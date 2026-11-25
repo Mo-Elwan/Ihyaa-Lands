@@ -1,0 +1,2941 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعاينة والزيارات الميدانية | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet & MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../static/style.css">
+    
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen font-['Tajawal'] antialiased flex flex-col">
+
+    <div class="flex-grow flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation matching Naama Platform Brand Identity -->
+        <aside class="w-full md:w-64 bg-white text-slate-700 flex-shrink-0 flex flex-col border-l border-slate-200/90 shadow-xs no-print">
+            
+            <!-- Brand: Official Naama Stylized Emblem & Header -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <a href="../admin/index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007a3d] to-[#00552b] flex items-center justify-center text-white shadow-xs">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-xl text-[#007a3d] tracking-wide">نَمَـــا</span>
+                            <span class="text-[10px] bg-emerald-50 text-[#007a3d] font-bold px-2 py-0.5 rounded-full border border-emerald-200">الفروع</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">سلسلة الاعتماد والعمليات</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Info Badge in Naama Soft Mint Tint -->
+            <div class="p-3.5 mx-3 mt-3 bg-emerald-50/70 border border-emerald-100/90 rounded-2xl shadow-2xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#007a3d] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h4 class="text-xs font-black text-slate-900 truncate">م. فهد الزهراني</h4>
+                        <p class="text-[10px] text-[#007a3d] font-bold truncate">رئيس اللجنة | فرع منطقة الباحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-grow p-4 space-y-1 text-xs font-semibold overflow-y-auto">
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">سلسلة الاعتماد والعمليات</div>
+
+                <!-- Unified Inbox for the 3 Roles -->
+                <a href="../admin/inbox.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-base w-5 text-center text-[#007a3d]"></i>
+                        <span>صندوق معالجة الطلبات (Inbox)</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-[#007a3d] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">3 أدوار</span>
+                </a>
+
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mt-4 mb-2">المؤشرات العامة</div>
+
+                <a href="../admin/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center text-slate-500"></i>
+                    <span>لوحة المؤشرات والقيادة</span>
+                </a>
+
+                <a href="../admin/map.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-map-location-dot text-base w-5 text-center text-slate-500"></i>
+                    <span>الخريطة الجغرافية الوطنية (GIS)</span>
+                </a>
+
+                <a href="../admin/farms.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-table-list text-base w-5 text-center text-slate-500"></i>
+                    <span>سجل المزارع والحصر (1,733)</span>
+                </a>
+
+                <a href="../admin/partners.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-handshake-angle text-base w-5 text-center text-slate-500"></i>
+                    <span>منظومة الشركاء ومطابقة الدعم</span>
+                </a>
+
+                <a href="../admin/visits.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition bg-emerald-50 text-[#007a3d] font-extrabold border-r-4 border-[#007a3d] shadow-2xs">
+                    <i class="fa-solid fa-truck-field text-base w-5 text-center text-slate-500"></i>
+                    <span>المعاينة والزيارات الميدانية</span>
+                </a>
+
+                <a href="../admin/advisory.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-headset text-base w-5 text-center text-slate-500"></i>
+                    <span>الإرشاد والتوجيه الزراعي</span>
+                </a>
+
+                <a href="../admin/reports.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-file-invoice text-base w-5 text-center text-slate-500"></i>
+                    <span>التقرير الشهري والتنفيذي</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Public Switcher -->
+            <div class="p-4 border-t border-slate-100">
+                <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#007a3d] text-xs font-bold transition border border-slate-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>الخروج إلى بوابة المستفيد</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow flex flex-col overflow-y-auto">
+            
+            <!-- Top App Bar -->
+            <header class="bg-white border-b border-slate-200/90 px-6 py-4 flex items-center justify-between no-print shadow-xs">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg font-black text-slate-900">إدارة المعاينة والزيارات الميدانية للمزارع المهملة</h1>
+                    <span class="text-xs bg-emerald-50 text-[#007a3d] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        13 منطقة إدارية
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="../register.html" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold transition shadow-xs">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>إضافة حصر جديد</span>
+                    </a>
+                    <div class="text-slate-500 font-medium hidden sm:block">
+                        <i class="fa-solid fa-calendar-check text-[#007a3d] ml-1"></i> أكتوبر - نوفمبر 2026 م
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Page Content -->
+            <div class="p-4 sm:p-6 lg:p-8 flex-grow">
+                
+<div class="space-y-6">
+
+    <!-- Header Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">إجمالي الزيارات المنفذة</span>
+                <div class="text-2xl font-black text-slate-900 font-mono">100 زيارة</div>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">مزارع بانتظار الزيارة والمعاينة</span>
+                <div class="text-2xl font-black text-amber-600 font-mono">50 مزرعة</div>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">الفرق الميدانية العاملة</span>
+                <div class="text-2xl font-black text-emerald-800 font-mono">13 فريقاً بالفروع</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visits Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i>
+                <span>سجل الزيارات الميدانية وتقارير التربة والمياه</span>
+            </h3>
+            <span class="text-xs text-slate-500">محدثة من فرق الفروع الـ 13</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم المزرعة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">المنطقة</th>
+                        <th class="py-3 px-4">الفريق والمفتش</th>
+                        <th class="py-3 px-4">تاريخ الزيارة</th>
+                        <th class="py-3 px-4">فحص التربة</th>
+                        <th class="py-3 px-4">ملوحة الماء (TDS)</th>
+                        <th class="py-3 px-4">توصيات المهندس الميداني</th>
+                        <th class="py-3 px-4">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1784" class="hover:underline">FRM-1784</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله بن فهد الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-25</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية خصبة صالحة ومؤهلة للزراعة الفورية</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي قائم صالح يحتاج مضخة موفرة وتطهير | شبكة الري: تحتاج توريد شبكة تنقيط حديثة كاملة (GR) | الشتلات الموصى بها: 400 شتلة بن خولاني + 150 شتلة لوز ورمان | ملاحظات: المزرعة مؤهلة لتدخل استصلاحي سريع</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1784" class="hover:underline">FRM-1784</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله بن فهد الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-26</td>
+                        <td class="py-3 px-4 text-slate-700">بانتظار المعاينة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="text-slate-400 italic">قيد الفحص</span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">معاينة وفحص التربة ومصادر المياه</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مجدولة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1786" class="hover:underline">FRM-1786</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1785" class="hover:underline">FRM-1785</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1782" class="hover:underline">FRM-1782</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1776" class="hover:underline">FRM-1776</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-19</td>
+                        <td class="py-3 px-4 text-slate-700">بانتظار المعاينة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="text-slate-400 italic">قيد الفحص</span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">معاينة وفحص التربة ومصادر المياه</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مجدولة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1776" class="hover:underline">FRM-1776</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-19</td>
+                        <td class="py-3 px-4 text-slate-700">بانتظار المعاينة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="text-slate-400 italic">قيد الفحص</span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">معاينة وفحص التربة ومصادر المياه</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مجدولة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1781" class="hover:underline">FRM-1781</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1779" class="hover:underline">FRM-1779</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/1777" class="hover:underline">FRM-1777</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الفنية</span>
+                            <span class="text-[10px] text-slate-400">م. فيصل الغامدي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-11-20</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طينية ممتازة</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                450 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة | الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                منجزة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/481" class="hover:underline">FRM-0481</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله سعد ظافر الاسمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بللسمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                544 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/479" class="hover:underline">FRM-0479</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">على بن محمد موسى الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المندق</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                702 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/476" class="hover:underline">FRM-0476</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">على بن محمد موسى الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المندق</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1212 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/471" class="hover:underline">FRM-0471</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">على بن محمد موسى الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المندق</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                879 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/470" class="hover:underline">FRM-0470</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">على بن محمد موسى الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المندق</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                566 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/460" class="hover:underline">FRM-0460</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مزرعة حسين مريع ابراهيم نشيلي</td>
+                        <td class="py-3 px-4 text-slate-600">جازان - ابوعريش</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع جازان</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                958 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/454" class="hover:underline">FRM-0454</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد مظفر دراج</td>
+                        <td class="py-3 px-4 text-slate-600">جازان - ابو عريش</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع جازان</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                855 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/453" class="hover:underline">FRM-0453</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">صالح عبدالله محمد المشيخي العمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - المجاردة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                951 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/443" class="hover:underline">FRM-0443</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">غنيمان غانم غنيمان المطيري / محمد غانم غنيمان المطيري</td>
+                        <td class="py-3 px-4 text-slate-600">الرياض - المجمعه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الرياض</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                720 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/441" class="hover:underline">FRM-0441</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">الصميديعي</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - القطيف</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                953 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/431" class="hover:underline">FRM-0431</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">فالح بن مفلح بن فلاح المطيري</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - قرية العليا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1157 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/428" class="hover:underline">FRM-0428</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">حسين شرار البوحسن</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - الأحساء</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1092 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/426" class="hover:underline">FRM-0426</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">صالح ظاهر بريك الجهني</td>
+                        <td class="py-3 px-4 text-slate-600">تبوك - أملج</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع تبوك</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                841 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/424" class="hover:underline">FRM-0424</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عباس صالح الظاهري</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - مهد الذهب</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1262 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/413" class="hover:underline">FRM-0413</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">يوسف غرم عبدالله الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - قرية العليا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1372 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/412" class="hover:underline">FRM-0412</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي غرم عبدالله الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - قرية العليا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1344 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/410" class="hover:underline">FRM-0410</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">منير هاشم عمر نجدي السيد</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - المدينة المنورة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                545 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/406" class="hover:underline">FRM-0406</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي بن رويشد عيد البلوي</td>
+                        <td class="py-3 px-4 text-slate-600">تبوك - الوجه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع تبوك</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1202 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/405" class="hover:underline">FRM-0405</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالكريم حكمي</td>
+                        <td class="py-3 px-4 text-slate-600">جازان - احد المسارحة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع جازان</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1003 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/404" class="hover:underline">FRM-0404</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">فلاح بن فالح الحجيلي</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - الفريش</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                975 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/400" class="hover:underline">FRM-0400</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي عبدالله محمد الحارثي</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بيشة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                493 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/399" class="hover:underline">FRM-0399</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">احمد المحمود</td>
+                        <td class="py-3 px-4 text-slate-600">القصيم - اعيون الجواء</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع القصيم</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                730 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/397" class="hover:underline">FRM-0397</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">ابراهيم عقيل سليمان المحمدي</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - المليليح</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1400 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/395" class="hover:underline">FRM-0395</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد علي حمد الصقية</td>
+                        <td class="py-3 px-4 text-slate-600">حائل - الشنان</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع حائل</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                633 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/392" class="hover:underline">FRM-0392</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عصام احمد موسى خرمي</td>
+                        <td class="py-3 px-4 text-slate-600">جازان - ابوعريش</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع جازان</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                736 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/391" class="hover:underline">FRM-0391</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">فواز محمد عبدالحميد الحمدي</td>
+                        <td class="py-3 px-4 text-slate-600">تبوك - أملج</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع تبوك</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1062 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/388" class="hover:underline">FRM-0388</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">منصور علي خضران الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - القرى</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1282 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/384" class="hover:underline">FRM-0384</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">حسن احمد مفرح عسيري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                694 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/383" class="hover:underline">FRM-0383</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">احمد مفرح محمد عسيري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                634 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/381" class="hover:underline">FRM-0381</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">ماجد جابر عبدالله علي</td>
+                        <td class="py-3 px-4 text-slate-600">جازان - صبيا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع جازان</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                472 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/376" class="hover:underline">FRM-0376</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">كامل غريب ثويني العنزي</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - العلا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1134 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/375" class="hover:underline">FRM-0375</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مرخ</td>
+                        <td class="py-3 px-4 text-slate-600">مكة المكرمة - خليص</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع مكة المكرمة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                682 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/369" class="hover:underline">FRM-0369</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالعزيز زعل</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - العيص</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1386 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/367" class="hover:underline">FRM-0367</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">هادي مانع ال منصور</td>
+                        <td class="py-3 px-4 text-slate-600">نجران - نجران</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع نجران</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1080 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/365" class="hover:underline">FRM-0365</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">خالد عبدالمحسن ابراهيم اليحيا</td>
+                        <td class="py-3 px-4 text-slate-600">الرياض - المجمعة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الرياض</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1108 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/361" class="hover:underline">FRM-0361</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد عبدالله آل مبارك</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - وادي ال حسين بللحمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                453 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/357" class="hover:underline">FRM-0357</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد سعود محمد الفقيه</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بيشة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                543 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/348" class="hover:underline">FRM-0348</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مزرعة متعب الهلالي</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - محايل</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                807 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/346" class="hover:underline">FRM-0346</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عرض السيد</td>
+                        <td class="py-3 px-4 text-slate-600">مكة المكرمة - القنفذة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع مكة المكرمة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                606 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/343" class="hover:underline">FRM-0343</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالرحمن عبدالمعلي الطريس الحربي</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - المدينه المنوره</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                541 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/342" class="hover:underline">FRM-0342</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد يحيى عسيري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                846 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/341" class="hover:underline">FRM-0341</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">الوادي</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - تنومه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1295 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/339" class="hover:underline">FRM-0339</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">فهد مرزوق الحربي</td>
+                        <td class="py-3 px-4 text-slate-600">المدينة المنورة - المدينة المنورة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المدينة المنورة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1122 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/338" class="hover:underline">FRM-0338</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مانع حوام ال منصور</td>
+                        <td class="py-3 px-4 text-slate-600">نجران - نجران</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع نجران</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1131 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/334" class="hover:underline">FRM-0334</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبيد حنس ماجد البقمي</td>
+                        <td class="py-3 px-4 text-slate-600">مكة المكرمة - تربة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع مكة المكرمة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                494 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/332" class="hover:underline">FRM-0332</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عواض علي الأحمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - محايل عسير</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                848 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/331" class="hover:underline">FRM-0331</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي محمد عايض الاكلبي</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بيشه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                519 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/329" class="hover:underline">FRM-0329</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">صويلح علوان أحمد المنتشري</td>
+                        <td class="py-3 px-4 text-slate-600">مكة المكرمة - العرضيات</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع مكة المكرمة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                702 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/327" class="hover:underline">FRM-0327</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله علي ردعان احمد القرني</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بيشه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                491 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/326" class="hover:underline">FRM-0326</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مقبل احمد الميموني</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                917 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/325" class="hover:underline">FRM-0325</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد ظافر عبدالله الاحمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بللحمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1222 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/324" class="hover:underline">FRM-0324</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">هادي يحي أحمد عسيري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                651 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/322" class="hover:underline">FRM-0322</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد ظافر عبدالله الاحمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بللحمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1325 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/315" class="hover:underline">FRM-0315</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله متعب مطر الشبعان</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - قرية العليا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                934 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/309" class="hover:underline">FRM-0309</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالرزاق عبدالرحمن المعيصب</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - الدمام</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                810 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/307" class="hover:underline">FRM-0307</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">كريم حسن علي النويصر</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - الجبيل</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                789 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/306" class="hover:underline">FRM-0306</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مانع عبدالله</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بللحمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1009 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/305" class="hover:underline">FRM-0305</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي يحيى عبدالله ال عايض</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - ابها</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                964 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/297" class="hover:underline">FRM-0297</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مزرعة شرزاء</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - رجال المع</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                660 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/293" class="hover:underline">FRM-0293</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعيد سالم محمد اللبيد</td>
+                        <td class="py-3 px-4 text-slate-600">نجران - بدر الجنوب</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع نجران</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                722 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/289" class="hover:underline">FRM-0289</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">المخلوط وشطانه</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - أبها</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                814 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/286" class="hover:underline">FRM-0286</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">حمد محمد حمد البرشاع</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - النعيرية</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1269 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/285" class="hover:underline">FRM-0285</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">نواف محمد عقاب الدويش</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - محافظة قرية العليا</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1097 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/276" class="hover:underline">FRM-0276</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">ورثة احمد صالح الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - القرى</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1181 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/271" class="hover:underline">FRM-0271</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">فهد سالم سليم العطوي</td>
+                        <td class="py-3 px-4 text-slate-600">تبوك - تبوك</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع تبوك</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                816 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/270" class="hover:underline">FRM-0270</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">خرمان محمد عبدالحميد الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المندق</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1382 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/264" class="hover:underline">FRM-0264</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">مشبب عوض احمد الاحمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بلحمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                768 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/263" class="hover:underline">FRM-0263</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">جازي عبدالله يحيى الهلالي</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - البرك</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1366 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/261" class="hover:underline">FRM-0261</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالرحمن</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بالجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                585 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/260" class="hover:underline">FRM-0260</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">احمد محمد عزيري الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - الحجرة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1316 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/259" class="hover:underline">FRM-0259</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">راشد علي القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - سراة عبيدة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                475 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/257" class="hover:underline">FRM-0257</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">رشيد راشد ناجي الرشيدي</td>
+                        <td class="py-3 px-4 text-slate-600">حائل - الحائط</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع حائل</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1059 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/244" class="hover:underline">FRM-0244</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">أحمد علي جبر آل جبر</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - القطيف</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                836 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/243" class="hover:underline">FRM-0243</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد علي عبدالله الشهري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - المجاردة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                883 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/242" class="hover:underline">FRM-0242</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالناصر فرحان خلف الرويلي</td>
+                        <td class="py-3 px-4 text-slate-600">الحدود الشمالية - طريف</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الحدود الشمالية</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1093 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/240" class="hover:underline">FRM-0240</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">الكبيشه</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المخواه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1192 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/233" class="hover:underline">FRM-0233</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالسلام بن علي الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                704 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/232" class="hover:underline">FRM-0232</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عبدالله محمد عبدالله الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - قلوة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. فهد السبيعي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                550 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/230" class="hover:underline">FRM-0230</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">علي بن صالح محمد ال صلاح</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - القطيف</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1311 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/225" class="hover:underline">FRM-0225</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعيد سالم محمد سالم اللبيد</td>
+                        <td class="py-3 px-4 text-slate-600">نجران - بدر الجنوب</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع نجران</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1301 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/224" class="hover:underline">FRM-0224</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">العامرية</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - الاحساء</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1121 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/223" class="hover:underline">FRM-0223</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">خالد سليمان عليثة الفايدي</td>
+                        <td class="py-3 px-4 text-slate-600">تبوك - أملج</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع تبوك</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1028 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/221" class="hover:underline">FRM-0221</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد بن سعد بن شار الاحمري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - بلسمر</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                817 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/219" class="hover:underline">FRM-0219</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عمر احمد محفوظ عسيري</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - محايل</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. عادل المطيري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1223 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/215" class="hover:underline">FRM-0215</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عمر احمد محفوظ</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - محايل</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                933 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/214" class="hover:underline">FRM-0214</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عمر احمد محفوظ</td>
+                        <td class="py-3 px-4 text-slate-600">عسير - محايل</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع عسير</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                775 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/213" class="hover:underline">FRM-0213</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">ابراهيم عبدالله عمر الغامدى</td>
+                        <td class="py-3 px-4 text-slate-600">الحدود الشمالية - رفحاء</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الحدود الشمالية</span>
+                            <span class="text-[10px] text-slate-400">م. خالد الشهري</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1079 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/212" class="hover:underline">FRM-0212</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">القناعيه</td>
+                        <td class="py-3 px-4 text-slate-600">المنطقة الشرقية - القطيف</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع المنطقة الشرقية</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                571 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/205" class="hover:underline">FRM-0205</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد علي محمد العمري</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - المخواة</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. يحيى الزهراني</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-emerald-50 text-emerald-800">
+                                871 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/193" class="hover:underline">FRM-0193</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سعيد علي سعيد الزهراني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - قلوه</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">فريق المعاينة الميدانية - فرع الباحة</span>
+                            <span class="text-[10px] text-slate-400">م. عمر العتيبي</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">2026-10-18</td>
+                        <td class="py-3 px-4 text-slate-700">تربة طميية صالحة للزراعة، تحتاج تقليب وإزالة حشائش</td>
+                        <td class="py-3 px-4 font-mono">
+                            
+                            <span class="px-2 py-0.5 rounded text-[10px] bg-amber-50 text-amber-800">
+                                1135 ppm
+                            </span>
+                            
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">يوصى بتركيب منظومة طاقة شمسية وغاطس 5 حصان وشبكة تنقيط</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مكتملة
+                            </span>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+            </div>
+
+        </main>
+    </div>
+
+    
+<script src="../static/gh_pages_adapter.js"></script>
+</body>
+</html>

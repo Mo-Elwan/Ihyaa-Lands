@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة القيادة والمؤشرات التنفيذية | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet & MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../static/style.css">
+    
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen font-['Tajawal'] antialiased flex flex-col">
+
+    <div class="flex-grow flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation matching Naama Platform Brand Identity -->
+        <aside class="w-full md:w-64 bg-white text-slate-700 flex-shrink-0 flex flex-col border-l border-slate-200/90 shadow-xs no-print">
+            
+            <!-- Brand: Official Naama Stylized Emblem & Header -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <a href="../admin/index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007a3d] to-[#00552b] flex items-center justify-center text-white shadow-xs">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-xl text-[#007a3d] tracking-wide">نَمَـــا</span>
+                            <span class="text-[10px] bg-emerald-50 text-[#007a3d] font-bold px-2 py-0.5 rounded-full border border-emerald-200">الفروع</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">سلسلة الاعتماد والعمليات</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Info Badge in Naama Soft Mint Tint -->
+            <div class="p-3.5 mx-3 mt-3 bg-emerald-50/70 border border-emerald-100/90 rounded-2xl shadow-2xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#007a3d] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h4 class="text-xs font-black text-slate-900 truncate">م. فهد الزهراني</h4>
+                        <p class="text-[10px] text-[#007a3d] font-bold truncate">رئيس اللجنة | فرع منطقة الباحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-grow p-4 space-y-1 text-xs font-semibold overflow-y-auto">
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">سلسلة الاعتماد والعمليات</div>
+
+                <!-- Unified Inbox for the 3 Roles -->
+                <a href="../admin/inbox.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-base w-5 text-center text-[#007a3d]"></i>
+                        <span>صندوق معالجة الطلبات (Inbox)</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-[#007a3d] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">3 أدوار</span>
+                </a>
+
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mt-4 mb-2">المؤشرات العامة</div>
+
+                <a href="../admin/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition bg-emerald-50 text-[#007a3d] font-extrabold border-r-4 border-[#007a3d] shadow-2xs">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center text-slate-500"></i>
+                    <span>لوحة المؤشرات والقيادة</span>
+                </a>
+
+                <a href="../admin/map.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-map-location-dot text-base w-5 text-center text-slate-500"></i>
+                    <span>الخريطة الجغرافية الوطنية (GIS)</span>
+                </a>
+
+                <a href="../admin/farms.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-table-list text-base w-5 text-center text-slate-500"></i>
+                    <span>سجل المزارع والحصر (1,733)</span>
+                </a>
+
+                <a href="../admin/partners.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-handshake-angle text-base w-5 text-center text-slate-500"></i>
+                    <span>منظومة الشركاء ومطابقة الدعم</span>
+                </a>
+
+                <a href="../admin/visits.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-truck-field text-base w-5 text-center text-slate-500"></i>
+                    <span>المعاينة والزيارات الميدانية</span>
+                </a>
+
+                <a href="../admin/advisory.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-headset text-base w-5 text-center text-slate-500"></i>
+                    <span>الإرشاد والتوجيه الزراعي</span>
+                </a>
+
+                <a href="../admin/reports.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-file-invoice text-base w-5 text-center text-slate-500"></i>
+                    <span>التقرير الشهري والتنفيذي</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Public Switcher -->
+            <div class="p-4 border-t border-slate-100">
+                <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#007a3d] text-xs font-bold transition border border-slate-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>الخروج إلى بوابة المستفيد</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow flex flex-col overflow-y-auto">
+            
+            <!-- Top App Bar -->
+            <header class="bg-white border-b border-slate-200/90 px-6 py-4 flex items-center justify-between no-print shadow-xs">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg font-black text-slate-900">لوحة المؤشرات والقيادة المركزية للمبادرة</h1>
+                    <span class="text-xs bg-emerald-50 text-[#007a3d] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        13 منطقة إدارية
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="../register.html" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold transition shadow-xs">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>إضافة حصر جديد</span>
+                    </a>
+                    <div class="text-slate-500 font-medium hidden sm:block">
+                        <i class="fa-solid fa-calendar-check text-[#007a3d] ml-1"></i> أكتوبر - نوفمبر 2026 م
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Page Content -->
+            <div class="p-4 sm:p-6 lg:p-8 flex-grow">
+                
+<div class="space-y-6">
+
+    <!-- KPI Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">إجمالي المزارع المحصورة</span>
+                <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-tree"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">1,786</div>
+            <div class="text-[11px] text-emerald-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>حصر رقمي وميداني في 13 منطقة</span>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">المساحة الإجمالية</span>
+                <span class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-vector-square"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">341,210.7 <span class="text-xs font-normal text-slate-500">هكتار</span></div>
+            <div class="text-[11px] text-blue-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-check"></i>
+                <span>مزارع وحيازات زراعية مؤهلة</span>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">شتلات الشركاء (متعهد + متاحة)</span>
+                <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-seedling"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-amber-600 font-mono">6,273,000</div>
+            <div class="text-[11px] text-amber-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-handshake"></i>
+                <span>مورد ومتاح في سجلات الشركاء</span>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">مزارع بدأ تأهيلها وأنتجت</span>
+                <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-circle-check"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">276 <span class="text-xs font-normal text-slate-500">مزرعة</span></div>
+            <div class="text-[11px] text-purple-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-award"></i>
+                <span>90 مؤهلة بمكة + 186 جارية بجبل شدا</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Secondary Stat Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-water"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">يتوفر بها آبار / خزانات</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">1,250 مزرعة</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">يتوفر بها عداد كهرباء</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">1,786 مزرعة</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">مسجل بالضمان الاجتماعي</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">492 مستفيد</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-boxes-packing"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">شتلات سُلّمت فعلياً</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">2,259,070 شتلة</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Regional Distribution Bar Chart -->
+        <div class="lg:col-span-8 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-column text-emerald-600"></i>
+                    <span>توزيع المزارع المحصورة على مناطق المملكة الـ 13</span>
+                </h3>
+                <span class="text-xs text-slate-400">تحديث أسبوعي معتمد</span>
+            </div>
+            <div class="h-72">
+                <canvas id="regionsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Priority Breakdown Doughnut Chart -->
+        <div class="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-pie-chart text-emerald-600"></i>
+                        <span>تصنيف الجاهزية والأولوية</span>
+                    </h3>
+                </div>
+                <div class="h-56 relative flex items-center justify-center">
+                    <canvas id="priorityChart"></canvas>
+                </div>
+            </div>
+
+            <div class="space-y-2 text-xs pt-3 border-t border-slate-100">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> أولوية 1 (جاهزية عالية)</span>
+                    <span class="font-bold font-mono">1361</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> أولوية 2 (جاهزية متوسطة)</span>
+                    <span class="font-bold font-mono">425</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> أولوية 3 (استصلاح شامل)</span>
+                    <span class="font-bold font-mono">0</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Registered Farms Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i>
+                <h3 class="text-sm font-bold text-slate-900">آخر المزارع المسجلة في الحصر الرقمي</h3>
+            </div>
+            <a href="../admin/farms.html" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                <span>عرض كامل السجل (1786 مزرعة)</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم المزرعة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">المنطقة والمحافظة</th>
+                        <th class="py-3 px-4">المساحة</th>
+                        <th class="py-3 px-4">المياه والكهرباء</th>
+                        <th class="py-3 px-4">أولوية التأهيل</th>
+                        <th class="py-3 px-4">حالة الملف</th>
+                        <th class="py-3 px-4 text-center">الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1786</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">15,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1786" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1785</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">15,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1785" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1784</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">عبدالله بن فهد الغامدي</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">12,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1784" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1783</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">12,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                محال للمعاينة الميدانية
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1783" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1782</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">15,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1782" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1781</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">15,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1781" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1780</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">12,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                محال للمعاينة الميدانية
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1780" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1779</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">سعد بن محمد القحطاني</td>
+                        <td class="py-3 px-4 text-slate-600">الباحة - بلجرشي</td>
+                        <td class="py-3 px-4 font-mono">15,000 م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] bg-blue-50 text-blue-700">
+                                مياه: بئر
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                أولوية 1 (جاهزي
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                جاري التأهيل
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/1779" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+            </div>
+
+        </main>
+    </div>
+
+    
+<script>
+    // Regional Chart Data
+    const regionLabels = ["الباحة","عسير","المدينة المنورة","مكة المكرمة","الرياض","حائل","المنطقة الشرقية","جازان","نجران","تبوك","القصيم","الجوف","الحدود الشمالية",];
+    const regionCounts = [423,309,215,195,121,113,106,94,79,67,33,18,13,];
+
+    const ctxRegions = document.getElementById('regionsChart').getContext('2d');
+    new Chart(ctxRegions, {
+        type: 'bar',
+        data: {
+            labels: regionLabels,
+            datasets: [{
+                label: 'عدد المزارع المحصورة',
+                data: regionCounts,
+                backgroundColor: '#059669',
+                borderRadius: 6,
+                maxBarThickness: 36
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#f1f5f9' },
+                    ticks: { font: { family: 'Tajawal' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { family: 'Tajawal' } }
+                }
+            }
+        }
+    });
+
+    // Priority Chart
+    const ctxPriority = document.getElementById('priorityChart').getContext('2d');
+    new Chart(ctxPriority, {
+        type: 'doughnut',
+        data: {
+            labels: ['أولوية 1 (عالية)', 'أولوية 2 (متوسطة)', 'أولوية 3 (منخفضة)'],
+            datasets: [{
+                data: [1361, 425, 0],
+                backgroundColor: ['#059669', '#f59e0b', '#94a3b8'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            cutout: '70%'
+        }
+    });
+</script>
+
+<script src="../static/gh_pages_adapter.js"></script>
+</body>
+</html>

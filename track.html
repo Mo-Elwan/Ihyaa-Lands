@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متابعة حالة المزرعة والملف الرقمي | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        naama: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#10b981',
+                            600: '#007a3d',
+                            700: '#006934',
+                            800: '#00552b',
+                            900: '#003d1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet & SweetAlert -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="static/style.css">
+    
+</head>
+<body class="bg-[#fcfdfd] text-[#1f2937] min-h-screen flex flex-col font-['Tajawal']">
+
+    <!-- Top Bar 100% matching Image 1 & 2 -->
+    <div class="bg-white border-b border-slate-100 text-xs py-2 px-6 sm:px-12 flex justify-between items-center text-slate-600 no-print">
+        <!-- Right side: Digital Gov Authority badge -->
+        <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-700">
+            <span class="inline-block w-4 h-4 rounded bg-[#007a3d] text-white text-[9px] flex items-center justify-center font-bold">✓</span>
+            <span>موقع حكومي مسجل لدى هيئة الحكومة الرقمية</span>
+            <a href="https://dga.gov.sa" target="_blank" class="text-[#007a3d] hover:underline font-bold flex items-center gap-0.5 mr-1">
+                <span>كيف تتحقق؟</span>
+                <i class="fa-solid fa-chevron-down text-[8px]"></i>
+            </a>
+        </div>
+
+        <!-- Left side: Login & English -->
+        <div class="flex items-center gap-5 text-xs">
+            
+            <a href="nafath/login.html" class="flex items-center gap-1.5 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-regular fa-user text-[11px]"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            
+
+            <button class="flex items-center gap-1 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-solid fa-globe text-[11px]"></i>
+                <span>English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header 100% matching Image 1 & 2 -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Center/Right: Logo & Nav items -->
+                <div class="flex items-center gap-8">
+                    <!-- Naama Logo matching exact image -->
+                    <a href="index.html" class="flex items-center gap-2.5 group">
+                        <!-- Stylized Tree/Pillars SVG -->
+                        <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="24" width="10" height="28" rx="5" fill="#007a3d"/>
+                            <rect x="22" y="12" width="10" height="40" rx="5" fill="#005a2b"/>
+                            <rect x="36" y="20" width="10" height="32" rx="5" fill="#10b981"/>
+                            <path d="M48 30C48 24.4772 52.4772 20 58 20V40C52.4772 40 48 35.5228 48 30Z" fill="#007a3d"/>
+                        </svg>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-black text-[#007a3d] tracking-tighter leading-none" style="font-family: 'Tajawal', sans-serif;">نما</span>
+                            <span class="text-[10px] font-black text-[#007a3d] tracking-[0.25em] font-mono leading-none mt-1">NAAMA</span>
+                        </div>
+                    </a>
+
+                    <!-- Nav Links matching Naama official portal 100% -->
+                    <nav class="hidden xl:flex items-center gap-0.5 text-xs font-bold text-slate-700">
+                        <a href="index.html" class="px-2.5 py-2 hover:text-[#007a3d] transition">الرئيسية</a>
+                        <a href="services.html" class="px-3 py-1.5 naama-active-tab shadow-xs rounded-md">دليل الخدمات الإلكترونية</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">منشآتي</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">إدارة التفويض والوكالات</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأخبار والأحداث</a>
+                        <div class="relative group">
+                            <button class="px-2.5 py-2 hover:text-[#007a3d] flex items-center gap-1 transition">
+                                <span>عن نما</span>
+                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                            </button>
+                        </div>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأسئلة الشائعة</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">تواصل معنا</a>
+                    </nav>
+                </div>
+
+                <!-- Left side: Search Box matching image & Portal Access buttons -->
+                <div class="flex items-center gap-3">
+                    <div class="relative hidden sm:block w-44 lg:w-52">
+                        <input type="text" placeholder="ابحث هنا ..."
+                               class="w-full pr-4 pl-8 py-2 rounded-lg border border-slate-300 text-xs text-slate-700 focus:ring-1 focus:ring-[#007a3d] focus:outline-none placeholder-slate-400 shadow-xs">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    </div>
+
+                    <a href="my-requests.html" class="text-xs font-bold text-slate-800 hover:text-[#007a3d] px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition flex items-center gap-1.5 shadow-xs">
+                        <i class="fa-solid fa-list-check text-emerald-700"></i>
+                        <span>طلباتي</span>
+                    </a>
+                    
+                    <a href="admin/index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-bold border border-slate-700 shadow-xs transition">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
+                        <span class="hidden md:inline">بوابة معالجة الطلبات</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Slot -->
+    <main class="flex-grow">
+        
+<div class="max-w-5xl mx-auto px-4 sm:px-6 py-10">
+    
+    <!-- Header -->
+    <div class="text-center mb-8">
+        <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full uppercase">الملف الرقمي الموحد</span>
+        <h1 class="text-3xl font-extrabold text-slate-900 mt-2">الاستعلام ومتابعة حالة المزرعة</h1>
+        <p class="text-slate-600 text-sm mt-1">أدخل رقم المزرعة (مثال: FRM-0001) أو رقم السجل المدني لمتابعة مسار التأهيل والزيارات الميدانية</p>
+    </div>
+
+    <!-- Search Form -->
+    <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 max-w-2xl mx-auto">
+        <form method="GET" action="track.html" class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-grow">
+                <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400 text-sm"></i>
+                <input type="text" name="query" value="" required placeholder="أدخل رقم المزرعة (FRM-0001) أو رقم الهوية أو الجوال..."
+                       class="w-full pr-10 pl-4 py-3 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none font-medium">
+            </div>
+            <button type="submit" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow flex items-center justify-center gap-2">
+                <span>استعلام</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+        </form>
+
+        <div class="flex items-center justify-center gap-2 mt-3 text-xs text-slate-500">
+            <span>نماذج جاهزة للتجربة:</span>
+            <a href="track.html?query=FRM-0001" class="text-emerald-700 font-mono font-bold hover:underline">FRM-0001</a>
+            <span>•</span>
+            <a href="track.html?query=FRM-0030" class="text-emerald-700 font-mono font-bold hover:underline">FRM-0030</a>
+            <span>•</span>
+            <a href="track.html?query=FRM-0067" class="text-emerald-700 font-mono font-bold hover:underline">FRM-0067</a>
+        </div>
+    </div>
+
+    
+
+    
+
+</div>
+
+    </main>
+
+    <!-- Naama Official Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-8 text-xs text-slate-500 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-700">وزارة البيئة والمياه والزراعة</span>
+                <span>•</span>
+                <span>منصة نما للخدمات الإلكترونية الموحدة</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+                جميع الحقوق محفوظة © 2026 م - وكالة الوزارة لتقنية المعلومات والتحول الرقمي
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Accessibility Widgets matching exact Image 1 & 2 (Bottom Left) -->
+    <div class="floating-accessibility no-print">
+        <!-- Sound Speaker -->
+        <button class="floating-accessibility-btn" title="قارئ الشاشة">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <!-- Accessibility Person -->
+        <button class="floating-accessibility-btn" title="سهولة الوصول">
+            <i class="fa-solid fa-universal-access"></i>
+        </button>
+        <!-- Sign language hands -->
+        <button class="floating-accessibility-btn" title="لغة الإشارة">
+            <i class="fa-solid fa-hands-asl-interpreting"></i>
+        </button>
+    </div>
+
+    <!-- Floating Chatbot Widgets matching exact Image 1 & 2 (Bottom Right) -->
+    <div class="floating-chat-naama no-print">
+        <!-- Green Naama Leaf Avatar -->
+        <div class="floating-naama-avatar" title="المساعد الذكي نما">
+            <i class="fa-solid fa-seedling"></i>
+        </div>
+        <!-- Colorful Brain / AI Chat Bubble -->
+        <div class="floating-naama-chat" title="محادثة الدعم الفني">
+            <i class="fa-solid fa-comment-dots text-emerald-600 text-xl"></i>
+        </div>
+    </div>
+
+    
+<script src="static/gh_pages_adapter.js"></script>
+</body>
+</html>

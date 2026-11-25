@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقرير التنفيذي الشهري للمبادرة | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet & MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../static/style.css">
+    
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen font-['Tajawal'] antialiased flex flex-col">
+
+    <div class="flex-grow flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation matching Naama Platform Brand Identity -->
+        <aside class="w-full md:w-64 bg-white text-slate-700 flex-shrink-0 flex flex-col border-l border-slate-200/90 shadow-xs no-print">
+            
+            <!-- Brand: Official Naama Stylized Emblem & Header -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <a href="../admin/index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007a3d] to-[#00552b] flex items-center justify-center text-white shadow-xs">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-xl text-[#007a3d] tracking-wide">نَمَـــا</span>
+                            <span class="text-[10px] bg-emerald-50 text-[#007a3d] font-bold px-2 py-0.5 rounded-full border border-emerald-200">الفروع</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">سلسلة الاعتماد والعمليات</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Info Badge in Naama Soft Mint Tint -->
+            <div class="p-3.5 mx-3 mt-3 bg-emerald-50/70 border border-emerald-100/90 rounded-2xl shadow-2xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#007a3d] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h4 class="text-xs font-black text-slate-900 truncate">م. فهد الزهراني</h4>
+                        <p class="text-[10px] text-[#007a3d] font-bold truncate">رئيس اللجنة | فرع منطقة الباحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-grow p-4 space-y-1 text-xs font-semibold overflow-y-auto">
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">سلسلة الاعتماد والعمليات</div>
+
+                <!-- Unified Inbox for the 3 Roles -->
+                <a href="../admin/inbox.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-base w-5 text-center text-[#007a3d]"></i>
+                        <span>صندوق معالجة الطلبات (Inbox)</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-[#007a3d] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">3 أدوار</span>
+                </a>
+
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mt-4 mb-2">المؤشرات العامة</div>
+
+                <a href="../admin/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center text-slate-500"></i>
+                    <span>لوحة المؤشرات والقيادة</span>
+                </a>
+
+                <a href="../admin/map.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-map-location-dot text-base w-5 text-center text-slate-500"></i>
+                    <span>الخريطة الجغرافية الوطنية (GIS)</span>
+                </a>
+
+                <a href="../admin/farms.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-table-list text-base w-5 text-center text-slate-500"></i>
+                    <span>سجل المزارع والحصر (1,733)</span>
+                </a>
+
+                <a href="../admin/partners.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-handshake-angle text-base w-5 text-center text-slate-500"></i>
+                    <span>منظومة الشركاء ومطابقة الدعم</span>
+                </a>
+
+                <a href="../admin/visits.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-truck-field text-base w-5 text-center text-slate-500"></i>
+                    <span>المعاينة والزيارات الميدانية</span>
+                </a>
+
+                <a href="../admin/advisory.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-headset text-base w-5 text-center text-slate-500"></i>
+                    <span>الإرشاد والتوجيه الزراعي</span>
+                </a>
+
+                <a href="../admin/reports.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition bg-emerald-50 text-[#007a3d] font-extrabold border-r-4 border-[#007a3d] shadow-2xs">
+                    <i class="fa-solid fa-file-invoice text-base w-5 text-center text-slate-500"></i>
+                    <span>التقرير الشهري والتنفيذي</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Public Switcher -->
+            <div class="p-4 border-t border-slate-100">
+                <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#007a3d] text-xs font-bold transition border border-slate-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>الخروج إلى بوابة المستفيد</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow flex flex-col overflow-y-auto">
+            
+            <!-- Top App Bar -->
+            <header class="bg-white border-b border-slate-200/90 px-6 py-4 flex items-center justify-between no-print shadow-xs">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg font-black text-slate-900">التقرير التنفيذي الشهري للجنة مبادرة إحياء المزارع المهملة</h1>
+                    <span class="text-xs bg-emerald-50 text-[#007a3d] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        13 منطقة إدارية
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="../register.html" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold transition shadow-xs">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>إضافة حصر جديد</span>
+                    </a>
+                    <div class="text-slate-500 font-medium hidden sm:block">
+                        <i class="fa-solid fa-calendar-check text-[#007a3d] ml-1"></i> أكتوبر - نوفمبر 2026 م
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Page Content -->
+            <div class="p-4 sm:p-6 lg:p-8 flex-grow">
+                
+<div class="space-y-6 max-w-5xl mx-auto">
+
+    <!-- Top Action Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between no-print">
+        <div>
+            <h2 class="text-sm font-bold text-slate-900">تقرير المبادرة لشهر أكتوبر - نوفمبر 2026 م</h2>
+            <p class="text-xs text-slate-500">يصدر شهرياً للعرض على سعادة وكيل الوزارة لشؤون الفروع ومعالي نائب الوزير</p>
+        </div>
+        <button onclick="window.print()" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow flex items-center gap-2 transition">
+            <i class="fa-solid fa-print text-amber-400"></i>
+            <span>طباعة التقرير الرسمي (PDF)</span>
+        </button>
+    </div>
+
+    <!-- Official Report Document Canvas -->
+    <div class="bg-white p-8 sm:p-12 rounded-3xl border border-slate-200 shadow-md space-y-8 text-slate-800">
+        
+        <!-- Document Header -->
+        <div class="border-b-2 border-emerald-800 pb-6 flex justify-between items-end">
+            <div>
+                <div class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">المملكة العربية السعودية</div>
+                <div class="text-xs font-bold text-slate-700">وزارة البيئة والمياه والزراعة</div>
+                <div class="text-xs text-slate-500">وكالة الوزارة لخدمة المستفيدين وشؤون الفروع</div>
+                <div class="text-xs font-bold text-emerald-800 mt-1">لجنة مبادرة إحياء المزارع المهملة وإعادتها إلى النشاط الزراعي</div>
+            </div>
+            
+            <div class="text-left">
+                <div class="inline-block px-3 py-1 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold text-xs">
+                    التقرير التنفيذي الأول - 1448 هـ / 2026 م
+                </div>
+                <div class="text-[11px] text-slate-400 mt-1 font-mono">القرار الإداري رقم 482555376</div>
+            </div>
+        </div>
+
+        <!-- Executive Summary Banner -->
+        <div class="gradient-green text-white p-6 rounded-2xl shadow-md">
+            <h3 class="text-lg font-black mb-1">الملخص التنفيذي لمنجزات المبادرة</h3>
+            <p class="text-xs text-emerald-100 leading-relaxed font-light mb-6">
+                انطلقت المبادرة بحصر رقمي وميداني موحد في مناطق المملكة الـ 13 لتحويل المزارع المهملة لأكثر من 5 سنوات إلى أصول زراعية منتجة، وتوحيد بياناتها وربط احتياجاتها بشركاء النجاح والإرشاد الزراعي.
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center border-t border-emerald-600/60 pt-4">
+                <div>
+                    <div class="text-3xl font-black text-amber-300 font-mono">1,786</div>
+                    <div class="text-[11px] text-emerald-200 font-medium">مزرعة مهملة محصورة</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-white font-mono">13</div>
+                    <div class="text-[11px] text-emerald-200 font-medium">منطقة إدارية مشمولة</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-amber-300 font-mono">341210.71</div>
+                    <div class="text-[11px] text-emerald-200 font-medium">هكتار مساحة محصورة</div>
+                </div>
+                <div>
+                    <div class="text-3xl font-black text-white font-mono">276</div>
+                    <div class="text-[11px] text-emerald-200 font-medium">مزرعة بدأ تأهيلها وأنتجت</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Regional Distribution -->
+        <div class="space-y-4">
+            <h4 class="text-sm font-black text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-2">
+                <span>أولاً: التوزيع الإقليمي للمزارع المحصورة حسب المناطق الـ 13</span>
+            </h4>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">الباحة</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">423</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">عسير</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">309</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">المدينة المنورة</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">215</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">مكة المكرمة</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">195</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">الرياض</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">121</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">حائل</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">113</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">المنطقة الشرقية</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">106</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">جازان</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">94</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">نجران</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">79</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">تبوك</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">67</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">القصيم</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">33</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">الجوف</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">18</span>
+                </div>
+                
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center">
+                    <span class="font-bold text-slate-800">الحدود الشمالية</span>
+                    <span class="font-mono font-black text-emerald-800 text-sm">13</span>
+                </div>
+                
+            </div>
+        </div>
+
+        <!-- Section 2: Key Strategic Models -->
+        <div class="space-y-4">
+            <h4 class="text-sm font-black text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-2">
+                <span>ثانياً: نماذج الشراكة المبتكرة المرشحة للتعميم</span>
+            </h4>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-slate-900 text-sm">1. الاستثمار الأهلي للحيازات (جبل شدا - الباحة)</strong>
+                        <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">جارٍ التنفيذ</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        تأهيل 67 حيازة زراعية مهملة على مساحة 47,000 م² بالشراكة مع جمعية البن الصافي الشدوي وزراعة 23,000 شتلة بن خولاني شدوي بنظام المشاركة الإنتاجية.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-slate-900 text-sm">2. القرض الحسن مقابل ثلث الإنتاج (شركة أزكى)</strong>
+                        <span class="text-[10px] bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full font-bold">سارٍ ومعتمد</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        تقديم قرض حسن يصل إلى 100 ألف ريال لكل مزرعة دون أي فوائد لتمويل شبكات الري والطاقة الشمسية، وسداد القسط من ثلث إنتاج المزرعة والثلثان للمزارع.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-slate-900 text-sm">3. المساهمة المجتمعية بالفسائل (مكتب الأحساء والشرقية)</strong>
+                        <span class="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-bold">50 ألف فسيلة</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        توفير فسائل نخيل خلاص الأحساء ومصدات رياح ومطابقة بيانات 2,000 مزرعة مع المؤسسة العامة للري لإعادة ضخ المياه المعالجة للمزارع.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50 space-y-2">
+                    <div class="flex justify-between items-center">
+                        <strong class="text-slate-900 text-sm">4. التأهيل المباشر للمزارع الجاهزة (منطقة مكة المكرمة)</strong>
+                        <span class="text-[10px] bg-purple-100 text-purple-800 px-2 py-0.5 rounded-full font-bold">30 مزرعة منجزة</span>
+                    </div>
+                    <p class="text-slate-600 leading-relaxed">
+                        إنجاز تأهيل 30 مزرعة بالكامل وزراعة 9,174 شجرة مثمرة واستصلاح 109 هكتار بدعم من الجمعيات والقطاع الخاص.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Partners Table -->
+        <div class="space-y-4">
+            <h4 class="text-sm font-black text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-2">
+                <span>ثالثاً: سجل مساهمات شركاء النجاح المعتمدة</span>
+            </h4>
+
+            <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                        <tr>
+                            <th class="py-2.5 px-3">الجهة الشريكة</th>
+                            <th class="py-2.5 px-3">التصنيف</th>
+                            <th class="py-2.5 px-3">نوع الدعم</th>
+                            <th class="py-2.5 px-3">المتعهد به</th>
+                            <th class="py-2.5 px-3">المسلم فعلياً</th>
+                            <th class="py-2.5 px-3">الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">جمعية البن الصافي الشدوي</td>
+                            <td class="py-2 px-3 text-slate-600">جمعيات وأهلية</td>
+                            <td class="py-2 px-3 text-slate-700">استثمار أهلي للحيازات وشتلات بن</td>
+                            <td class="py-2 px-3 font-mono font-bold">23,000 شتلة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">15,000 شتلة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">جمعية الباحة الخضراء</td>
+                            <td class="py-2 px-3 text-slate-600">جمعيات وأهلية</td>
+                            <td class="py-2 px-3 text-slate-700">شتلات رمان ولوز وأشجار غطاء نباتي</td>
+                            <td class="py-2 px-3 font-mono font-bold">100,000 شتلة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">42,000 شتلة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">جمعية البن التعاونية</td>
+                            <td class="py-2 px-3 text-slate-600">جمعيات وأهلية</td>
+                            <td class="py-2 px-3 text-slate-700">شتلات بن ومعدات حصاد وري</td>
+                            <td class="py-2 px-3 font-mono font-bold">50,000 شتلة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">20,000 شتلة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">شركة أزكى للاستثمار الزراعي</td>
+                            <td class="py-2 px-3 text-slate-600">شركات ومستثمرين</td>
+                            <td class="py-2 px-3 text-slate-700">قرض حسن بدون فوائد مقابل ثلث المحصول</td>
+                            <td class="py-2 px-3 font-mono font-bold">1,000,000 ريال</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">350,000 ريال</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">مكتب وزارة البيئة بالأحساء والجمعيات الشريكة</td>
+                            <td class="py-2 px-3 text-slate-600">مشاتل وجهات أهلية</td>
+                            <td class="py-2 px-3 text-slate-700">فسائل نخيل خلاص ومصدات رياح</td>
+                            <td class="py-2 px-3 font-mono font-bold">50,000 فسيلة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">18,500 فسيلة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">مشاتل نجران الوطنية المعتمدة (50 مشتل)</td>
+                            <td class="py-2 px-3 text-slate-600">مشاتل</td>
+                            <td class="py-2 px-3 text-slate-700">شتلات حمضيات وسدر ونخيل</td>
+                            <td class="py-2 px-3 font-mono font-bold">45,000 شتلة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">12,000 شتلة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">المؤسسة العامة للري</td>
+                            <td class="py-2 px-3 text-slate-600">جهات حكومية وشبه حكومية</td>
+                            <td class="py-2 px-3 text-slate-700">تأهيل شبكات ومصادر الري والمياه المعالجة</td>
+                            <td class="py-2 px-3 font-mono font-bold">2,000 مزرعة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">650 مزرعة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">صندوق التنمية الزراعية</td>
+                            <td class="py-2 px-3 text-slate-600">تمويل وإقراض</td>
+                            <td class="py-2 px-3 text-slate-700">تمويل تقنيات الري والطاقة الشمسية الميسر</td>
+                            <td class="py-2 px-3 font-mono font-bold">5,000,000 ريال</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">1,800,000 ريال</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                        <tr>
+                            <td class="py-2 px-3 font-bold text-slate-800">مركز وقاء (مكافحة الآفات النباتية والحيوانية)</td>
+                            <td class="py-2 px-3 text-slate-600">جهات حكومية وشبه حكومية</td>
+                            <td class="py-2 px-3 text-slate-700">فحص التربة ومكافحة سوسة النخيل والآفات الحرجية</td>
+                            <td class="py-2 px-3 font-mono font-bold">3,000 زيارة واستشارة</td>
+                            <td class="py-2 px-3 font-mono text-emerald-700 font-bold">920 زيارة واستشارة</td>
+                            <td class="py-2 px-3"><span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 font-bold text-[10px]">نشط</span></td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Signatures Footer -->
+        <div class="pt-8 border-t border-slate-200 grid grid-cols-2 text-center text-xs">
+            <div>
+                <span class="text-slate-400 block mb-1">نائب رئيس اللجنة</span>
+                <strong class="text-slate-800 block text-sm">أ. سليمان بن صالح الجطيلي</strong>
+                <span class="text-slate-500 text-[11px]">مدير مكتب تنسيق التشجير بالوزارة</span>
+            </div>
+            <div>
+                <span class="text-slate-400 block mb-1">رئيس لجنة المبادرة</span>
+                <strong class="text-slate-800 block text-sm">م. فهد بن مفتاح الزهراني</strong>
+                <span class="text-slate-500 text-[11px]">مدير عام فرع الوزارة بمنطقة الباحة</span>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+            </div>
+
+        </main>
+    </div>
+
+    
+<script src="../static/gh_pages_adapter.js"></script>
+</body>
+</html>

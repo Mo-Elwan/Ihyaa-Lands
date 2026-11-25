@@ -1,0 +1,3545 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلباتي الإلكترونية | منصة نما - وزارة البيئة والمياه والزراعة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        naama: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#10b981',
+                            600: '#007a3d',
+                            700: '#006934',
+                            800: '#00552b',
+                            900: '#003d1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet & SweetAlert -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="static/style.css">
+    
+</head>
+<body class="bg-[#fcfdfd] text-[#1f2937] min-h-screen flex flex-col font-['Tajawal']">
+
+    <!-- Top Bar 100% matching Image 1 & 2 -->
+    <div class="bg-white border-b border-slate-100 text-xs py-2 px-6 sm:px-12 flex justify-between items-center text-slate-600 no-print">
+        <!-- Right side: Digital Gov Authority badge -->
+        <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-700">
+            <span class="inline-block w-4 h-4 rounded bg-[#007a3d] text-white text-[9px] flex items-center justify-center font-bold">✓</span>
+            <span>موقع حكومي مسجل لدى هيئة الحكومة الرقمية</span>
+            <a href="https://dga.gov.sa" target="_blank" class="text-[#007a3d] hover:underline font-bold flex items-center gap-0.5 mr-1">
+                <span>كيف تتحقق؟</span>
+                <i class="fa-solid fa-chevron-down text-[8px]"></i>
+            </a>
+        </div>
+
+        <!-- Left side: Login & English -->
+        <div class="flex items-center gap-5 text-xs">
+            
+            <a href="nafath/login.html" class="flex items-center gap-1.5 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-regular fa-user text-[11px]"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            
+
+            <button class="flex items-center gap-1 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-solid fa-globe text-[11px]"></i>
+                <span>English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header 100% matching Image 1 & 2 -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Center/Right: Logo & Nav items -->
+                <div class="flex items-center gap-8">
+                    <!-- Naama Logo matching exact image -->
+                    <a href="index.html" class="flex items-center gap-2.5 group">
+                        <!-- Stylized Tree/Pillars SVG -->
+                        <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="24" width="10" height="28" rx="5" fill="#007a3d"/>
+                            <rect x="22" y="12" width="10" height="40" rx="5" fill="#005a2b"/>
+                            <rect x="36" y="20" width="10" height="32" rx="5" fill="#10b981"/>
+                            <path d="M48 30C48 24.4772 52.4772 20 58 20V40C52.4772 40 48 35.5228 48 30Z" fill="#007a3d"/>
+                        </svg>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-black text-[#007a3d] tracking-tighter leading-none" style="font-family: 'Tajawal', sans-serif;">نما</span>
+                            <span class="text-[10px] font-black text-[#007a3d] tracking-[0.25em] font-mono leading-none mt-1">NAAMA</span>
+                        </div>
+                    </a>
+
+                    <!-- Nav Links matching Naama official portal 100% -->
+                    <nav class="hidden xl:flex items-center gap-0.5 text-xs font-bold text-slate-700">
+                        <a href="index.html" class="px-2.5 py-2 hover:text-[#007a3d] transition">الرئيسية</a>
+                        <a href="services.html" class="px-3 py-1.5 naama-active-tab shadow-xs rounded-md">دليل الخدمات الإلكترونية</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">منشآتي</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">إدارة التفويض والوكالات</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأخبار والأحداث</a>
+                        <div class="relative group">
+                            <button class="px-2.5 py-2 hover:text-[#007a3d] flex items-center gap-1 transition">
+                                <span>عن نما</span>
+                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                            </button>
+                        </div>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأسئلة الشائعة</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">تواصل معنا</a>
+                    </nav>
+                </div>
+
+                <!-- Left side: Search Box matching image & Portal Access buttons -->
+                <div class="flex items-center gap-3">
+                    <div class="relative hidden sm:block w-44 lg:w-52">
+                        <input type="text" placeholder="ابحث هنا ..."
+                               class="w-full pr-4 pl-8 py-2 rounded-lg border border-slate-300 text-xs text-slate-700 focus:ring-1 focus:ring-[#007a3d] focus:outline-none placeholder-slate-400 shadow-xs">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    </div>
+
+                    <a href="my-requests.html" class="text-xs font-bold text-slate-800 hover:text-[#007a3d] px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition flex items-center gap-1.5 shadow-xs">
+                        <i class="fa-solid fa-list-check text-emerald-700"></i>
+                        <span>طلباتي</span>
+                    </a>
+                    
+                    <a href="admin/index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-bold border border-slate-700 shadow-xs transition">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
+                        <span class="hidden md:inline">بوابة معالجة الطلبات</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Slot -->
+    <main class="flex-grow">
+        
+<div class="max-w-[1400px] mx-auto px-4 sm:px-8 py-5 font-['Tajawal'] space-y-4">
+
+    <!-- Top Total Counter Line matching Screenshot 100% -->
+    <div class="flex items-center justify-between text-xs sm:text-sm font-bold text-slate-800 pt-1">
+        <span>جميع الطلبات (<span id="visibleCount" class="font-mono text-emerald-800 font-extrabold">36</span>) طلب</span>
+        <span class="text-xs text-slate-400 font-normal hidden sm:inline">قائمة طلباتي الموثقة عبر منصة نما</span>
+    </div>
+
+    <!-- Filter & Search Toolbar matching Screenshot 100% -->
+    <div class="bg-white p-3 sm:p-3.5 rounded-2xl border border-slate-200 shadow-xs flex flex-col lg:flex-row items-center gap-3">
+        
+        <!-- 1. Search Box with Magnifying Glass Icon -->
+        <div class="relative w-full lg:flex-1">
+            <input type="text" id="tableSearch" onkeyup="filterRequestsTable()" placeholder="بحث جميع الطلبات"
+                   class="w-full pr-10 pl-4 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:ring-1 focus:ring-[#007a3d] focus:border-[#007a3d] focus:outline-none shadow-xs">
+            <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3.5 text-slate-400 text-sm"></i>
+        </div>
+
+        <!-- 2. Account Dropdown (جميع الحسابات) -->
+        <div class="w-full lg:w-48">
+            <select id="accountFilter" onchange="filterRequestsTable()"
+                    class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-700 bg-white font-medium focus:ring-1 focus:ring-[#007a3d] focus:outline-none shadow-xs cursor-pointer">
+                <option value="">جميع الحسابات</option>
+                <option value="7001477913">7001477913</option>
+                
+                <option value="1087452190">1087452190 (حساب المستفيد)</option>
+                
+            </select>
+        </div>
+
+        <!-- 3. Duration Dropdown (عرض الطلبات حسب المدة) -->
+        <div class="w-full lg:w-56">
+            <select id="durationFilter" onchange="filterRequestsTable()"
+                    class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-700 bg-white font-medium focus:ring-1 focus:ring-[#007a3d] focus:outline-none shadow-xs cursor-pointer">
+                <option value="">عرض الطلبات حسب المدة</option>
+                <option value="month">آخر شهر</option>
+                <option value="3months">آخر 3 أشهر</option>
+                <option value="6months">آخر 6 أشهر</option>
+                <option value="year">آخر سنة</option>
+                <option value="all">جميع الأوقات</option>
+            </select>
+        </div>
+
+        <!-- 4. Status Dropdown (كل الحالات) -->
+        <div class="w-full lg:w-44">
+            <select id="statusFilter" onchange="filterRequestsTable()"
+                    class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs sm:text-sm text-slate-700 bg-white font-medium focus:ring-1 focus:ring-[#007a3d] focus:outline-none shadow-xs cursor-pointer">
+                <option value="">كل الحالات</option>
+                <option value="مسودة">مسودة</option>
+                <option value="الطلب مكتمل">الطلب مكتمل</option>
+                <option value="تحت المراجعة والتدقيق">تحت المراجعة والتدقيق</option>
+                <option value="الطلب ملغي">الطلب ملغي</option>
+            </select>
+        </div>
+
+        <!-- 5. Sort Button (الترتيب حسب) -->
+        <div class="w-full lg:w-auto">
+            <button type="button" onclick="toggleSortDirection()" title="تغيير اتجاه الترتيب"
+                    class="w-full lg:w-auto px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-xs transition cursor-pointer whitespace-nowrap">
+                <span>الترتيب حسب</span>
+                <i class="fa-solid fa-arrow-down-up-across-line text-slate-500 text-xs" id="sortIcon"></i>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Active Code Banner if just submitted -->
+    
+
+    <!-- Requests Table matching Screenshot 100% -->
+    
+    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+        <div class="overflow-x-auto">
+            <table id="requestsTable" class="w-full text-right border-collapse">
+                
+                <!-- Table Header matching Screenshot -->
+                <thead>
+                    <tr class="bg-[#f8fafc] border-b border-slate-200 text-slate-500 text-xs font-bold select-none">
+                        <!-- Column 1: عنوان الطلب -->
+                        <th onclick="sortTable(0)" class="py-4 px-6 cursor-pointer hover:bg-slate-100 transition min-w-[260px] sm:min-w-[340px]">
+                            <div class="flex items-center gap-1.5 justify-start text-slate-600">
+                                <span>عنوان الطلب</span>
+                                <i class="fa-solid fa-sort text-[10px] text-slate-400"></i>
+                            </div>
+                        </th>
+
+                        <!-- Column 2: الحالة -->
+                        <th onclick="sortTable(1)" class="py-4 px-4 cursor-pointer hover:bg-slate-100 transition text-center min-w-[140px]">
+                            <div class="flex items-center gap-1.5 justify-center text-slate-600">
+                                <span>الحالة</span>
+                                <i class="fa-solid fa-sort text-[10px] text-slate-400"></i>
+                            </div>
+                        </th>
+
+                        <!-- Column 3: رقم الحساب -->
+                        <th onclick="sortTable(2)" class="py-4 px-4 cursor-pointer hover:bg-slate-100 transition text-center min-w-[130px]">
+                            <div class="flex items-center gap-1.5 justify-center text-slate-600">
+                                <span>رقم الحساب</span>
+                                <i class="fa-solid fa-sort text-[10px] text-slate-400"></i>
+                            </div>
+                        </th>
+
+                        <!-- Column 4: رقم الطلب -->
+                        <th onclick="sortTable(3)" class="py-4 px-4 cursor-pointer hover:bg-slate-100 transition text-center min-w-[140px]">
+                            <div class="flex items-center gap-1.5 justify-center text-slate-600">
+                                <span>رقم الطلب</span>
+                                <i class="fa-solid fa-sort text-[10px] text-slate-400"></i>
+                            </div>
+                        </th>
+
+                        <!-- Column 5: تاريخ الطلب -->
+                        <th onclick="sortTable(4)" class="py-4 px-4 cursor-pointer hover:bg-slate-100 transition text-center min-w-[120px]">
+                            <div class="flex items-center gap-1.5 justify-center text-slate-600">
+                                <span>تاريخ الطلب</span>
+                                <i class="fa-solid fa-sort text-[10px] text-slate-400"></i>
+                            </div>
+                        </th>
+
+                        <!-- Column 6: Action Button -->
+                        <th class="py-4 px-6 text-center w-32"></th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body matching Screenshot rows 100% -->
+                <tbody class="divide-y divide-slate-100 text-xs sm:text-sm">
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1786"
+                        data-date="2026/11/25">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1786', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1786</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/25</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1786', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1785"
+                        data-date="2026/11/25">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1785', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1785</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/25</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1785', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="محال للمعاينة الميدانية"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1783"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1783', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>محال للمعاينة الميدانية</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1783</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1783', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1782"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1782', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1782</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1782', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1781"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1781', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1781</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1781', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="محال للمعاينة الميدانية"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1780"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1780', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>محال للمعاينة الميدانية</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1780</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1780', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1779"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1779', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1779</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1779', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1778"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1778', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1778</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1778', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="جاري التأهيل"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1777"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1777', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>جاري التأهيل</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1777</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1777', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="محال للمعاينة الميدانية"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1776"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1776', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>محال للمعاينة الميدانية</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1776</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1776', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1775"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1775', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1775</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1775', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1774"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1774', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1774</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1774', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1773"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1773', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1773</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1773', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1772"
+                        data-date="2026/11/18">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1772', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1772</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/18</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1772', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1770"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1770', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1770</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1770', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1769"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1769', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1769</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1769', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1768"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1768', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1768</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1768', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1767"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1767', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1767</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1767', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1766"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1766', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1766</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1766', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1765"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1765', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1765</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1765', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1764"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1764', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1764</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1764', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1763"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1763', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1763</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1763', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1760"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1760', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1760</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1760', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1759"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1759', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1759</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1759', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1758"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1758', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1758</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1758', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1757"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1757', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1757</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1757', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1756"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1756', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1756</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1756', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1755"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1755', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1755</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1755', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1754"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1754', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1754</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1754', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1753"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1753', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1753</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1753', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1750"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1750', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1750</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1750', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1748"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1748', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1748</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1748', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1745"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1745', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1745</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1745', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1743"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1743', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1743</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1743', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1742"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1742', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1742</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1742', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                    <tr class="req-row hover:bg-slate-50/80 transition group"
+                        data-title="طلب حصر وتأهيل مزرعة مهملة"
+                        data-status="تحت المراجعة والتدقيق"
+                        data-account="7001477913"
+                        data-reqnum="FRM-1741"
+                        data-date="2026/11/17">
+                        
+                        <!-- 1. عنوان الطلب (Green Link) -->
+                        <td class="py-4.5 px-6 font-bold text-[#007a3d] hover:underline cursor-pointer"
+                            onclick="handleRequestAction('FRM-1741', true, 'التفاصيل')">
+                            <span class="leading-relaxed block">طلب حصر وتأهيل مزرعة مهملة</span>
+                        </td>
+
+                        <!-- 2. الحالة: كبسولة مطابقة لمنصة نما بنسبة 100% كما في الصورة -->
+                        <td class="py-4.5 px-4 text-center whitespace-nowrap">
+                            
+                            <!-- Farm Request under Review / Action -->
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white bg-[#007a3d] shadow-2xs">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                <span>تحت المراجعة والتدقيق</span>
+                            </span>
+                            
+                        </td>
+
+                        <!-- 3. رقم الحساب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-800 text-xs font-semibold">7001477913</span>
+                        </td>
+
+                        <!-- 4. رقم الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-900 text-xs font-bold">FRM-1741</span>
+                        </td>
+
+                        <!-- 5. تاريخ الطلب -->
+                        <td class="py-4.5 px-4 text-center">
+                            <span class="font-mono text-slate-700 text-xs font-medium">2026/11/17</span>
+                        </td>
+
+                        <!-- 6. Action Button: [ استكمال ⬅ ] or [ التفاصيل ⬅ ] -->
+                        <td class="py-4.5 px-6 text-center">
+                            <button type="button"
+                                    onclick="handleRequestAction('FRM-1741', true, 'التفاصيل')"
+                                    class="w-full bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs px-3.5 py-1.5 rounded-md flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <span>التفاصيل</span>
+                                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                </tbody>
+
+            </table>
+        </div>
+
+        <!-- Empty Results Placeholder for filters -->
+        <div id="noResultsRow" class="hidden p-12 text-center space-y-3">
+            <div class="w-14 h-14 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center text-2xl mx-auto">
+                <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-700">لا توجد طلبات مطابقة للبحث أو التصفية الحالية</h4>
+            <p class="text-xs text-slate-400">جرب تغيير كلمات البحث أو إعادة ضبط خيارات الفلاتر</p>
+            <button onclick="resetFilters()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                إعادة ضبط الفلاتر
+            </button>
+        </div>
+    </div>
+    
+
+</div>
+
+<!-- Floating Official Naama Help & Chat Button matching Screenshot -->
+<div class="fixed bottom-6 right-6 z-30 flex flex-col items-center gap-2 no-print">
+    <button onclick="openChatSupportModal()" title="المساعد الذكي لمنظومة نما"
+            class="w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-[#007a3d] hover:bg-[#006934] text-white flex flex-col items-center justify-center shadow-xl border-2 border-white transition transform hover:scale-105 group">
+        <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3"></path>
+            <path d="M12 14a6 6 0 0 1 6-6h3v2a6 6 0 0 1-6 6h-3"></path>
+            <line x1="12" y1="10" x2="12" y2="21"></line>
+        </svg>
+        <span class="text-[9px] font-black leading-none mt-0.5 tracking-tight">نما</span>
+    </button>
+</div>
+
+<!-- Floating Accessibility Toolbar matching Screenshot on bottom right/left -->
+<div class="fixed bottom-6 left-6 z-30 flex items-center gap-1.5 bg-white/90 backdrop-blur-xs p-1.5 rounded-full border border-slate-200 shadow-md no-print text-slate-600 text-xs">
+    <button onclick="toggleHighContrast()" title="تباين الألوان" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center transition">
+        <i class="fa-solid fa-circle-half-stroke"></i>
+    </button>
+    <button onclick="changeFontSize(1)" title="تكبير الخط" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center font-bold text-xs transition">
+        A+
+    </button>
+    <button onclick="changeFontSize(-1)" title="تصغير الخط" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center font-bold text-xs transition">
+        A-
+    </button>
+    <button onclick="readPageAloud()" title="القراءة الصوتية" class="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center transition text-emerald-700">
+        <i class="fa-solid fa-volume-high"></i>
+    </button>
+</div>
+
+<!-- ================= Request Details Modal (نافذة تفاصيل الطلب المتطورة) ================= -->
+<div id="requestDetailsModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-4 hidden no-print">
+    <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-slate-100 animate-fade-in p-6 sm:p-8 space-y-5">
+        
+        <!-- Modal Header -->
+        <div class="flex items-start justify-between border-b border-slate-100 pb-4">
+            <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                    <span id="modalReqCode" class="text-xs font-mono font-black bg-slate-100 text-slate-800 px-2.5 py-0.5 rounded-md border border-slate-200">FRM-0000</span>
+                    <span id="modalReqStatusBadge" class="text-xs font-bold text-[#007a3d] flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#007a3d] animate-pulse"></span><span>تحت المراجعة والتدقيق</span></span>
+                </div>
+                <h3 id="modalReqTitle" class="text-base sm:text-lg font-black text-slate-900">طلب حصر وتأهيل مزرعة مهملة</h3>
+                <p class="text-xs text-slate-500">منظومة نما الإلكترونية - مبادرة حصر وتأهيل المزارع المهملة (وزارة البيئة والمياه والزراعة)</p>
+            </div>
+            <button onclick="closeRequestDetailsModal()" class="text-slate-400 hover:text-slate-700 p-2 transition text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Timeline Workflow Stages -->
+        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2">
+            <span class="text-xs font-bold text-slate-800 block">مراحل سير معالجة الطلب لدى فرع الوزارة:</span>
+            <div class="grid grid-cols-4 gap-2 text-center text-[10px] sm:text-[11px]">
+                <div class="p-2 rounded-xl bg-emerald-100 text-emerald-900 font-bold border border-emerald-300 flex flex-col items-center gap-1">
+                    <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                    <span>1. استلام الطلب</span>
+                </div>
+                <div class="p-2 rounded-xl bg-emerald-50 text-emerald-900 font-bold border border-emerald-200 flex flex-col items-center gap-1">
+                    <i class="fa-solid fa-spinner fa-spin text-emerald-600"></i>
+                    <span>2. تدقيق الوثائق</span>
+                </div>
+                <div class="p-2 rounded-xl bg-slate-100 text-slate-400 font-medium border border-slate-200 flex flex-col items-center gap-1">
+                    <i class="fa-regular fa-circle text-slate-300"></i>
+                    <span>3. الزيارة الميدانية</span>
+                </div>
+                <div class="p-2 rounded-xl bg-slate-100 text-slate-400 font-medium border border-slate-200 flex flex-col items-center gap-1">
+                    <i class="fa-regular fa-circle text-slate-300"></i>
+                    <span>4. اعتماد التأهيل</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Details Grid Container -->
+        <div id="modalDetailsContent" class="space-y-4 text-xs">
+            <!-- Dynamically injected via JS -->
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+            <button onclick="window.print()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs flex items-center gap-2 transition">
+                <i class="fa-solid fa-print"></i>
+                <span>طباعة إشعار الطلب</span>
+            </button>
+            <button onclick="closeRequestDetailsModal()" class="px-5 py-2.5 rounded-xl bg-[#111827] hover:bg-slate-800 text-white font-bold text-xs transition">
+                إغلاق النافذة
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+    </main>
+
+    <!-- Naama Official Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-8 text-xs text-slate-500 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-700">وزارة البيئة والمياه والزراعة</span>
+                <span>•</span>
+                <span>منصة نما للخدمات الإلكترونية الموحدة</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+                جميع الحقوق محفوظة © 2026 م - وكالة الوزارة لتقنية المعلومات والتحول الرقمي
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Accessibility Widgets matching exact Image 1 & 2 (Bottom Left) -->
+    <div class="floating-accessibility no-print">
+        <!-- Sound Speaker -->
+        <button class="floating-accessibility-btn" title="قارئ الشاشة">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <!-- Accessibility Person -->
+        <button class="floating-accessibility-btn" title="سهولة الوصول">
+            <i class="fa-solid fa-universal-access"></i>
+        </button>
+        <!-- Sign language hands -->
+        <button class="floating-accessibility-btn" title="لغة الإشارة">
+            <i class="fa-solid fa-hands-asl-interpreting"></i>
+        </button>
+    </div>
+
+    <!-- Floating Chatbot Widgets matching exact Image 1 & 2 (Bottom Right) -->
+    <div class="floating-chat-naama no-print">
+        <!-- Green Naama Leaf Avatar -->
+        <div class="floating-naama-avatar" title="المساعد الذكي نما">
+            <i class="fa-solid fa-seedling"></i>
+        </div>
+        <!-- Colorful Brain / AI Chat Bubble -->
+        <div class="floating-naama-chat" title="محادثة الدعم الفني">
+            <i class="fa-solid fa-comment-dots text-emerald-600 text-xl"></i>
+        </div>
+    </div>
+
+    
+<script>
+    // Store all farm objects passed from backend for modal display
+    const FARMS_DATA = {
+        
+        
+        "FRM-1786": {
+            code: "FRM-1786",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.960095029395525",
+            longitude: "41.377645795383785",
+            created_at: "2026/11/25",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-25 10:19]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-25 10:19]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-25 10:19]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1785": {
+            code: "FRM-1785",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.00219955377232",
+            longitude: "41.503647884514145",
+            created_at: "2026/11/25",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-25 10:09]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-25 10:09]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-25 10:09]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1783": {
+            code: "FRM-1783",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "محال للمعاينة الميدانية",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.96597230181375",
+            longitude: "41.45343524318284",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر وتعميق بئر
+[التدقيق المكتبي - 2026-11-25 12:01]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: المكلف: م. فيصل الغامدي (مهندس زراعي - قطاع الباحة والقرى)"
+        },
+        
+        
+        
+        "FRM-1782": {
+            code: "FRM-1782",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.915995160693903",
+            longitude: "41.55266003869712",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-18 08:39]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-18 08:39]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-18 08:39]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1781": {
+            code: "FRM-1781",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.994535855052057",
+            longitude: "41.407713944374066",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-18 08:22]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-18 08:22]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-18 08:22]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1780": {
+            code: "FRM-1780",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "محال للمعاينة الميدانية",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.071081979294622",
+            longitude: "41.41180809567102",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر وتعميق بئر
+[التدقيق المكتبي - 2026-11-18 08:25]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: المكلف: م. فيصل الغامدي (مهندس زراعي - قطاع الباحة والقرى)"
+        },
+        
+        
+        
+        "FRM-1779": {
+            code: "FRM-1779",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.109180717127483",
+            longitude: "41.44689304447207",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-18 08:19]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-18 08:19]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-18 08:19]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1778": {
+            code: "FRM-1778",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.08856194847129",
+            longitude: "41.40604267590887",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر وتعميق بئر"
+        },
+        
+        
+        
+        "FRM-1777": {
+            code: "FRM-1777",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "جاري التأهيل",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.095515263059713",
+            longitude: "41.393752915585885",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-18 08:10]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-18 08:10]: تم إنجاز المعاينة الميدانية بواسطة م. فيصل الغامدي. التقرير: فحص مصادر المياه: بئر سطحي صالح يحتاج مضخة موفرة | شبكة الري: يحتاج شبكة ري بالتنقيط حديثة. التوصية: الشتلات الموصى بها: 400 شتلة بن خولاني و100 شتلة لوز | ملاحظات: المزرعة واعدة وجاهزية التأهيل عالية. ورُفع الطلب للاعتماد.
+[مدير الفرع - 2026-11-18 08:10]: تم الاعتماد النهائي لخطة التأهيل وتخصيص مسار الدعم: مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى). توجيهات الإدارة: يُعتمد إدراج المزرعة ضمن الدفعة الأولى لصرف القرض الحسن وتوريد الشتلات"
+        },
+        
+        
+        
+        "FRM-1776": {
+            code: "FRM-1776",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "محال للمعاينة الميدانية",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "15000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان وبن",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.0127696818877",
+            longitude: "41.549843410968265",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: صيانة بئر وشبكة ري
+[التدقيق المكتبي - 2026-11-18 08:10]: تم قبول الطلب مبدئياً واستيفاء الوثائق وإحالته للمعاينة الميدانية. ملاحظات: تم التحقق من صك الملكية وسريان السجل الزراعي
+[فني الميدان - 2026-11-18 08:26]: تم جدولة المعاينة الميدانية بتاريخ 2026-11-19 بواسطة م. فيصل الغامدي.
+[فني الميدان - 2026-11-18 08:26]: تم جدولة المعاينة الميدانية بتاريخ 2026-11-19 بواسطة م. فيصل الغامدي."
+        },
+        
+        
+        
+        "FRM-1775": {
+            code: "FRM-1775",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.98564382610066",
+            longitude: "41.52275226857361",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1774": {
+            code: "FRM-1774",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.072218265221043",
+            longitude: "41.5301944263281",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1773": {
+            code: "FRM-1773",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.05173445224774",
+            longitude: "41.51417885560709",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر وتعميق بئر"
+        },
+        
+        
+        
+        "FRM-1772": {
+            code: "FRM-1772",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.10250407723441",
+            longitude: "41.496746418399646",
+            created_at: "2026/11/18",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1770": {
+            code: "FRM-1770",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.069499964003636",
+            longitude: "41.45478830305767",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1769": {
+            code: "FRM-1769",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.97960350557058",
+            longitude: "41.455051136991834",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1768": {
+            code: "FRM-1768",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.96381185716974",
+            longitude: "41.47501610182085",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1767": {
+            code: "FRM-1767",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.97357718440702",
+            longitude: "41.46687493235401",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1766": {
+            code: "FRM-1766",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.078140407741106",
+            longitude: "41.56662127272583",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1765": {
+            code: "FRM-1765",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي، لوز بجلي، رمان",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "19.930613064612132",
+            longitude: "41.47166979871511",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) | احتياجات التأهيل المطلوبة: بحاجة لحفر بئر ارتوازي وتركيب منظومة طاقة شمسية وشبكة ري بالتنقيط | ملاحظات: المزرعة بحاجة لمعاينة عاجلة"
+        },
+        
+        
+        
+        "FRM-1764": {
+            code: "FRM-1764",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.01809690165438",
+            longitude: "41.38778495711436",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1763": {
+            code: "FRM-1763",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.984509836545538",
+            longitude: "41.39060731243684",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1760": {
+            code: "FRM-1760",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي، لوز بجلي، رمان",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "20.020748085611782",
+            longitude: "41.47750994850297",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) | احتياجات التأهيل المطلوبة: بحاجة لحفر بئر ارتوازي وتركيب منظومة طاقة شمسية وشبكة ري بالتنقيط | ملاحظات: المزرعة بحاجة لمعاينة عاجلة"
+        },
+        
+        
+        
+        "FRM-1759": {
+            code: "FRM-1759",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.04988202022754",
+            longitude: "41.455617194660604",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1758": {
+            code: "FRM-1758",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.103809626854037",
+            longitude: "41.435953466295686",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1757": {
+            code: "FRM-1757",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي، لوز بجلي، رمان",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "19.9582295745857",
+            longitude: "41.53052343417095",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) | احتياجات التأهيل المطلوبة: بحاجة لحفر بئر ارتوازي وتركيب منظومة طاقة شمسية وشبكة ري بالتنقيط | ملاحظات: المزرعة بحاجة لمعاينة عاجلة"
+        },
+        
+        
+        
+        "FRM-1756": {
+            code: "FRM-1756",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "رمان ولوز وخوخ",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.049846080191248",
+            longitude: "41.42513115809657",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: تمديد شبكة ري بالتنقيط وحفر بئر"
+        },
+        
+        
+        
+        "FRM-1755": {
+            code: "FRM-1755",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.088449763677414",
+            longitude: "41.4537955009589",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1754": {
+            code: "FRM-1754",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي، لوز بجلي، رمان",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "19.94882976270538",
+            longitude: "41.56036944646834",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) | احتياجات التأهيل المطلوبة: بحاجة لحفر بئر ارتوازي وتركيب منظومة طاقة شمسية وشبكة ري بالتنقيط | ملاحظات: المزرعة بحاجة لمعاينة عاجلة"
+        },
+        
+        
+        
+        "FRM-1753": {
+            code: "FRM-1753",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "19.99958576359155",
+            longitude: "41.43202398838766",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1750": {
+            code: "FRM-1750",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي ولوز",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.063314053401314",
+            longitude: "41.56245061118381",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) | احتياجات التأهيل المطلوبة: حفر بئر وطاقة شمسية"
+        },
+        
+        
+        
+        "FRM-1748": {
+            code: "FRM-1748",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي، لوز بجلي، رمان",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "20.00806362519276",
+            longitude: "41.48736873834951",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) | احتياجات التأهيل المطلوبة: بحاجة لحفر بئر ارتوازي وتركيب منظومة طاقة شمسية وشبكة ري بالتنقيط | ملاحظات: المزرعة بحاجة لمعاينة عاجلة"
+        },
+        
+        
+        
+        "FRM-1745": {
+            code: "FRM-1745",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "19.98564353351143",
+            longitude: "41.45137998205846",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) |"
+        },
+        
+        
+        
+        "FRM-1743": {
+            code: "FRM-1743",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي",
+            applicant_role: "وريث مفوض",
+            ownership_doc_type: "صك حصر ورثة مشفوع بوكالة شرعية سارية",
+            ownership_doc_number: "4201992837",
+            latitude: "20.061915706596213",
+            longitude: "41.566034473186214",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: وريث مفوض | وثيقة الملكية: صك حصر ورثة مشفوع بوكالة شرعية سارية رقم (4201992837) |"
+        },
+        
+        
+        
+        "FRM-1742": {
+            code: "FRM-1742",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.025753857933754",
+            longitude: "41.39695094840629",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) |"
+        },
+        
+        
+        
+        "FRM-1741": {
+            code: "FRM-1741",
+            title: "طلب حصر وتأهيل مزرعة مهملة",
+            status: "تحت المراجعة والتدقيق",
+            farmer_name: "سعد بن محمد القحطاني",
+            national_id: "1087452190",
+            phone: "0554129876",
+            social_security: "نعم",
+            agricultural_registry: "SA-2026-104520",
+            region: "الباحة",
+            governorate: "بلجرشي",
+            city: "بلجرشي",
+            area_m2: "12000.0",
+            land_status: "غير محياة",
+            water_source: "بئر",
+            electricity_source: "لا يوجد",
+            road_type: "معبد",
+            previous_crops: "بن شدوي",
+            applicant_role: "مالك",
+            ownership_doc_type: "صك ملكية إلكتروني",
+            ownership_doc_number: "31099887766",
+            latitude: "20.011756877562977",
+            longitude: "41.47882843662168",
+            created_at: "2026/11/17",
+            notes: "صفة مقدم الطلب: مالك | وثيقة الملكية: صك ملكية إلكتروني رقم (31099887766) |"
+        },
+        
+        
+    };
+
+    let sortAsc = false;
+
+    // Filter Table dynamically
+    function filterRequestsTable() {
+        const query = (document.getElementById('tableSearch').value || '').trim().toLowerCase();
+        const accountVal = document.getElementById('accountFilter').value;
+        const statusVal = document.getElementById('statusFilter').value;
+        const durationVal = document.getElementById('durationFilter').value;
+
+        const rows = document.querySelectorAll('.req-row');
+        let visibleCount = 0;
+
+        rows.forEach(row => {
+            const title = row.getAttribute('data-title').toLowerCase();
+            const status = row.getAttribute('data-status');
+            const account = row.getAttribute('data-account');
+            const reqnum = row.getAttribute('data-reqnum').toLowerCase();
+            const date = row.getAttribute('data-date');
+
+            let matchesQuery = !query || title.includes(query) || reqnum.includes(query) || account.includes(query);
+            let matchesAccount = !accountVal || account === accountVal;
+            let matchesStatus = !statusVal || status === statusVal;
+            let matchesDuration = true; // Duration simulated logic
+
+            if (matchesQuery && matchesAccount && matchesStatus && matchesDuration) {
+                row.classList.remove('hidden');
+                visibleCount++;
+            } else {
+                row.classList.add('hidden');
+            }
+        });
+
+        document.getElementById('visibleCount').innerText = visibleCount;
+        const noResults = document.getElementById('noResultsRow');
+        if (visibleCount === 0) {
+            noResults.classList.remove('hidden');
+        } else {
+            noResults.classList.add('hidden');
+        }
+    }
+
+    // Reset Filters
+    function resetFilters() {
+        document.getElementById('tableSearch').value = '';
+        document.getElementById('accountFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        document.getElementById('durationFilter').value = '';
+        filterRequestsTable();
+    }
+
+    // Sort by Column
+    function sortTable(colIndex) {
+        const table = document.getElementById('requestsTable');
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('.req-row'));
+
+        sortAsc = !sortAsc;
+
+        rows.sort((a, b) => {
+            let valA, valB;
+            if (colIndex === 0) {
+                valA = a.getAttribute('data-title');
+                valB = b.getAttribute('data-title');
+            } else if (colIndex === 1) {
+                valA = a.getAttribute('data-status');
+                valB = b.getAttribute('data-status');
+            } else if (colIndex === 2) {
+                valA = a.getAttribute('data-account');
+                valB = b.getAttribute('data-account');
+            } else if (colIndex === 3) {
+                valA = a.getAttribute('data-reqnum');
+                valB = b.getAttribute('data-reqnum');
+            } else {
+                valA = a.getAttribute('data-date');
+                valB = b.getAttribute('data-date');
+            }
+
+            return sortAsc ? valA.localeCompare(valB, 'ar') : valB.localeCompare(valA, 'ar');
+        });
+
+        rows.forEach(r => tbody.appendChild(r));
+    }
+
+    function toggleSortDirection() {
+        sortTable(4); // Toggle sort by Date
+    }
+
+    // Handle Click on Action Button or Title
+    function handleRequestAction(reqId, isFarm, actionType) {
+        if (isFarm && FARMS_DATA[reqId]) {
+            openFarmModal(FARMS_DATA[reqId]);
+        } else if (actionType === 'استكمال') {
+            Swal.fire({
+                icon: 'info',
+                title: 'استكمال المسودة',
+                text: 'جاري فتح مسودة الطلب واسترجاع الحقول المدخلة لمتابعة التقديم...',
+                confirmButtonText: 'حسناً',
+                confirmButtonColor: '#007a3d'
+            });
+        } else {
+            // General Naama Request view
+            Swal.fire({
+                icon: 'info',
+                title: 'تفاصيل المعاملة الإلكترونية',
+                html: `
+                    <div class="text-right text-xs space-y-2 pt-2">
+                        <div><strong>رقم الطلب:</strong> <span class="font-mono text-emerald-800">${reqId}</span></div>
+                        <div><strong>الجهة المختصة:</strong> الإدارة العامة للخدمات الزراعية والمائية</div>
+                        <div><strong>حالة المعاملة:</strong> مستكملة ومنتهية بالإجراء النظامي المعتمد</div>
+                    </div>
+                `,
+                confirmButtonText: 'إغلاق',
+                confirmButtonColor: '#007a3d'
+            });
+        }
+    }
+
+    function openFarmModal(farm) {
+        document.getElementById('modalReqCode').innerText = farm.code;
+        document.getElementById('modalReqStatusBadge').innerText = farm.status;
+        document.getElementById('modalReqTitle').innerText = `طلب حصر وتأهيل مزرعة مهملة (${farm.code})`;
+
+        const content = document.getElementById('modalDetailsContent');
+        content.innerHTML = `
+            <!-- Beneficiary & Registry -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div><span class="text-slate-400 block text-[10px]">مقدم الطلب:</span><strong class="text-slate-800">${farm.farmer_name}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">رقم الهوية:</span><strong class="font-mono text-slate-800">${farm.national_id}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">رقم الجوال:</span><strong class="font-mono text-slate-800" dir="ltr">${farm.phone}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">السجل الزراعي:</span><strong class="font-mono text-emerald-800">${farm.agricultural_registry}</strong></div>
+            </div>
+
+            <!-- Geographic Location & Ownership -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div><span class="text-slate-400 block text-[10px]">المنطقة والمحافظة:</span><strong class="text-slate-800">${farm.region} - ${farm.governorate}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">المدينة:</span><strong class="text-slate-800">${farm.city}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">صفة مقدم الطلب:</span><strong class="text-slate-800">${farm.applicant_role}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">وثيقة الإثبات:</span><strong class="text-slate-800">${farm.ownership_doc_type} (${farm.ownership_doc_number})</strong></div>
+            </div>
+
+            <!-- Farm Characteristics -->
+            <div class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div><span class="text-slate-400 block text-[10px]">المساحة الإجمالية:</span><strong class="text-slate-800">${Number(farm.area_m2).toLocaleString()} م²</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">حالة الأرض:</span><strong class="text-slate-800">${farm.land_status}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">مصدر المياه:</span><strong class="text-slate-800">${farm.water_source}</strong></div>
+                <div><span class="text-slate-400 block text-[10px]">مصدر الكهرباء:</span><strong class="text-slate-800">${farm.electricity_source}</strong></div>
+            </div>
+
+            <!-- Crops & Needs -->
+            <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200 space-y-2">
+                <div>
+                    <span class="text-slate-500 block text-[10px]">المزروعات السابقة أو الحالية:</span>
+                    <strong class="text-emerald-950 font-medium">${farm.previous_crops || 'لم تسجل'}</strong>
+                </div>
+                <div>
+                    <span class="text-slate-500 block text-[10px]">تفاصيل الطلب والملاحظات:</span>
+                    <p class="text-slate-700 leading-relaxed font-normal">${farm.notes || 'لا توجد ملاحظات إضافية'}</p>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1">
+                <span>الإحداثيات الجغرافية: <strong class="font-mono text-slate-800">${farm.latitude}, ${farm.longitude}</strong></span>
+                <span>تاريخ التقديم: <strong class="font-mono text-slate-800">${farm.created_at}</strong></span>
+            </div>
+        `;
+
+        document.getElementById('requestDetailsModal').classList.remove('hidden');
+    }
+
+    function openFarmDetailsByCode(code) {
+        if (FARMS_DATA[code]) {
+            openFarmModal(FARMS_DATA[code]);
+        }
+    }
+
+    function closeRequestDetailsModal() {
+        document.getElementById('requestDetailsModal').classList.add('hidden');
+    }
+
+    function openChatSupportModal() {
+        Swal.fire({
+            icon: 'info',
+            title: 'المساعد الذكي لمنظومة نما',
+            text: 'أهلاً بكم في منظومة نما، يمكنك الاستفسار عن حالة طلبات حصر وتأهيل المزارع المهملة أو حجز موعد مع المفتش الزراعي.',
+            confirmButtonText: 'بدء المحادثة',
+            confirmButtonColor: '#007a3d'
+        });
+    }
+
+    // Accessibility handlers
+    function toggleHighContrast() {
+        document.body.classList.toggle('contrast-125');
+    }
+
+    let curFontSize = 100;
+    function changeFontSize(delta) {
+        curFontSize = Math.min(130, Math.max(90, curFontSize + delta * 5));
+        document.documentElement.style.fontSize = `${curFontSize}%`;
+    }
+
+    function readPageAloud() {
+        if ('speechSynthesis' in window) {
+            const utter = new SpeechSynthesisUtterance('صفحة طلباتي في منصة نما، يمكنك استعراض وفلترة جميع طلباتك المسجلة.');
+            utter.lang = 'ar-SA';
+            window.speechSynthesis.speak(utter);
+        } else {
+            Swal.fire('تنبيه', 'خاصية القراءة الصوتية غير مدعومة في متصفحك الحالي', 'info');
+        }
+    }
+
+    // Auto open modal if active_code was passed in URL query
+    window.addEventListener('DOMContentLoaded', () => {
+        
+    });
+</script>
+
+<script src="static/gh_pages_adapter.js"></script>
+</body>
+</html>

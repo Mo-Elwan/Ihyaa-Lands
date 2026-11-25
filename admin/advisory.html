@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الإرشاد الزراعي والتوصيات | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet & MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../static/style.css">
+    
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen font-['Tajawal'] antialiased flex flex-col">
+
+    <div class="flex-grow flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation matching Naama Platform Brand Identity -->
+        <aside class="w-full md:w-64 bg-white text-slate-700 flex-shrink-0 flex flex-col border-l border-slate-200/90 shadow-xs no-print">
+            
+            <!-- Brand: Official Naama Stylized Emblem & Header -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <a href="../admin/index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007a3d] to-[#00552b] flex items-center justify-center text-white shadow-xs">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-xl text-[#007a3d] tracking-wide">نَمَـــا</span>
+                            <span class="text-[10px] bg-emerald-50 text-[#007a3d] font-bold px-2 py-0.5 rounded-full border border-emerald-200">الفروع</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">سلسلة الاعتماد والعمليات</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Info Badge in Naama Soft Mint Tint -->
+            <div class="p-3.5 mx-3 mt-3 bg-emerald-50/70 border border-emerald-100/90 rounded-2xl shadow-2xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#007a3d] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h4 class="text-xs font-black text-slate-900 truncate">م. فهد الزهراني</h4>
+                        <p class="text-[10px] text-[#007a3d] font-bold truncate">رئيس اللجنة | فرع منطقة الباحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-grow p-4 space-y-1 text-xs font-semibold overflow-y-auto">
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">سلسلة الاعتماد والعمليات</div>
+
+                <!-- Unified Inbox for the 3 Roles -->
+                <a href="../admin/inbox.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-base w-5 text-center text-[#007a3d]"></i>
+                        <span>صندوق معالجة الطلبات (Inbox)</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-[#007a3d] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">3 أدوار</span>
+                </a>
+
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mt-4 mb-2">المؤشرات العامة</div>
+
+                <a href="../admin/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center text-slate-500"></i>
+                    <span>لوحة المؤشرات والقيادة</span>
+                </a>
+
+                <a href="../admin/map.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-map-location-dot text-base w-5 text-center text-slate-500"></i>
+                    <span>الخريطة الجغرافية الوطنية (GIS)</span>
+                </a>
+
+                <a href="../admin/farms.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-table-list text-base w-5 text-center text-slate-500"></i>
+                    <span>سجل المزارع والحصر (1,733)</span>
+                </a>
+
+                <a href="../admin/partners.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-handshake-angle text-base w-5 text-center text-slate-500"></i>
+                    <span>منظومة الشركاء ومطابقة الدعم</span>
+                </a>
+
+                <a href="../admin/visits.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-truck-field text-base w-5 text-center text-slate-500"></i>
+                    <span>المعاينة والزيارات الميدانية</span>
+                </a>
+
+                <a href="../admin/advisory.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition bg-emerald-50 text-[#007a3d] font-extrabold border-r-4 border-[#007a3d] shadow-2xs">
+                    <i class="fa-solid fa-headset text-base w-5 text-center text-slate-500"></i>
+                    <span>الإرشاد والتوجيه الزراعي</span>
+                </a>
+
+                <a href="../admin/reports.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-file-invoice text-base w-5 text-center text-slate-500"></i>
+                    <span>التقرير الشهري والتنفيذي</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Public Switcher -->
+            <div class="p-4 border-t border-slate-100">
+                <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#007a3d] text-xs font-bold transition border border-slate-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>الخروج إلى بوابة المستفيد</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow flex flex-col overflow-y-auto">
+            
+            <!-- Top App Bar -->
+            <header class="bg-white border-b border-slate-200/90 px-6 py-4 flex items-center justify-between no-print shadow-xs">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg font-black text-slate-900">إدارة طلبات الإرشاد الزراعي والاستشارات الفنية</h1>
+                    <span class="text-xs bg-emerald-50 text-[#007a3d] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        13 منطقة إدارية
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="../register.html" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold transition shadow-xs">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>إضافة حصر جديد</span>
+                    </a>
+                    <div class="text-slate-500 font-medium hidden sm:block">
+                        <i class="fa-solid fa-calendar-check text-[#007a3d] ml-1"></i> أكتوبر - نوفمبر 2026 م
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Page Content -->
+            <div class="p-4 sm:p-6 lg:p-8 flex-grow">
+                
+<div class="space-y-6">
+
+    <!-- Intro Card -->
+    <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center justify-between">
+        <div>
+            <h2 class="text-base font-bold text-slate-900">طلبات الاستشارة الواردة من ملاك المزارع المهملة</h2>
+            <p class="text-xs text-slate-500 mt-0.5">بالتعاون مع الإدارة العامة للإرشاد الزراعي ومركز وقاء، يتم الرد على الاستفسارات وربط التوصية بملف المزرعة</p>
+        </div>
+        <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-xs">
+            3 طلب إرشاد
+        </span>
+    </div>
+
+    <!-- Advisories Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم الاستشارة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">الجوال</th>
+                        <th class="py-3 px-4">المجال</th>
+                        <th class="py-3 px-4">نص الاستفسار</th>
+                        <th class="py-3 px-4">التوصية والرد</th>
+                        <th class="py-3 px-4">المرشد المسؤول</th>
+                        <th class="py-3 px-4">الحالة</th>
+                        <th class="py-3 px-4 text-center">إجراء</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">ADV-3</td>
+                        <td class="py-3 px-4 font-bold text-slate-800">سالم بن مريع</td>
+                        <td class="py-3 px-4 font-mono text-slate-600" dir="ltr">0544332211</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
+                                الطاقة الشمسية للمزارع
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">هل تكلفة الألواح الشمسية مغطاة بالقرض الحسن؟</td>
+                        <td class="py-3 px-4 text-slate-800 max-w-xs truncate font-medium">نعم، مسار القرض الحسن بالتنسيق مع شركة أزكى وصندوق التنمية الزراعية يغطي كامل تكاليف الطاقة الشمسية بدون أي فوائد.</td>
+                        <td class="py-3 px-4 text-slate-600">م. ناصر الغامدي</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                تم الرد
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="openReplyModal(3, 'سالم بن مريع', 'هل تكلفة الألواح الشمسية مغطاة بالقرض الحسن؟')" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition">
+                                رد وتوجيه
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">ADV-2</td>
+                        <td class="py-3 px-4 font-bold text-slate-800">محمد علي الأسمري</td>
+                        <td class="py-3 px-4 font-mono text-slate-600" dir="ltr">0501122334</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
+                                تطهير الآبار السطحية
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">البئر لدينا قديم ومردوم جزئياً، كيف يتم تنظيفه وإعادة تشغيله؟</td>
+                        <td class="py-3 px-4 text-slate-800 max-w-xs truncate font-medium">سيتم إدراج مزرعتكم ضمن مسار دعم تعميق وتطهير الآبار بالتعاون مع المؤسسة العامة للري وتركيب غاطس حديث.</td>
+                        <td class="py-3 px-4 text-slate-600">م. إبراهيم القحطاني</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                تم الرد
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="openReplyModal(2, 'محمد علي الأسمري', 'البئر لدينا قديم ومردوم جزئياً، كيف يتم تنظيفه وإعادة تشغيله؟')" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition">
+                                رد وتوجيه
+                            </button>
+                        </td>
+                    </tr>
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">ADV-1</td>
+                        <td class="py-3 px-4 font-bold text-slate-800">عطيه عبدالله</td>
+                        <td class="py-3 px-4 font-mono text-slate-600" dir="ltr">0555577880</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-800">
+                                المحاصيل الملائمة للمنطقة
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">ما هي أفضل أصناف الفواكه المناسبة لمنطقة القنفذة مع قلة المياه؟</td>
+                        <td class="py-3 px-4 text-slate-800 max-w-xs truncate font-medium">يوصى بزراعة المانجو والبابايا وأشجار السدر، مع استخدام شبكة تنقيط لتوفير 40% من المياه.</td>
+                        <td class="py-3 px-4 text-slate-600">د. عبدالعزيز الفهيد - مرشد زراعي أول</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold
+                                bg-emerald-100 text-emerald-800
+                                ">
+                                تم الرد
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <button onclick="openReplyModal(1, 'عطيه عبدالله', 'ما هي أفضل أصناف الفواكه المناسبة لمنطقة القنفذة مع قلة المياه؟')" class="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] shadow-xs transition">
+                                رد وتوجيه
+                            </button>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Reply Modal -->
+<div id="replyModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 text-xs">
+        <div class="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
+            <h3 class="font-bold text-slate-900 text-sm">اعتماد التوصية الإرشادية</h3>
+            <button onclick="document.getElementById('replyModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+        </div>
+
+        <form id="replyForm" onsubmit="submitReply(event)" class="space-y-4">
+            <input type="hidden" name="req_id" id="modal_req_id">
+
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                <span class="text-slate-500 block mb-0.5">المستفيد: <strong id="modal_farmer_name" class="text-slate-800"></strong></span>
+                <p id="modal_inquiry" class="text-slate-700 text-[11px] font-medium"></p>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">اسم المرشد الزراعي المعتمد</label>
+                <input type="text" name="advisor_name" value="د. عبدالعزيز الفهيد - مرشد زراعي أول" required
+                       class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">نص التوصية الفنية المعتمدة <span class="text-red-500">*</span></label>
+                <textarea name="reply" rows="4" required placeholder="أدخل التوصيات الإرشادية والممارسات الزراعية الملائمة لمزرعة المستفيد..."
+                          class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500"></textarea>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button type="submit" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow">
+                    اعتماد وإرسال التوصية
+                </button>
+                <button type="button" onclick="document.getElementById('replyModal').classList.add('hidden')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">
+                    إلغاء
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+            </div>
+
+        </main>
+    </div>
+
+    
+<script>
+    function openReplyModal(id, name, inquiry) {
+        document.getElementById('modal_req_id').value = id;
+        document.getElementById('modal_farmer_name').innerText = name;
+        document.getElementById('modal_inquiry').innerText = inquiry;
+        document.getElementById('replyModal').classList.remove('hidden');
+    }
+
+    async function submitReply(e) {
+        e.preventDefault();
+        const id = document.getElementById('modal_req_id').value;
+        const formData = new FormData(e.target);
+        try {
+            const res = await fetch(`/api/admin/advisory/${id}/reply`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                Swal.fire('تم اعتماد التوصية', data.message, 'success').then(() => location.reload());
+            }
+        } catch(e) {
+            Swal.fire('خطأ', 'تعذر إرسال الرد', 'error');
+        }
+    }
+</script>
+
+<script src="../static/gh_pages_adapter.js"></script>
+</body>
+</html>

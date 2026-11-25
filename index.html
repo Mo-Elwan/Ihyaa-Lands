@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل الخدمات الإلكترونية | منصة نما - وزارة البيئة والمياه والزراعة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        naama: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            500: '#10b981',
+                            600: '#007a3d',
+                            700: '#006934',
+                            800: '#00552b',
+                            900: '#003d1f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet & SweetAlert -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="static/style.css">
+    
+</head>
+<body class="bg-[#fcfdfd] text-[#1f2937] min-h-screen flex flex-col font-['Tajawal']">
+
+    <!-- Top Bar 100% matching Image 1 & 2 -->
+    <div class="bg-white border-b border-slate-100 text-xs py-2 px-6 sm:px-12 flex justify-between items-center text-slate-600 no-print">
+        <!-- Right side: Digital Gov Authority badge -->
+        <div class="flex items-center gap-1.5 text-[11px] font-medium text-slate-700">
+            <span class="inline-block w-4 h-4 rounded bg-[#007a3d] text-white text-[9px] flex items-center justify-center font-bold">✓</span>
+            <span>موقع حكومي مسجل لدى هيئة الحكومة الرقمية</span>
+            <a href="https://dga.gov.sa" target="_blank" class="text-[#007a3d] hover:underline font-bold flex items-center gap-0.5 mr-1">
+                <span>كيف تتحقق؟</span>
+                <i class="fa-solid fa-chevron-down text-[8px]"></i>
+            </a>
+        </div>
+
+        <!-- Left side: Login & English -->
+        <div class="flex items-center gap-5 text-xs">
+            
+            <a href="nafath/login.html" class="flex items-center gap-1.5 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-regular fa-user text-[11px]"></i>
+                <span>تسجيل الدخول</span>
+            </a>
+            
+
+            <button class="flex items-center gap-1 text-slate-700 hover:text-[#007a3d] font-semibold transition">
+                <i class="fa-solid fa-globe text-[11px]"></i>
+                <span>English</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Navigation Header 100% matching Image 1 & 2 -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-40 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Center/Right: Logo & Nav items -->
+                <div class="flex items-center gap-8">
+                    <!-- Naama Logo matching exact image -->
+                    <a href="index.html" class="flex items-center gap-2.5 group">
+                        <!-- Stylized Tree/Pillars SVG -->
+                        <svg class="w-10 h-10" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="8" y="24" width="10" height="28" rx="5" fill="#007a3d"/>
+                            <rect x="22" y="12" width="10" height="40" rx="5" fill="#005a2b"/>
+                            <rect x="36" y="20" width="10" height="32" rx="5" fill="#10b981"/>
+                            <path d="M48 30C48 24.4772 52.4772 20 58 20V40C52.4772 40 48 35.5228 48 30Z" fill="#007a3d"/>
+                        </svg>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-black text-[#007a3d] tracking-tighter leading-none" style="font-family: 'Tajawal', sans-serif;">نما</span>
+                            <span class="text-[10px] font-black text-[#007a3d] tracking-[0.25em] font-mono leading-none mt-1">NAAMA</span>
+                        </div>
+                    </a>
+
+                    <!-- Nav Links matching Naama official portal 100% -->
+                    <nav class="hidden xl:flex items-center gap-0.5 text-xs font-bold text-slate-700">
+                        <a href="index.html" class="px-2.5 py-2 hover:text-[#007a3d] transition">الرئيسية</a>
+                        <a href="services.html" class="px-3 py-1.5 naama-active-tab shadow-xs rounded-md">دليل الخدمات الإلكترونية</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">منشآتي</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">إدارة التفويض والوكالات</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأخبار والأحداث</a>
+                        <div class="relative group">
+                            <button class="px-2.5 py-2 hover:text-[#007a3d] flex items-center gap-1 transition">
+                                <span>عن نما</span>
+                                <i class="fa-solid fa-chevron-down text-[9px] text-slate-400"></i>
+                            </button>
+                        </div>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">الأسئلة الشائعة</a>
+                        <a href="#" class="px-2.5 py-2 hover:text-[#007a3d] transition">تواصل معنا</a>
+                    </nav>
+                </div>
+
+                <!-- Left side: Search Box matching image & Portal Access buttons -->
+                <div class="flex items-center gap-3">
+                    <div class="relative hidden sm:block w-44 lg:w-52">
+                        <input type="text" placeholder="ابحث هنا ..."
+                               class="w-full pr-4 pl-8 py-2 rounded-lg border border-slate-300 text-xs text-slate-700 focus:ring-1 focus:ring-[#007a3d] focus:outline-none placeholder-slate-400 shadow-xs">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-xs"></i>
+                    </div>
+
+                    <a href="my-requests.html" class="text-xs font-bold text-slate-800 hover:text-[#007a3d] px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition flex items-center gap-1.5 shadow-xs">
+                        <i class="fa-solid fa-list-check text-emerald-700"></i>
+                        <span>طلباتي</span>
+                    </a>
+                    
+                    <a href="admin/index.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-amber-300 text-xs font-bold border border-slate-700 shadow-xs transition">
+                        <i class="fa-solid fa-shield-halved text-amber-400 text-xs"></i>
+                        <span class="hidden md:inline">بوابة معالجة الطلبات</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Slot -->
+    <main class="flex-grow">
+        
+<div class="max-w-[1360px] mx-auto px-4 sm:px-8 py-6">
+
+    <!-- Breadcrumb matching Image 1 & 2 -->
+    <div class="text-xs text-slate-400 mb-6 flex items-center gap-1.5">
+        <a href="index.html" class="hover:text-emerald-700">الرئيسية</a>
+        <span class="text-[10px] text-slate-300">›</span>
+        <span class="text-slate-600 font-medium">دليل الخدمات الإلكترونية</span>
+    </div>
+
+    <!-- Centered Page Title matching Image 1 & 2 -->
+    <div class="text-center mb-8">
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-[#111827] tracking-tight">
+            دليل الخدمات الإلكترونية
+        </h1>
+    </div>
+
+    <!-- Search Input matching Image 1 & 2 -->
+    <div class="max-w-4xl mx-auto mb-10">
+        <div class="relative">
+            <input type="text" id="servicesSearchInput" onkeyup="filterNaamaCards()" placeholder="ابحث هنا ..."
+                   class="w-full pr-12 pl-12 py-3.5 rounded-full border border-slate-300 shadow-xs text-sm focus:border-[#007a3d] focus:ring-1 focus:ring-[#007a3d] focus:outline-none transition">
+            <!-- Mic icon right -->
+            <button class="absolute right-4 top-3.5 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-microphone text-base"></i>
+            </button>
+            <!-- Search icon left -->
+            <button class="absolute left-4 top-3.5 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-magnifying-glass text-base"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Layout: 2 Columns (Right: Filters, Left: All Services Cards) matching Image 1 & 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Right Column: تصفية البحث matching Image 1 & 2 -->
+        <div class="lg:col-span-3 space-y-6 text-xs text-slate-700">
+            <h2 class="text-base font-bold text-[#111827] pb-2">
+                تصفية البحث
+            </h2>
+
+            <!-- فئات المستفيدين -->
+            <div class="space-y-3">
+                <h3 class="font-bold text-slate-800 text-xs">فئات المستفيدين</h3>
+                <div class="space-y-2.5">
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#007a3d] focus:ring-0">
+                        <span>الجمعيات التطوعية (111)</span>
+                    </label>
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#007a3d] focus:ring-0">
+                        <span>جهات حكومية (946)</span>
+                    </label>
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <input type="checkbox" checked class="w-4 h-4 rounded border-slate-300 text-[#007a3d] focus:ring-0">
+                        <span class="font-bold text-slate-900">أفراد (971)</span>
+                    </label>
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#007a3d] focus:ring-0">
+                        <span>زوار المملكة (35)</span>
+                    </label>
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[#007a3d] focus:ring-0">
+                        <span>قطاع أعمال (1060)</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- القطاعات -->
+            <div class="space-y-3 pt-2">
+                <h3 class="font-bold text-slate-800 text-xs">القطاعات</h3>
+                <div class="space-y-2.5">
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-900 font-bold">
+                        <span class="w-4 h-4 rounded-full bg-[#007a3d] text-white flex items-center justify-center text-[9px]">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span>قطاع الزراعة (1060)</span>
+                    </label>
+                    <label class="flex items-center gap-2.5 cursor-pointer text-slate-600 hover:text-slate-900">
+                        <span class="w-4 h-4 rounded-full bg-emerald-600 text-white flex items-center justify-center text-[9px]">
+                            <i class="fa-solid fa-check"></i>
+                        </span>
+                        <span>قطاع المياه (80)</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Left Column: جميع الخدمات & Cards matching Image 1 & 2 -->
+        <div class="lg:col-span-9 space-y-5">
+            
+            <!-- Section Title & Badges Bar matching Image 1 & 2 -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div class="space-y-1.5">
+                    <h2 class="text-xl font-bold text-[#111827]">جميع الخدمات</h2>
+                    <div class="flex items-center gap-2 text-[11px] font-bold">
+                        <!-- Badges in exact order and styling -->
+                        <span class="px-2.5 py-0.5 rounded-full border border-slate-300 bg-white text-slate-700">
+                            (461) خدمة رئيسية
+                        </span>
+                        <span class="px-2.5 py-0.5 rounded-full border border-emerald-500 bg-emerald-50/50 text-[#007a3d]">
+                            (1191) خدمة فرعية
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Sort Button matching Image 1 & 2 -->
+                <button class="px-3.5 py-1.5 rounded-lg border border-slate-200 bg-white text-xs font-semibold text-slate-600 hover:bg-slate-50 flex items-center gap-2 transition">
+                    <i class="fa-solid fa-sliders text-slate-400"></i>
+                    <span>ترتيب الخدمات</span>
+                </button>
+            </div>
+
+            <!-- Services Cards Grid (2 cards per row matching Image 1 & 2) -->
+            <div id="naamaCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-5 pt-1">
+                
+                <!-- CARD 1: طلب حصر وتأهيل مزرعة مهملة (Primary initiative card) -->
+                <div class="service-item bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md hover:border-[#007a3d] transition flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <!-- Top Seedling Icon in Green Circular Emblem matching Image 1 & 2 -->
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-[#007a3d] text-lg">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3"></path>
+                                <path d="M12 14a6 6 0 0 1 6-6h3v2a6 6 0 0 1-6 6h-3"></path>
+                                <line x1="12" y1="10" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+
+                        <!-- Service Title -->
+                        <h3 class="text-base font-bold text-[#111827] leading-snug">
+                            طلب حصر وتأهيل مزرعة مهملة
+                        </h3>
+
+                        <!-- Description -->
+                        <p class="text-xs text-slate-500 leading-relaxed min-h-[40px]">
+                            خدمة تتيح لملاك المزارع المهملة حصر وتأهيل مزارعهم واستصلاحها وإعادتها للنشاط الإنتاجي وربطها بشركاء الدعم والآبار والطاقة والشتلات.
+                        </p>
+
+                        <!-- Tags matching Image 1 & 2 -->
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-slate-500">
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">خدمات المزارع</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">خدمات المياه</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">قطاع الزراعة</span>
+                        </div>
+                    </div>
+
+                    <!-- Button: تفاصيل الخدمة ⬅ matching Image 1 & 2 -->
+                    <div class="pt-3">
+                        <a href="services/farm-rehab.html" class="w-full py-2.5 rounded-lg bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-xs transition">
+                            <span>تفاصيل الخدمة</span>
+                            <i class="fa-solid fa-arrow-left text-[11px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- CARD 2: شهادة سعودي قاب لمزارع الدواجن خارج المملكة matching Image 1 & 2 -->
+                <div class="service-item bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <!-- Top Seedling Icon -->
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-[#007a3d] text-lg">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3"></path>
+                                <path d="M12 14a6 6 0 0 1 6-6h3v2a6 6 0 0 1-6 6h-3"></path>
+                                <line x1="12" y1="10" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="text-base font-bold text-[#111827] leading-snug">
+                            شهادة سعودي قاب لمزارع الدواجن خارج المملكة
+                        </h3>
+
+                        <!-- Description -->
+                        <p class="text-xs text-slate-500 leading-relaxed min-h-[40px]">
+                            خدمة تتيح لمزارع الدواجن خارج المملكة الحصول على شهادة الممارسات الزراعية الجيدة السعودية (سعودي قاب) ، بعد التحقق من...
+                        </p>
+
+                        <!-- Tags matching exact Image 1 & 2 -->
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-slate-500">
+                            <span class="bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded border border-emerald-100 font-bold">1 خدمة فرعية</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">خدمات زراعية</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">سعودي قاب</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">قطاع الزراعة</span>
+                        </div>
+                    </div>
+
+                    <!-- Button: اختر الخدمة ⧉ matching exact Image 1 & 2 -->
+                    <div class="pt-3">
+                        <button class="w-full py-2.5 rounded-lg bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-xs transition">
+                            <i class="fa-regular fa-square-check text-[11px]"></i>
+                            <span>اختر الخدمة</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 3: طلب كمية مياه اضافية matching exact Image 1 & 2 -->
+                <div class="service-item bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <!-- Top Seedling Icon -->
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-[#007a3d] text-lg">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3"></path>
+                                <path d="M12 14a6 6 0 0 1 6-6h3v2a6 6 0 0 1-6 6h-3"></path>
+                                <line x1="12" y1="10" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+
+                        <!-- Title -->
+                        <h3 class="text-base font-bold text-[#111827] leading-snug">
+                            طلب كمية مياه اضافية
+                        </h3>
+
+                        <!-- Description -->
+                        <p class="text-xs text-slate-500 leading-relaxed min-h-[40px]">
+                            دراسة تخصيص كمية إضافية من المياه بعد تحديث المساحة المروية (لإعادة احتساب كمية المياه المخصصة)...
+                        </p>
+
+                        <!-- Tags -->
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-slate-500">
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">خدمات المزارع</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">خدمات المياه</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">قطاع الزراعة</span>
+                        </div>
+                    </div>
+
+                    <!-- Button: تفاصيل الخدمة ⬅ -->
+                    <div class="pt-3">
+                        <button class="w-full py-2.5 rounded-lg bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-xs transition">
+                            <span>تفاصيل الخدمة</span>
+                            <i class="fa-solid fa-arrow-left text-[11px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD 4: إصدار سجل زراعي مطور -->
+                <div class="service-item bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs hover:shadow-md transition flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="w-10 h-10 rounded-full bg-emerald-50 flex items-center justify-center text-[#007a3d] text-lg">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 10a6 6 0 0 0-6-6H3v2a6 6 0 0 0 6 6h3"></path>
+                                <path d="M12 14a6 6 0 0 1 6-6h3v2a6 6 0 0 1-6 6h-3"></path>
+                                <line x1="12" y1="10" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3 class="text-base font-bold text-[#111827] leading-snug">
+                            إصدار وتجديد السجل الزراعي المطور
+                        </h3>
+                        <p class="text-xs text-slate-500 leading-relaxed min-h-[40px]">
+                            خدمة تمكن المزارعين من استخراج وتحديث وثيقة السجل الزراعي إلكترونياً للحصول على الدعم الحكومي والتمويل والعمالة.
+                        </p>
+                        <div class="flex flex-wrap items-center gap-1.5 pt-1 text-[11px] text-slate-500">
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">سجلات وتراخيص</span>
+                            <span class="bg-slate-50 px-2 py-0.5 rounded border border-slate-100">قطاع الزراعة</span>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <button class="w-full py-2.5 rounded-lg bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs text-center flex items-center justify-center gap-2 shadow-xs transition">
+                            <span>تفاصيل الخدمة</span>
+                            <i class="fa-solid fa-arrow-left text-[11px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+    </main>
+
+    <!-- Naama Official Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-16 py-8 text-xs text-slate-500 no-print">
+        <div class="max-w-[1400px] mx-auto px-6 sm:px-12 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="font-bold text-slate-700">وزارة البيئة والمياه والزراعة</span>
+                <span>•</span>
+                <span>منصة نما للخدمات الإلكترونية الموحدة</span>
+            </div>
+            <div class="text-[11px] text-slate-400">
+                جميع الحقوق محفوظة © 2026 م - وكالة الوزارة لتقنية المعلومات والتحول الرقمي
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Accessibility Widgets matching exact Image 1 & 2 (Bottom Left) -->
+    <div class="floating-accessibility no-print">
+        <!-- Sound Speaker -->
+        <button class="floating-accessibility-btn" title="قارئ الشاشة">
+            <i class="fa-solid fa-volume-high"></i>
+        </button>
+        <!-- Accessibility Person -->
+        <button class="floating-accessibility-btn" title="سهولة الوصول">
+            <i class="fa-solid fa-universal-access"></i>
+        </button>
+        <!-- Sign language hands -->
+        <button class="floating-accessibility-btn" title="لغة الإشارة">
+            <i class="fa-solid fa-hands-asl-interpreting"></i>
+        </button>
+    </div>
+
+    <!-- Floating Chatbot Widgets matching exact Image 1 & 2 (Bottom Right) -->
+    <div class="floating-chat-naama no-print">
+        <!-- Green Naama Leaf Avatar -->
+        <div class="floating-naama-avatar" title="المساعد الذكي نما">
+            <i class="fa-solid fa-seedling"></i>
+        </div>
+        <!-- Colorful Brain / AI Chat Bubble -->
+        <div class="floating-naama-chat" title="محادثة الدعم الفني">
+            <i class="fa-solid fa-comment-dots text-emerald-600 text-xl"></i>
+        </div>
+    </div>
+
+    
+<script>
+    function filterNaamaCards() {
+        const query = document.getElementById('servicesSearchInput').value.toLowerCase().trim();
+        const cards = document.querySelectorAll('.service-item');
+        cards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (text.includes(query)) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+</script>
+
+<script src="static/gh_pages_adapter.js"></script>
+</body>
+</html>

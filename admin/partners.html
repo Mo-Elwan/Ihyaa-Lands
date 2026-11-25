@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منظومة شركاء النجاح ومطابقة الدعم | منصة إحياء</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                            950: '#022c22'
+                        },
+                        amber: {
+                            500: '#f59e0b',
+                            600: '#d97706',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Leaflet & MarkerCluster -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Custom Style -->
+    <link rel="stylesheet" href="../static/style.css">
+    
+</head>
+<body class="bg-[#f8fafc] text-slate-800 min-h-screen font-['Tajawal'] antialiased flex flex-col">
+
+    <div class="flex-grow flex flex-col md:flex-row min-h-screen">
+        
+        <!-- Sidebar Navigation matching Naama Platform Brand Identity -->
+        <aside class="w-full md:w-64 bg-white text-slate-700 flex-shrink-0 flex flex-col border-l border-slate-200/90 shadow-xs no-print">
+            
+            <!-- Brand: Official Naama Stylized Emblem & Header -->
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <a href="../admin/index.html" class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-[#007a3d] to-[#00552b] flex items-center justify-center text-white shadow-xs">
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-black text-xl text-[#007a3d] tracking-wide">نَمَـــا</span>
+                            <span class="text-[10px] bg-emerald-50 text-[#007a3d] font-bold px-2 py-0.5 rounded-full border border-emerald-200">الفروع</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500 font-medium">سلسلة الاعتماد والعمليات</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- User Info Badge in Naama Soft Mint Tint -->
+            <div class="p-3.5 mx-3 mt-3 bg-emerald-50/70 border border-emerald-100/90 rounded-2xl shadow-2xs">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-[#007a3d] text-white flex items-center justify-center font-bold text-sm shadow-xs shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div class="overflow-hidden">
+                        <h4 class="text-xs font-black text-slate-900 truncate">م. فهد الزهراني</h4>
+                        <p class="text-[10px] text-[#007a3d] font-bold truncate">رئيس اللجنة | فرع منطقة الباحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="flex-grow p-4 space-y-1 text-xs font-semibold overflow-y-auto">
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mb-2">سلسلة الاعتماد والعمليات</div>
+
+                <!-- Unified Inbox for the 3 Roles -->
+                <a href="../admin/inbox.html" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-inbox text-base w-5 text-center text-[#007a3d]"></i>
+                        <span>صندوق معالجة الطلبات (Inbox)</span>
+                    </div>
+                    <span class="text-[10px] bg-emerald-100 text-[#007a3d] font-extrabold px-2 py-0.5 rounded-full border border-emerald-200">3 أدوار</span>
+                </a>
+
+                <div class="text-[10px] font-bold text-slate-400 px-3 uppercase tracking-wider mt-4 mb-2">المؤشرات العامة</div>
+
+                <a href="../admin/index.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-chart-pie text-base w-5 text-center text-slate-500"></i>
+                    <span>لوحة المؤشرات والقيادة</span>
+                </a>
+
+                <a href="../admin/map.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-map-location-dot text-base w-5 text-center text-slate-500"></i>
+                    <span>الخريطة الجغرافية الوطنية (GIS)</span>
+                </a>
+
+                <a href="../admin/farms.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-table-list text-base w-5 text-center text-slate-500"></i>
+                    <span>سجل المزارع والحصر (1,733)</span>
+                </a>
+
+                <a href="../admin/partners.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition bg-emerald-50 text-[#007a3d] font-extrabold border-r-4 border-[#007a3d] shadow-2xs">
+                    <i class="fa-solid fa-handshake-angle text-base w-5 text-center text-slate-500"></i>
+                    <span>منظومة الشركاء ومطابقة الدعم</span>
+                </a>
+
+                <a href="../admin/visits.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-truck-field text-base w-5 text-center text-slate-500"></i>
+                    <span>المعاينة والزيارات الميدانية</span>
+                </a>
+
+                <a href="../admin/advisory.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-headset text-base w-5 text-center text-slate-500"></i>
+                    <span>الإرشاد والتوجيه الزراعي</span>
+                </a>
+
+                <a href="../admin/reports.html" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl transition text-slate-600 hover:text-[#007a3d] hover:bg-emerald-50/50">
+                    <i class="fa-solid fa-file-invoice text-base w-5 text-center text-slate-500"></i>
+                    <span>التقرير الشهري والتنفيذي</span>
+                </a>
+            </nav>
+
+            <!-- Bottom Public Switcher -->
+            <div class="p-4 border-t border-slate-100">
+                <a href="../index.html" class="flex items-center justify-center gap-2 w-full py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-[#007a3d] text-xs font-bold transition border border-slate-200">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>الخروج إلى بوابة المستفيد</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="flex-grow flex flex-col overflow-y-auto">
+            
+            <!-- Top App Bar -->
+            <header class="bg-white border-b border-slate-200/90 px-6 py-4 flex items-center justify-between no-print shadow-xs">
+                <div class="flex items-center gap-3">
+                    <h1 class="text-lg font-black text-slate-900">منظومة شركاء النجاح وحوكمة المساهمات والتبرعات</h1>
+                    <span class="text-xs bg-emerald-50 text-[#007a3d] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200">
+                        13 منطقة إدارية
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-4 text-xs">
+                    <a href="../register.html" target="_blank" class="hidden sm:inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold transition shadow-xs">
+                        <i class="fa-solid fa-plus-circle"></i>
+                        <span>إضافة حصر جديد</span>
+                    </a>
+                    <div class="text-slate-500 font-medium hidden sm:block">
+                        <i class="fa-solid fa-calendar-check text-[#007a3d] ml-1"></i> أكتوبر - نوفمبر 2026 م
+                    </div>
+                </div>
+            </header>
+
+            <!-- Main Page Content -->
+            <div class="p-4 sm:p-6 lg:p-8 flex-grow">
+                
+<div class="space-y-6">
+
+    <!-- Top Action & Notice -->
+    <div class="bg-gradient-to-r from-emerald-900 to-slate-900 text-white p-6 rounded-2xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+            <span class="text-xs font-bold text-amber-300 bg-emerald-800/80 px-2.5 py-1 rounded-full border border-emerald-700">حوكمة الدعم والمساهمات</span>
+            <h2 class="text-xl font-black mt-2">حوكمة مساهمات الشركاء ومنع تكرار الإسناد</h2>
+            <p class="text-xs text-emerald-200 mt-1 max-w-2xl leading-relaxed">
+                تحوّل المنصة الاحتياج المعتمد إلى فرصة دعم، ولا يُحتسب الدعم منجزاً إلا بعد التحقق من تسليمه ميدانياً وفق المراحل الخمس: (متاح -> متعهد به -> مخصص -> مسلم -> متحقَّق منه).
+            </p>
+        </div>
+
+        <button onclick="document.getElementById('addPartnerModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs shadow flex items-center gap-2 transition flex-shrink-0">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>إضافة شريك أو مساهمة جديدة</span>
+        </button>
+    </div>
+
+    <!-- Partners Grid Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        جمعيات وأهلية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> الباحة</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">جمعية البن الصافي الشدوي</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> استثمار أهلي للحيازات وشتلات بن</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">23,000 شتلة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">15,000 شتلة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 65.2%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 65.2%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        جمعيات وأهلية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> الباحة</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">جمعية الباحة الخضراء</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> شتلات رمان ولوز وأشجار غطاء نباتي</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">100,000 شتلة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">42,000 شتلة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 42.0%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 42.0%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        جمعيات وأهلية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> عسير</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">جمعية البن التعاونية</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> شتلات بن ومعدات حصاد وري</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">50,000 شتلة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">20,000 شتلة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 40.0%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 40.0%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        شركات ومستثمرين
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> الباحة</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">شركة أزكى للاستثمار الزراعي</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> قرض حسن بدون فوائد مقابل ثلث المحصول</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">1,000,000 ريال</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">350,000 ريال</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 35.0%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 35.0%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        مشاتل وجهات أهلية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> المنطقة الشرقية</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">مكتب وزارة البيئة بالأحساء والجمعيات الشريكة</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> فسائل نخيل خلاص ومصدات رياح</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">50,000 فسيلة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">18,500 فسيلة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 37.0%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 37.0%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        مشاتل
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> نجران</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">مشاتل نجران الوطنية المعتمدة (50 مشتل)</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> شتلات حمضيات وسدر ونخيل</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">45,000 شتلة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">12,000 شتلة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 26.7%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 26.7%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        جهات حكومية وشبه حكومية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> المنطقة الشرقية</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">المؤسسة العامة للري</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> تأهيل شبكات ومصادر الري والمياه المعالجة</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">2,000 مزرعة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">650 مزرعة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 32.5%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 32.5%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        تمويل وإقراض
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> كافة المناطق</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">صندوق التنمية الزراعية</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> تمويل تقنيات الري والطاقة الشمسية الميسر</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">5,000,000 ريال</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">1,800,000 ريال</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 36.0%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 36.0%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between space-y-4">
+            <div>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                        جهات حكومية وشبه حكومية
+                    </span>
+                    <span class="text-xs text-slate-400 font-medium"><i class="fa-solid fa-location-dot ml-1"></i> كافة المناطق</span>
+                </div>
+                <h3 class="font-extrabold text-slate-900 text-sm leading-snug">مركز وقاء (مكافحة الآفات النباتية والحيوانية)</h3>
+                <p class="text-xs text-slate-500 mt-1"><strong class="text-slate-700">نوع المساهمة:</strong> فحص التربة ومكافحة سوسة النخيل والآفات الحرجية</p>
+            </div>
+
+            <div class="space-y-2 pt-3 border-t border-slate-100 text-xs">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>الكمية المتعهد بها:</span>
+                    <span class="font-bold text-slate-900 font-mono">3,000 زيارة واستشارة</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span>المسلَّم والمتحقق منه:</span>
+                    <span class="font-bold text-emerald-700 font-mono">920 زيارة واستشارة</span>
+                </div>
+
+                <!-- Progress Bar -->
+                
+                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                    <div class="bg-emerald-600 h-2 rounded-full" style="width: 30.7%"></div>
+                </div>
+                <div class="text-[10px] text-slate-400 flex justify-between">
+                    <span>نسبة الإنجاز: 30.7%</span>
+                    <span>الحالة: نشط</span>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <!-- Allocations History Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-link text-emerald-600"></i>
+                <span>سجل مطابقة وإسناد الدعم للمزارع</span>
+            </h3>
+            <span class="text-xs text-slate-500">محدث آلياً وفق قواعد الحوكمة</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم المزرعة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">المنطقة</th>
+                        <th class="py-3 px-4">الشريك الداعم</th>
+                        <th class="py-3 px-4">نوع الدعم</th>
+                        <th class="py-3 px-4">الكمية المسندة</th>
+                        <th class="py-3 px-4">حالة الدعم</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">FRM-1693</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">فهد مسلم عبد العزيز الشمري</td>
+                        <td class="py-3 px-4 text-slate-600">حائل</td>
+                        <td class="py-3 px-4 font-medium text-slate-800">مشاتل نجران الوطنية المعتمدة (50 مشتل)</td>
+                        <td class="py-3 px-4 text-slate-600">شتلات حمضيات وسدر ونخيل</td>
+                        <td class="py-3 px-4 font-mono font-bold">400</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                مخصص ومعتمد
+                            </span>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<!-- Add Partner Modal -->
+<div id="addPartnerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-slate-100 text-xs">
+        <div class="flex justify-between items-center pb-3 border-b border-slate-100 mb-4">
+            <h3 class="font-bold text-slate-900 text-sm">إضافة شريك نجاح ومساهمة جديدة</h3>
+            <button onclick="document.getElementById('addPartnerModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-xmark text-base"></i>
+            </button>
+        </div>
+
+        <form onsubmit="submitAddPartner(event)" class="space-y-4">
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">اسم الجهة أو الشريك <span class="text-red-500">*</span></label>
+                <input type="text" name="name" required placeholder="مثال: مشتل الوادي الوطني / شركة خيرات الشمال"
+                       class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">تصنيف الشريك</label>
+                    <select name="category" class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+                        <option value="مشاتل">مشاتل وطنية</option>
+                        <option value="جمعيات وأهلية">جمعيات تعاونية وأهلية</option>
+                        <option value="شركات ومستثمرين">شركات ومستثمرين زراعيين</option>
+                        <option value="جهات حكومية">جهات حكومية وشبه حكومية</option>
+                        <option value="تمويل وإقراض">جهات تمويل وقروض حسنة</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">نطاق المنطقة</label>
+                    <input type="text" name="region" required value="كافة المناطق"
+                           class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-bold text-slate-700 mb-1">نوع المساهمة والدعم</label>
+                <input type="text" name="contribution_type" required placeholder="مثال: شتلات رمان ولوز / شبكات ري / طاقة شمسية"
+                       class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">الكمية المتعهد بها</label>
+                    <input type="number" name="committed_quantity" required value="10000" min="1"
+                           class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 font-mono">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-700 mb-1">وحدة القياس</label>
+                    <input type="text" name="unit" required value="شتلة"
+                           class="w-full px-3 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+
+            <div class="flex gap-2 pt-2">
+                <button type="submit" class="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow">
+                    حفظ وإضافة الشريك
+                </button>
+                <button type="button" onclick="document.getElementById('addPartnerModal').classList.add('hidden')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold">
+                    إلغاء
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+            </div>
+
+        </main>
+    </div>
+
+    
+<script>
+    async function submitAddPartner(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        try {
+            const res = await fetch('/api/admin/partners', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await res.json();
+            if (data.success) {
+                Swal.fire('تمت الإضافة', data.message, 'success').then(() => location.reload());
+            }
+        } catch (e) {
+            Swal.fire('خطأ', 'تعذر إضافة الشريك', 'error');
+        }
+    }
+</script>
+
+<script src="../static/gh_pages_adapter.js"></script>
+</body>
+</html>
