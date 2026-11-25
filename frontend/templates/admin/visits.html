@@ -1,0 +1,104 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}المعاينة والزيارات الميدانية | منصة إحياء{% endblock %}
+{% block page_title %}إدارة المعاينة والزيارات الميدانية للمزارع المهملة{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-6">
+
+    <!-- Header Stats -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-clipboard-check"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">إجمالي الزيارات المنفذة</span>
+                <div class="text-2xl font-black text-slate-900 font-mono">{{ visits|length }} زيارة</div>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">مزارع بانتظار الزيارة والمعاينة</span>
+                <div class="text-2xl font-black text-amber-600 font-mono">{{ pending_farms|length }} مزرعة</div>
+            </div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-4">
+            <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl">
+                <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <div>
+                <span class="text-xs text-slate-500 font-bold">الفرق الميدانية العاملة</span>
+                <div class="text-2xl font-black text-emerald-800 font-mono">13 فريقاً بالفروع</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visits Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i>
+                <span>سجل الزيارات الميدانية وتقارير التربة والمياه</span>
+            </h3>
+            <span class="text-xs text-slate-500">محدثة من فرق الفروع الـ 13</span>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-700 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم المزرعة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">المنطقة</th>
+                        <th class="py-3 px-4">الفريق والمفتش</th>
+                        <th class="py-3 px-4">تاريخ الزيارة</th>
+                        <th class="py-3 px-4">فحص التربة</th>
+                        <th class="py-3 px-4">ملوحة الماء (TDS)</th>
+                        <th class="py-3 px-4">توصيات المهندس الميداني</th>
+                        <th class="py-3 px-4">الحالة</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for v in visits %}
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">
+                            <a href="/admin/farms/{{ v.farm_id }}" class="hover:underline">{{ v.farm_code }}</a>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-slate-800">{{ v.farmer_name }}</td>
+                        <td class="py-3 px-4 text-slate-600">{{ v.region }} - {{ v.governorate }}</td>
+                        <td class="py-3 px-4">
+                            <span class="font-semibold text-slate-800 block">{{ v.team_name }}</span>
+                            <span class="text-[10px] text-slate-400">{{ v.inspector_name }}</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-slate-600">{{ v.visit_date }}</td>
+                        <td class="py-3 px-4 text-slate-700">{{ v.soil_quality }}</td>
+                        <td class="py-3 px-4 font-mono">
+                            {% if v.water_salinity_tds is not none and v.water_salinity_tds > 0 %}
+                            <span class="px-2 py-0.5 rounded text-[10px] {% if v.water_salinity_tds < 1000 %}bg-emerald-50 text-emerald-800{% else %}bg-amber-50 text-amber-800{% endif %}">
+                                {{ v.water_salinity_tds }} ppm
+                            </span>
+                            {% else %}
+                            <span class="text-slate-400 italic">قيد الفحص</span>
+                            {% endif %}
+                        </td>
+                        <td class="py-3 px-4 text-slate-700 max-w-xs truncate">{{ v.recommendations }}</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
+                                {{ v.status }}
+                            </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

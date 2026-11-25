@@ -1,0 +1,132 @@
+/* Naama & Nafath Exact Theme Styles */
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap');
+
+:root {
+  --naama-green: #007a3d;
+  --naama-dark-green: #005a2b;
+  --naama-light-green: #e6f4ea;
+  --naama-border: #e2e8f0;
+  --naama-text-dark: #1f2937;
+  --naama-text-muted: #6b7280;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Tajawal', sans-serif;
+  direction: rtl;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+  color: var(--naama-text-dark);
+}
+
+/* Naama Active Tab */
+.naama-active-tab {
+  background-color: #007a3d !important;
+  color: #ffffff !important;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* Service Card Naama Style */
+.naama-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 0.2s ease-in-out;
+}
+.naama-card:hover {
+  border-color: #007a3d;
+  box-shadow: 0 4px 14px rgba(0, 122, 61, 0.08);
+}
+
+/* Nafath Dark Background */
+.nafath-full-bg {
+  min-height: 100vh;
+  background-color: #012d1e;
+  background-image: 
+    radial-gradient(circle at 85% 20%, rgba(16, 185, 129, 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 15% 80%, rgba(5, 150, 105, 0.20) 0%, transparent 45%),
+    linear-gradient(135deg, #023824 0%, #012619 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.nafath-full-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2310b981' fill-opacity='0.035' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+/* Floating Widgets on Left and Right matching images */
+.floating-accessibility {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 999;
+}
+
+.floating-accessibility-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #111827;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: transform 0.15s;
+}
+.floating-accessibility-btn:hover {
+  transform: scale(1.05);
+}
+
+.floating-chat-naama {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.floating-naama-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #007a3d;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 12px rgba(0, 122, 61, 0.4);
+  border: 2px solid #ffffff;
+  cursor: pointer;
+}
+
+.floating-naama-chat {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e5e7eb;
+  cursor: pointer;
+}

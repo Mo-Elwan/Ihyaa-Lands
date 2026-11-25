@@ -1,0 +1,1450 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}صندوق معالجة الطلبات الموحد (Inbox) | فروع الوزارة{% endblock %}
+
+{% block page_title %}صندوق معالجة الطلبات الموحد (Inbox){% endblock %}
+
+{% block admin_content %}
+<div class="p-6 space-y-6">
+
+    <!-- Top Notice & Initiative Header matching Naama Platform -->
+    <div class="bg-gradient-to-r from-[#004724] via-[#005e30] to-[#007a3d] p-6 rounded-3xl text-white shadow-xs border border-emerald-500/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div class="space-y-1.5">
+            <div class="flex items-center gap-2">
+                <span class="text-xs bg-white text-[#007a3d] font-black px-2.5 py-0.5 rounded-md shadow-2xs">سلسلة الاعتماد والعمليات</span>
+                <span class="text-xs text-emerald-100">فروع وزارة البيئة والمياه والزراعة (13 منطقة)</span>
+            </div>
+            <h2 class="text-xl sm:text-2xl font-black text-white">صندوق معالجة طلبات حصر وتأهيل المزارع المهملة</h2>
+            <p class="text-xs text-emerald-100 max-w-2xl leading-relaxed">
+                منظومة عمل موحدة تتيح الانتقال الفوري بين الأدوار الإجرائية الثلاثة (التدقيق المكتبي، المعاينة الميدانية، والاعتماد النهائي)، حيث تتغير الطلبات وقوائم المهام آلياً وفق صلاحية الدور المحدد.
+            </p>
+        </div>
+
+        <div class="flex items-center gap-2 self-end md:self-auto bg-black/15 p-2 rounded-2xl border border-white/10 text-xs backdrop-blur-xs">
+            <span class="text-emerald-100">إجمالي المعاملات النشطة:</span>
+            <strong class="font-mono text-white text-sm font-black">{{ auditor_count + inspector_count + manager_count }}</strong>
+        </div>
+    </div>
+
+    <!-- The 3 Big Role Switcher Cards matching User Requirement -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Role 1: موظف الفرع (التدقيق المكتبي) -->
+        <div onclick="switchRole('auditor')" id="role-card-auditor"
+             class="role-card p-5 rounded-2xl bg-white border-2 border-slate-200 hover:border-[#007a3d] cursor-pointer transition shadow-xs space-y-3 relative overflow-hidden group">
+            <div class="flex items-start justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-[#007a3d] flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition">
+                    <i class="fa-solid fa-file-circle-check"></i>
+                </div>
+                <span id="badge-auditor" class="font-mono font-black text-xs px-2.5 py-1 rounded-full bg-emerald-50 text-[#007a3d] border border-emerald-200">
+                    {{ auditor_count }} طلب جديد
+                </span>
+            </div>
+            <div>
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                    <span>1. موظف الفرع</span>
+                    <span class="text-[11px] font-normal text-slate-500">(التدقيق المكتبي)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    فحص الطلبات الجديدة، التحقق من وثيقة الملكية، سريان السجل الزراعي، واستيفاء الشروط والضوابط.
+                </p>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#007a3d]">
+                <span>الإجراء: قبول وإحالة للمعاينة الميدانية</span>
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            </div>
+            <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-[#007a3d]"></div>
+        </div>
+
+        <!-- Role 2: فني الزيارة الميدانية (المعاينة والفحص) -->
+        <div onclick="switchRole('inspector')" id="role-card-inspector"
+             class="role-card p-5 rounded-2xl bg-white border-2 border-slate-200 hover:border-amber-500 cursor-pointer transition shadow-xs space-y-3 relative overflow-hidden group">
+            <div class="flex items-start justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition">
+                    <i class="fa-solid fa-truck-field"></i>
+                </div>
+                <span id="badge-inspector" class="font-mono font-black text-xs px-2.5 py-1 rounded-full bg-amber-50 text-amber-800 border border-amber-200">
+                    {{ inspector_count }} بانتظار المعاينة
+                </span>
+            </div>
+            <div>
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                    <span>2. فني الزيارة الميدانية</span>
+                    <span class="text-[11px] font-normal text-slate-500">(المفتش الزراعي)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    جدولة النزول الميداني، فحص البئر والري والتربة، رفع الصور الحية، وكتابة التقرير الفني.
+                </p>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-amber-800">
+                <span>الإجراء: تعبئة التقرير ورفعه للاعتماد</span>
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            </div>
+            <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-amber-500"></div>
+        </div>
+
+        <!-- Role 3: مدير الفرع (لجنة الاعتماد والتوجيه) -->
+        <div onclick="switchRole('manager')" id="role-card-manager"
+             class="role-card p-5 rounded-2xl bg-white border-2 border-slate-200 hover:border-[#00552b] cursor-pointer transition shadow-xs space-y-3 relative overflow-hidden group">
+            <div class="flex items-start justify-between">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-[#00552b] flex items-center justify-center text-xl shadow-xs group-hover:scale-105 transition">
+                    <i class="fa-solid fa-stamp"></i>
+                </div>
+                <span id="badge-manager" class="font-mono font-black text-xs px-2.5 py-1 rounded-full bg-emerald-100 text-[#00552b] border border-emerald-300">
+                    {{ manager_count }} بانتظار الاعتماد
+                </span>
+            </div>
+            <div>
+                <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                    <span>3. مدير الفرع</span>
+                    <span class="text-[11px] font-normal text-slate-500">(لجنة الاعتماد والدعم)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+                    مراجعة تقرير المعاينة، إقرار خطة التأهيل، تخصيص مسار الدعم (قرض حسن / شراكة)، والاعتماد النهائي.
+                </p>
+            </div>
+            <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-[#00552b]">
+                <span>الإجراء: اعتماد خطة التأهيل وتخصيص الدعم</span>
+                <i class="fa-solid fa-arrow-left text-[10px]"></i>
+            </div>
+            <div class="active-indicator hidden absolute bottom-0 left-0 right-0 h-1.5 bg-[#00552b]"></div>
+        </div>
+
+    </div>
+
+    <!-- Active Persona Bar -->
+    <div id="active-persona-banner" class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs animate-fade-in shadow-xs">
+        <div class="flex items-center gap-3">
+            <div id="persona-icon-bg" class="w-9 h-9 rounded-xl bg-[#007a3d] text-white flex items-center justify-center text-sm shadow-xs shrink-0">
+                <i id="persona-icon" class="fa-solid fa-file-circle-check"></i>
+            </div>
+            <div>
+                <span class="text-slate-500 block text-[11px]">أنت تعمل الآن بصلاحية:</span>
+                <strong id="persona-title" class="text-sm font-black text-emerald-950">موظف الفرع - التدقيق المكتبي ومراجعة الوثائق</strong>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-2 text-slate-600">
+            <span>القائمة المعروضة:</span>
+            <span id="persona-scope" class="px-2.5 py-1 rounded-lg bg-white border border-emerald-200 font-bold text-[#007a3d]">الطلبات الجديدة غير المدققة</span>
+        </div>
+    </div>
+
+    <!-- Search & Filter bar for current inbox -->
+    <div class="bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div class="relative w-full sm:w-80">
+            <input type="text" id="inboxSearch" onkeyup="filterActiveRoleTable()" placeholder="بحث برقم الطلب، اسم المزارع، السجل..."
+                   class="w-full pr-10 pl-4 py-2 rounded-xl border border-slate-300 text-xs focus:ring-1 focus:ring-emerald-500 focus:outline-none">
+            <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-3 text-slate-400 text-xs"></i>
+        </div>
+
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+            <select id="regionFilter" onchange="filterActiveRoleTable()" class="px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white text-slate-700 font-medium">
+                <option value="">جميع المناطق (13 منطقة)</option>
+                <option value="الباحة">الباحة</option>
+                <option value="عسير">عسير</option>
+                <option value="مكة المكرمة">مكة المكرمة</option>
+                <option value="المدينة المنورة">المدينة المنورة</option>
+                <option value="الرياض">الرياض</option>
+                <option value="القصيم">القصيم</option>
+                <option value="جازان">جازان</option>
+                <option value="نجران">نجران</option>
+                <option value="تبوك">تبوك</option>
+                <option value="حائل">حائل</option>
+                <option value="الجوف">الجوف</option>
+                <option value="الحدود الشمالية">الحدود الشمالية</option>
+                <option value="المنطقة الشرقية">المنطقة الشرقية</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- ================== ROLE VIEW 1: AUDITOR TABLE ================== -->
+    <div id="view-auditor" class="role-view space-y-4">
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold select-none">
+                        <tr>
+                            <th class="py-3.5 px-4">رقم الطلب</th>
+                            <th class="py-3.5 px-4">تاريخ التقديم</th>
+                            <th class="py-3.5 px-4">مقدم الطلب</th>
+                            <th class="py-3.5 px-4">السجل الزراعي</th>
+                            <th class="py-3.5 px-4">وثيقة الملكية / الحيازة</th>
+                            <th class="py-3.5 px-4">الموقع الجغرافي</th>
+                            <th class="py-3.5 px-4">الضمان الاجتماعي</th>
+                            <th class="py-3.5 px-4 text-center">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="auditor-tbody">
+                        {% for f in auditor_farms %}
+                        <tr class="inbox-row hover:bg-slate-50 transition" id="row-farm-{{ f.id }}"
+                            data-code="{{ f.code }}" data-farmer="{{ f.farmer_name }}" data-region="{{ f.region }}" data-reg="{{ f.agricultural_registry }}">
+                            <td class="py-3.5 px-4 font-mono font-bold text-[#007a3d] cursor-pointer hover:underline" onclick="openRequestReviewModal({{ f.id }})">{{ f.code }}</td>
+                            <td class="py-3.5 px-4 font-mono text-slate-500">{{ f.created_at[:10] }}</td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-bold text-slate-900 block">{{ f.farmer_name }}</span>
+                                <span class="text-[11px] font-mono text-slate-400 block">{{ f.phone }}</span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 block w-fit">
+                                    {{ f.agricultural_registry }}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-semibold text-slate-800 block">{{ f.ownership_doc_type }}</span>
+                                <span class="text-[10px] text-slate-400 font-mono">{{ f.ownership_doc_number }} ({{ f.applicant_role or 'مالك' }})</span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-semibold text-slate-800 block">{{ f.region }} - {{ f.governorate }}</span>
+                                <span class="text-[10px] text-slate-500">{{ f.city }}</span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                {% if f.social_security == 'نعم' %}
+                                <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">مسجل (مستحق)</span>
+                                {% else %}
+                                <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">غير مسجل</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="openRequestReviewModal({{ f.id }})"
+                                        class="px-4 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                    <span>عرض الطلب</span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if auditor_farms|length == 0 %}
+            <div class="p-8 text-center text-slate-400 text-xs">لا توجد طلبات جديدة بانتظار التدقيق المكتبي حالياً.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ================== ROLE VIEW 2: INSPECTOR TABLE ================== -->
+    <div id="view-inspector" class="role-view space-y-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold select-none">
+                        <tr>
+                            <th class="py-3.5 px-4">رقم الطلب</th>
+                            <th class="py-3.5 px-4">المزرعة والموقع</th>
+                            <th class="py-3.5 px-4">المساحة</th>
+                            <th class="py-3.5 px-4">حالة المصادر الحالية</th>
+                            <th class="py-3.5 px-4">المزروعات السابقة</th>
+                            <th class="py-3.5 px-4">احتياجات التأهيل المطلوبة</th>
+                            <th class="py-3.5 px-4">حالة المعاينة</th>
+                            <th class="py-3.5 px-4 text-center">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="inspector-tbody">
+                        {% for f in inspector_farms %}
+                        <tr class="inbox-row hover:bg-slate-50 transition" id="row-farm-{{ f.id }}"
+                            data-code="{{ f.code }}" data-farmer="{{ f.farmer_name }}" data-region="{{ f.region }}" data-reg="{{ f.agricultural_registry }}">
+                            <td class="py-3.5 px-4 font-mono font-bold text-amber-900 cursor-pointer hover:underline" onclick="openRequestReviewModal({{ f.id }})">{{ f.code }}</td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-bold text-slate-900 block">{{ f.farmer_name }}</span>
+                                <span class="text-[11px] text-slate-500 block">{{ f.region }} - {{ f.governorate }} ({{ f.city }})</span>
+                                <a href="https://maps.google.com/?q={{ f.latitude }},{{ f.longitude }}" target="_blank" class="text-[10px] text-emerald-700 hover:underline flex items-center gap-1 mt-0.5">
+                                    <i class="fa-solid fa-location-dot"></i> فتح الإحداثيات
+                                </a>
+                            </td>
+                            <td class="py-3.5 px-4 font-semibold text-slate-800">{{ "{:,}".format(f.area_m2|int) }} م²</td>
+                            <td class="py-3.5 px-4">
+                                <span class="block text-slate-700">المياه: {{ f.water_source }}</span>
+                                <span class="block text-slate-500 text-[11px]">الكهرباء: {{ f.electricity_source }}</span>
+                            </td>
+                            <td class="py-3.5 px-4 text-slate-700 max-w-xs truncate" title="{{ f.previous_crops }}">
+                                {{ f.previous_crops or 'لم تسجل' }}
+                            </td>
+                            <td class="py-3.5 px-4 text-slate-600 max-w-xs truncate" title="{{ f.notes }}">
+                                {{ f.notes[:70] }}...
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="text-[11px] font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                                    {{ f.status }}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="openRequestReviewModal({{ f.id }})"
+                                        class="px-4 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                    <span>عرض الطلب</span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if inspector_farms|length == 0 %}
+            <div class="p-8 text-center text-slate-400 text-xs">لا توجد مزارع بانتظار الزيارة والمعاينة الميدانية حالياً.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- ================== ROLE VIEW 3: MANAGER TABLE ================== -->
+    <div id="view-manager" class="role-view space-y-4 hidden">
+        <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+            <div class="overflow-x-auto">
+                <table class="w-full text-right text-xs">
+                    <thead class="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold select-none">
+                        <tr>
+                            <th class="py-3.5 px-4">رقم الطلب</th>
+                            <th class="py-3.5 px-4">تاريخ التقديم</th>
+                            <th class="py-3.5 px-4">المزرعة والمستفيد</th>
+                            <th class="py-3.5 px-4">الموقع والمساحة</th>
+                            <th class="py-3.5 px-4">حالة المعاينة الفنية</th>
+                            <th class="py-3.5 px-4">الضمان الاجتماعي</th>
+                            <th class="py-3.5 px-4 text-center">الإجراء</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100" id="manager-tbody">
+                        {% for f in manager_farms %}
+                        <tr class="inbox-row hover:bg-slate-50 transition" id="row-farm-{{ f.id }}"
+                            data-code="{{ f.code }}" data-farmer="{{ f.farmer_name }}" data-region="{{ f.region }}" data-reg="{{ f.agricultural_registry }}">
+                            <td class="py-3.5 px-4 font-mono font-bold text-[#00552b] cursor-pointer hover:underline" onclick="openRequestReviewModal({{ f.id }})">{{ f.code }}</td>
+                            <td class="py-3.5 px-4 font-mono text-slate-500">{{ f.created_at[:10] }}</td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-bold text-slate-900 block">{{ f.farmer_name }}</span>
+                                <span class="text-[11px] font-mono text-slate-400 block">{{ f.phone }}</span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="font-semibold text-slate-800 block">{{ f.region }} - {{ f.governorate }}</span>
+                                <span class="text-[10px] text-slate-500">{{ "{:,}".format(f.area_m2|int) }} م² ({{ f.city }})</span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                <span class="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                                    {{ f.status }}
+                                </span>
+                            </td>
+                            <td class="py-3.5 px-4">
+                                {% if f.social_security == 'نعم' %}
+                                <span class="text-[11px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                                    <i class="fa-solid fa-hand-holding-heart ml-1"></i> مؤهل للقرض الحسن
+                                </span>
+                                {% else %}
+                                <span class="text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded">شراكة / استثمار</span>
+                                {% endif %}
+                            </td>
+                            <td class="py-3.5 px-4 text-center">
+                                <button onclick="openRequestReviewModal({{ f.id }})"
+                                        class="px-4 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs inline-flex items-center justify-center gap-1.5 shadow-xs transition cursor-pointer">
+                                    <i class="fa-solid fa-eye text-xs"></i>
+                                    <span>عرض الطلب</span>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if manager_farms|length == 0 %}
+            <div class="p-8 text-center text-slate-400 text-xs">لا توجد مزارع بانتظار قرار اعتماد مدير الفرع حالياً.</div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+
+<!-- ================= MODALS FOR EACH ROLE ACTION ================= -->
+
+<!-- ================= MODAL: استعراض الطلب الموحد بـ 3 تبويبات متوافقة مع منصة نما ================= -->
+<div id="requestReviewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 flex items-center justify-center p-2 sm:p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden text-right animate-fade-in">
+        
+        <!-- Modal Top Bar -->
+        <div class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-3">
+                <span id="revModalCode" class="font-mono font-black text-sm px-3 py-1 rounded-xl bg-emerald-50 text-[#007a3d] border border-emerald-200">
+                    FRM-0000
+                </span>
+                <div>
+                    <h3 class="text-base font-extrabold text-slate-900 flex items-center gap-2">
+                        <span>طلب حصر وتأهيل مزرعة مهملة</span>
+                        <span id="revModalStatus" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">مسجل</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 font-medium">مقدم الطلب: <strong id="revModalFarmer" class="text-slate-800">...</strong> | تاريخ التقديم: <span id="revModalDate" class="font-mono">...</span></p>
+                </div>
+            </div>
+            
+            <button onclick="closeModal('requestReviewModal')" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 flex items-center justify-center transition cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- 3 Tabs Navigation Bar matching Naama Platform -->
+        <div class="bg-[#f8fafc] border-b border-slate-200 px-6 flex items-center gap-2 shrink-0">
+            
+            <!-- Tab 1: بيانات الطلب -->
+            <button type="button" onclick="switchReviewTab('details')" id="btnTab-details"
+                    class="rev-tab-btn py-3 px-4 border-b-2 border-[#007a3d] text-[#007a3d] font-black text-xs flex items-center gap-2 transition whitespace-nowrap cursor-pointer">
+                <i class="fa-solid fa-file-lines text-sm"></i>
+                <span>بيانات الطلب</span>
+            </button>
+
+            <!-- Tab 2: سجل المعاملات و سير العمل -->
+            <button type="button" onclick="switchReviewTab('timeline')" id="btnTab-timeline"
+                    class="rev-tab-btn py-3 px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-xs flex items-center gap-2 transition whitespace-nowrap cursor-pointer">
+                <i class="fa-solid fa-clock-rotate-left text-sm"></i>
+                <span>سجل المعاملات و سير العمل</span>
+            </button>
+
+            <!-- Tab 3: الاجراء -->
+            <button type="button" onclick="switchReviewTab('actions')" id="btnTab-actions"
+                    class="rev-tab-btn py-3 px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-xs flex items-center gap-2 transition whitespace-nowrap cursor-pointer">
+                <i class="fa-solid fa-sliders text-sm"></i>
+                <span>الاجراء</span>
+            </button>
+
+        </div>
+
+        <!-- Modal Body Content with Scroll -->
+        <div class="p-6 overflow-y-auto space-y-6 flex-grow bg-white text-xs">
+            
+            <!-- ================= TAB 1: تفاصيل الطلب كاملة كما تم إدخاله في صفحة المستفيد ================= -->
+            <div id="revContent-details" class="rev-tab-content space-y-4">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    
+                    <!-- 1. بيانات مقدم الطلب -->
+                    <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+                        <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 border-b border-slate-200 pb-2 text-[#007a3d]">
+                            <i class="fa-solid fa-user-check"></i>
+                            <span>بيانات مقدم الطلب والحساب</span>
+                        </h4>
+                        <div class="space-y-1.5 text-slate-600">
+                            <div class="flex justify-between"><span class="text-slate-400">الاسم الرباعي:</span> <strong id="revDetailName" class="text-slate-900">-</strong></div>
+                            <div class="flex justify-between"><span class="text-slate-400">رقم الهوية الوطنية:</span> <span id="revDetailNid" class="font-mono font-bold text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">رقم الجوال:</span> <span id="revDetailPhone" class="font-mono text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">صفة مقدم الطلب:</span> <span id="revDetailApplicantRole" class="font-semibold text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">الضمان الاجتماعي:</span> <span id="revDetailSocial" class="font-bold text-emerald-800">-</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 2. بيانات وثيقة الملكية والسجل الزراعي -->
+                    <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+                        <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 border-b border-slate-200 pb-2 text-[#007a3d]">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <span>وثيقة الملكية / الحيازة والسجل الزراعي</span>
+                        </h4>
+                        <div class="space-y-1.5 text-slate-600">
+                            <div class="flex justify-between"><span class="text-slate-400">نوع الوثيقة:</span> <strong id="revDetailDocType" class="text-slate-900">-</strong></div>
+                            <div class="flex justify-between"><span class="text-slate-400">رقم الصك / الوثيقة:</span> <span id="revDetailDocNum" class="font-mono font-bold text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">السجل الزراعي المطور:</span> <span id="revDetailAgriReg" class="font-mono font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">حالة المطابقة:</span> <span class="font-bold text-emerald-700"><i class="fa-solid fa-circle-check text-[10px]"></i> مستوفٍ للضوابط</span></div>
+                        </div>
+                    </div>
+
+                    <!-- 3. الموقع الجغرافي -->
+                    <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+                        <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 border-b border-slate-200 pb-2 text-[#007a3d]">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <span>الموقع الجغرافي للمزرعة</span>
+                        </h4>
+                        <div class="space-y-1.5 text-slate-600">
+                            <div class="flex justify-between"><span class="text-slate-400">المنطقة الإدارية:</span> <strong id="revDetailRegion" class="text-slate-900">-</strong></div>
+                            <div class="flex justify-between"><span class="text-slate-400">المحافظة:</span> <span id="revDetailGov" class="text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">المدينة:</span> <span id="revDetailCity" class="text-slate-800">-</span></div>
+                            <div class="flex justify-between items-center pt-1">
+                                <span class="text-slate-400">الإحداثيات:</span>
+                                <a id="revDetailMapsLink" href="#" target="_blank" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-[#007a3d] font-bold text-[11px] border border-emerald-200 inline-flex items-center gap-1 transition">
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                    <span>فتح في خرائط Google</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4. خصائص المزرعة والمصادر -->
+                    <div class="p-4 rounded-2xl bg-slate-50/80 border border-slate-200 space-y-2.5">
+                        <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 border-b border-slate-200 pb-2 text-[#007a3d]">
+                            <i class="fa-solid fa-seedling"></i>
+                            <span>بيانات ومصادر المزرعة</span>
+                        </h4>
+                        <div class="space-y-1.5 text-slate-600">
+                            <div class="flex justify-between"><span class="text-slate-400">المساحة الإجمالية:</span> <span id="revDetailArea" class="font-bold text-slate-900 font-mono">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">حالة الأرض الزراعية:</span> <span id="revDetailLandStatus" class="font-semibold text-slate-800">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">مصادر المياه المتوفرة:</span> <span id="revDetailWater" class="text-slate-800 font-medium">-</span></div>
+                            <div class="flex justify-between"><span class="text-slate-400">توفر شبكة الكهرباء:</span> <span id="revDetailElec" class="text-slate-800 font-medium">-</span></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- 5. المزروعات السابقة واحتياجات التأهيل والمرفقات -->
+                <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/80 space-y-3">
+                    <h4 class="font-bold text-emerald-950 text-xs flex items-center gap-2 border-b border-emerald-200/60 pb-2">
+                        <i class="fa-solid fa-clipboard-list text-[#007a3d]"></i>
+                        <span>المزروعات واحتياجات التأهيل والمرفقات المدخلة</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-400 block font-semibold mb-1">المزروعات السابقة أو الحالية:</span>
+                            <strong id="revDetailCrops" class="text-slate-800 text-xs leading-relaxed block">-</strong>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-slate-200">
+                            <span class="text-slate-400 block font-semibold mb-1">أهم احتياجات التأهيل المطلوبة للمزرعة:</span>
+                            <strong id="revDetailNeeds" class="text-[#007a3d] text-xs leading-relaxed block">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-3 rounded-xl border border-slate-200">
+                        <span class="text-slate-400 block font-semibold mb-1">المرفقات والوثائق المرفوعة مع الطلب:</span>
+                        <div id="revDetailAttachments" class="text-slate-700 text-xs leading-relaxed">
+                            صك الملكية الإلكتروني المعتمد + وثيقة السجل الزراعي المطور + إحداثيات الموقع الجغرافي.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ================= TAB 2: سجل المعاملات وسير العمل (Audit Trail) ================= -->
+            <div id="revContent-timeline" class="rev-tab-content space-y-5 hidden">
+                
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                    <h4 class="font-extrabold text-slate-900 text-xs flex items-center gap-2 mb-4 text-[#007a3d]">
+                        <i class="fa-solid fa-timeline"></i>
+                        <span>سلسلة الاعتماد ومحطات سير العمل (Workflow Milestones)</span>
+                    </h4>
+
+                    <!-- Visual Timeline -->
+                    <div class="relative pr-6 border-r-2 border-emerald-300 space-y-6">
+                        
+                        <!-- Milestone 1: التقديم والتسجيل -->
+                        <div class="relative">
+                            <span class="absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-[#007a3d] border-2 border-white shadow-xs"></span>
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-2">
+                                    <strong class="text-slate-900 text-xs">1. التقديم والتسجيل الإلكتروني</strong>
+                                    <span class="text-[10px] font-bold bg-emerald-100 text-[#007a3d] px-2 py-0.5 rounded-full">مكتمل</span>
+                                </div>
+                                <p class="text-[11px] text-slate-500">تم تسجيل الطلب وحصر المزرعة بنجاح عبر منصة نما وإسناد المعاملة لفرع الوزارة.</p>
+                                <span id="revTlDate1" class="text-[10px] font-mono text-slate-400 block">...</span>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 2: التدقيق المكتبي -->
+                        <div class="relative">
+                            <span id="revTlDot2" class="absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white shadow-xs"></span>
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-2">
+                                    <strong class="text-slate-900 text-xs">2. التدقيق المكتبي ومراجعة الوثائق (موظف الفرع)</strong>
+                                    <span id="revTlBadge2" class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">قيد التدقيق</span>
+                                </div>
+                                <p id="revTlDesc2" class="text-[11px] text-slate-600">فحص صك الملكية وسريان السجل الزراعي وإحالة المعاملة لفني المعاينة الميدانية.</p>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 3: المعاينة والفحص الميداني -->
+                        <div class="relative">
+                            <span id="revTlDot3" class="absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white shadow-xs"></span>
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-2">
+                                    <strong class="text-slate-900 text-xs">3. المعاينة والفحص الميداني (فني الميدان)</strong>
+                                    <span id="revTlBadge3" class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">بانتظار الزيارة</span>
+                                </div>
+                                <p id="revTlDesc3" class="text-[11px] text-slate-600">فحص مصادر المياه والتربة وشبكة الري وإعداد التقرير الفني لرفعه للاعتماد.</p>
+                            </div>
+                        </div>
+
+                        <!-- Milestone 4: قرار الاعتماد النهائي وتخصيص الدعم -->
+                        <div class="relative">
+                            <span id="revTlDot4" class="absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white shadow-xs"></span>
+                            <div class="space-y-0.5">
+                                <div class="flex items-center gap-2">
+                                    <strong class="text-slate-900 text-xs">4. قرار الاعتماد النهائي وتخصيص الدعم (مدير الفرع)</strong>
+                                    <span id="revTlBadge4" class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full">بانتظار القرار</span>
+                                </div>
+                                <p id="revTlDesc4" class="text-[11px] text-slate-600">اعتماد خطة التأهيل وتخصيص مسار الدعم (قرض حسن بدون فوائد / شراكة تعاونية / استثمار).</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Full Audit Trail / Activity Log -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                    <h4 class="font-extrabold text-slate-900 text-xs flex items-center gap-2 text-slate-700">
+                        <i class="fa-solid fa-list-check"></i>
+                        <span>سجل الملاحظات والإجراءات التفصيلية (Activity Log)</span>
+                    </h4>
+                    <div id="revAuditLogList" class="space-y-2 max-h-56 overflow-y-auto">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ================= TAB 3: الإجراءات الممكن عملها على الطلب (تتغير بحسب الدور الحالي) ================= -->
+            <div id="revContent-actions" class="rev-tab-content space-y-5 hidden">
+                
+                <!-- Notification banner explaining active role -->
+                <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-950">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-user-gear text-base text-[#007a3d]"></i>
+                        <span>الإجراءات المتاحة حالياً وفق صلاحية: <strong id="revActionRoleTitle" class="text-[#007a3d]">موظف الفرع</strong></span>
+                    </div>
+                    <span class="text-[11px] text-slate-500">يتم حفظ كل إجراء في سجل المعاملة وتحديث حالة الطلب فوراً.</span>
+                </div>
+
+                <!-- ROLE 1 ACTIONS: موظف الفرع (التدقيق المكتبي) -->
+                <div id="roleActionPanel-auditor" class="role-action-panel space-y-4">
+                    
+                    <!-- Action A: قبول التدقيق وتكليف فني الميدان -->
+                    <div class="p-5 rounded-2xl bg-white border-2 border-emerald-300 shadow-xs space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                            <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 text-[#007a3d]">
+                                <i class="fa-solid fa-circle-check"></i>
+                                <span>الإجراء الأول: قبول التدقيق المكتبي وتكليف فني المعاينة الميدانية</span>
+                            </h4>
+                            <span class="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-full">المسار النظامي</span>
+                        </div>
+                        
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">تكليف فني الزيارة الميدانية (حسب النطاق الجغرافي للمزرعة):</label>
+                                <select id="revAuditorInspector" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white font-medium">
+                                    <option value="م. فيصل الغامدي (مهندس زراعي - قطاع الباحة والقرى)">م. فيصل الغامدي (مهندس زراعي - قطاع الباحة والقرى)</option>
+                                    <option value="م. عبد الله الشهري (مهندس ري وتربة - قطاع بلجرشي والمندق)">م. عبد الله الشهري (مهندس ري وتربة - قطاع بلجرشي والمندق)</option>
+                                    <option value="م. سعيد الزهراني (أخصائي بستنة - قطاع تهامة والمخواة)">م. سعيد الزهراني (أخصائي بستنة - قطاع تهامة والمخواة)</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">توجيهات أو ملاحظات لفني الميدان (اختياري):</label>
+                                <textarea id="revAuditorNotes" rows="2.5" placeholder="مثال: يرجى التركيز على فحص عمق البئر الارتوازي ومعاينة شبكة الري القائمة والتأكد من حدود الصك..."
+                                          class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#007a3d]"></textarea>
+                            </div>
+
+                            <button type="button" onclick="submitAuditorReviewAction('approve_audit')" id="btnRevAuditorApprove"
+                                    class="w-full py-2.5 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-black text-xs flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <i class="fa-solid fa-check text-xs"></i>
+                                <span>تأكيد قبول التدقيق المكتبي وإحالة للمعاينة الميدانية ⬅</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action B & C: نواقص أو رفض -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2">
+                            <h5 class="font-bold text-amber-950 text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                                <span>طلب استكمال نواقص وثائق</span>
+                            </h5>
+                            <textarea id="revAuditorMissingNotes" rows="2" placeholder="أدخل الوثائق المطلوب استكمالها من المزارع..."
+                                      class="w-full px-3 py-2 rounded-xl border border-amber-300 text-xs bg-white"></textarea>
+                            <button type="button" onclick="submitAuditorReviewAction('request_info')"
+                                    class="w-full py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs transition cursor-pointer">
+                                <span>إرسال إشعار النواقص للمستفيد</span>
+                            </button>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-rose-50/70 border border-rose-200 space-y-2">
+                            <h5 class="font-bold text-rose-950 text-xs flex items-center gap-1.5">
+                                <i class="fa-solid fa-ban text-rose-600"></i>
+                                <span>رفض الطلب لعدم انطباق الشروط</span>
+                            </h5>
+                            <textarea id="revAuditorRejectNotes" rows="2" placeholder="أدخل أسباب الرفض النظامية المعتمدة..."
+                                      class="w-full px-3 py-2 rounded-xl border border-rose-300 text-xs bg-white"></textarea>
+                            <button type="button" onclick="submitAuditorReviewAction('reject')"
+                                    class="w-full py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs transition cursor-pointer">
+                                <span>رفض الطلب وحفظ السبب</span>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- ROLE 2 ACTIONS: فني الزيارة الميدانية (المعاينة والتقرير) -->
+                <div id="roleActionPanel-inspector" class="role-action-panel space-y-4 hidden">
+                    
+                    <!-- Action A: جدولة أو إعادة جدولة الزيارة -->
+                    <div class="p-4 rounded-2xl bg-blue-50/60 border border-blue-200 space-y-3">
+                        <h4 class="font-bold text-blue-950 text-xs flex items-center gap-2 border-b border-blue-200/60 pb-2">
+                            <i class="fa-regular fa-calendar-check text-blue-700"></i>
+                            <span>تحديد / إعادة جدولة موعد الزيارة الميدانية</span>
+                        </h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">تاريخ المعاينة الميدانية المتفق عليه:</label>
+                                <input type="date" id="revInspVisitDate" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white font-bold">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">اسم الفني المعاين المسؤول:</label>
+                                <input type="text" id="revInspVisitInspector" value="م. فيصل الغامدي" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-slate-50 font-bold">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">ملاحظات التنسيق أو سبب إعادة الجدولة:</label>
+                            <input type="text" id="revInspScheduleNotes" placeholder="مثال: تم التنسيق مع المزارع على الحضور بالمزرعة الساعة 10 صباحاً..."
+                                   class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                        </div>
+                        <button type="button" onclick="submitInspectorScheduleReviewAction()" id="btnRevInspSchedule"
+                                class="px-5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs inline-flex items-center gap-2 transition cursor-pointer">
+                            <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                            <span>حفظ موعد الزيارة وإشعار المزارع</span>
+                        </button>
+                    </div>
+
+                    <!-- Action B: تعبئة تقرير المعاينة الفنية ورفعه للاعتماد -->
+                    <div class="p-5 rounded-2xl bg-white border-2 border-amber-300 shadow-xs space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                            <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 text-amber-800">
+                                <i class="fa-solid fa-clipboard-check"></i>
+                                <span>تعبئة تقرير المعاينة الفنية الميدانية ورفعه للاعتماد</span>
+                            </h4>
+                            <span class="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">إحالة للمدير</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">فحص مصادر المياه والآبار:</label>
+                                <select id="revInspWater" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                                    <option value="بئر سطحي قائم صالح يحتاج مضخة موفرة وتطهير">بئر سطحي صالح يحتاج مضخة وتطهير</option>
+                                    <option value="بئر ارتوازي صالح بمنسوب مائي ممتاز">بئر ارتوازي صالح بمنسوب مائي ممتاز</option>
+                                    <option value="يحتاج حفر وتعميق بئر ارتوازي جديد">يحتاج حفر وتعميق بئر ارتوازي جديد</option>
+                                    <option value="خزان تجميع مياه أمطار أرضي">خزان تجميع مياه أمطار أرضي</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">فحص شبكة الري:</label>
+                                <select id="revInspIrrig" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                                    <option value="تحتاج توريد شبكة تنقيط حديثة كاملة (GR)">تحتاج توريد شبكة تنقيط كاملة (GR)</option>
+                                    <option value="شبكة ري قديمة تالفة تحتاج إحلال وتحديث">شبكة قديمة تالفة تحتاج إحلال</option>
+                                    <option value="شبكة ري متوفرة تحتاج صيانة فلاتر ذكية">شبكة متوفرة تحتاج فلاتر ذكية</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">حالة التربة والمدرجات:</label>
+                                <select id="revInspSoil" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white">
+                                    <option value="تربة طينية خصبة صالحة ومؤهلة للزراعة الفورية">تربة طينية خصبة ومؤهلة فوراً</option>
+                                    <option value="مدرجات زراعية تحتاج تسوية وبناء مصدات">مدرجات تحتاج تسوية وبناء مصدات</option>
+                                    <option value="تربة صفراء تحتاج تسميد ومخصبات">تربة صفراء تحتاج تسميد ومخصبات</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">الشتلات الموصى بها:</label>
+                                <input type="text" id="revInspSeedlings" value="400 شتلة بن خولاني + 150 شتلة لوز ورمان"
+                                       class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs bg-white font-medium">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-slate-700 mb-1">خلاصة التقرير وتوصيات التدخل لمدير الفرع:</label>
+                            <textarea id="revInspReportNotes" rows="2.5" placeholder="أدخل توصيات التدخل الميداني واستصلاح مصادر المياه..."
+                                      class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+
+                        <button type="button" onclick="submitInspectorReportReviewAction()" id="btnRevInspReport"
+                                class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-black text-xs flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                            <i class="fa-solid fa-clipboard-check text-xs"></i>
+                            <span>رفع التقرير الميداني وإحالة المعاملة لمدير الفرع للاعتماد ⬅</span>
+                        </button>
+                    </div>
+
+                </div>
+
+                <!-- ROLE 3 ACTIONS: مدير الفرع (الاعتماد النهائي وتخصيص الدعم) -->
+                <div id="roleActionPanel-manager" class="role-action-panel space-y-4 hidden">
+                    
+                    <!-- Action A: اعتماد خطة التأهيل وتخصيص مسار الدعم -->
+                    <div class="p-5 rounded-2xl bg-white border-2 border-[#007a3d] shadow-xs space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                            <h4 class="font-bold text-slate-900 text-xs flex items-center gap-2 text-[#007a3d]">
+                                <i class="fa-solid fa-stamp"></i>
+                                <span>قرار الاعتماد النهائي وتخصيص مسار الدعم التنموي</span>
+                            </h4>
+                            <span class="text-[10px] font-bold bg-emerald-100 text-[#007a3d] px-2 py-0.5 rounded-full">الاعتماد النهائي</span>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">تخصيص مسار الدعم والشراكة التنموية:</label>
+                                <select id="revMgrSupportPath" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-emerald-950 bg-white">
+                                    <option value="مسار القرض الحسن والدعم التنموي (بنك التنمية الاجتماعية / شركة أزكى)">مسار القرض الحسن بدون فوائد (بنك التنمية / شركة أزكى - مستفيدي الضمان)</option>
+                                    <option value="مسار الشراكة التعاونية الزراعية (الجمعيات التعاونية الزراعية بالمنطقة)">مسار الشراكة التعاونية الزراعية (الجمعيات التعاونية)</option>
+                                    <option value="مسار الاستثمار والتشغيل الزراعي الأهلي">مسار الاستثمار والتشغيل الزراعي الأهلي</option>
+                                </select>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <div class="sm:col-span-2">
+                                    <label class="block font-bold text-slate-700 mb-1">إسناد المزرعة إلى الشريك الداعم:</label>
+                                    <select id="revMgrPartnerId" onchange="updatePartnerUnitHint()" class="w-full px-3 py-2.5 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 bg-white">
+                                        <option value="">-- اختر الشريك الداعم (يُسجّل تلقائياً في سجل الشركاء) --</option>
+                                        {% for p in partners %}
+                                        <option value="{{ p.id }}" data-unit="{{ p.unit }}">{{ p.name }} — {{ p.contribution_type }} ({{ p.region }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block font-bold text-slate-700 mb-1">الكمية المسندة (<span id="revMgrPartnerUnit">وحدة</span>):</label>
+                                    <input type="number" id="revMgrAllocatedQty" min="1" value="400" class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs font-mono font-bold text-slate-800 bg-white">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block font-bold text-slate-700 mb-1">قرار وتوجيهات مدير الفرع / رئيس اللجنة:</label>
+                                <textarea id="revMgrNotes" rows="3" placeholder="مثال: يُعتمد إدراج المزرعة ضمن خطة التأهيل المعتمدة وتوريد شبكة الري والشتلات وصرف حزمة الدعم المقررة."
+                                          class="w-full px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-[#007a3d]"></textarea>
+                            </div>
+
+                            <button type="button" onclick="submitManagerReviewAction('approve_plan')" id="btnRevMgrApprove"
+                                    class="w-full py-2.5 rounded-xl bg-[#007a3d] hover:bg-[#005e30] text-white font-black text-xs flex items-center justify-center gap-2 shadow-xs transition cursor-pointer">
+                                <i class="fa-solid fa-stamp text-xs"></i>
+                                <span>إصدار قرار الاعتماد الرسمي وتخصيص الدعم للمزرعة ⬅</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Action B: إعادة لفني الميدان لإعادة الفحص -->
+                    <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2">
+                        <h5 class="font-bold text-amber-950 text-xs flex items-center gap-1.5">
+                            <i class="fa-solid fa-rotate-left text-amber-700"></i>
+                            <span>إعادة الملف لفني الميدان لإعادة الفحص والتدقيق</span>
+                        </h5>
+                        <textarea id="revMgrReturnNotes" rows="2" placeholder="أدخل أسباب الإعادة وملاحظات إعادة المعاينة الفنية..."
+                                  class="w-full px-3 py-2 rounded-xl border border-amber-300 text-xs bg-white"></textarea>
+                        <button type="button" onclick="submitManagerReviewAction('return_for_reinspection')"
+                                class="px-5 py-2 rounded-xl bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs transition cursor-pointer">
+                            <span>إعادة الطلب لفني الميدان ⬅</span>
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modal Footer with Next / Previous Navigation -->
+        <div class="bg-slate-50 border-t border-slate-200 px-6 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0">
+            <span class="text-[11px] text-slate-500 hidden sm:inline">منظومة منصة نما الموحدة - وزارة البيئة والمياه والزراعة</span>
+            <div class="flex items-center gap-2 mr-auto sm:mr-0">
+                <button type="button" id="btnRevPrev" onclick="prevReviewTab()"
+                        class="px-4 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-bold text-xs inline-flex items-center gap-1.5 transition cursor-pointer hidden">
+                    <i class="fa-solid fa-arrow-right text-[10px]"></i>
+                    <span>السابق</span>
+                </button>
+                <button type="button" id="btnRevNext" onclick="nextReviewTab()"
+                        class="px-5 py-2 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs inline-flex items-center gap-1.5 shadow-xs transition cursor-pointer">
+                    <span>التالي</span>
+                    <i class="fa-solid fa-arrow-left text-[10px]"></i>
+                </button>
+                <button type="button" onclick="closeModal('requestReviewModal')" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs transition cursor-pointer">
+                    إغلاق
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ================= MODAL: نافذة التأكيد والتنبيه المحلية (مستقلة بدون الاعتماد على CDN خارجي) ================= -->
+<div id="naamaDialogModal" style="display: none; z-index: 9999;" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 text-center space-y-4 animate-fade-in">
+        <div id="naamaDialogIconWrap" class="w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-2xl bg-emerald-50 text-[#007a3d] border border-emerald-200">
+            <i id="naamaDialogIcon" class="fa-solid fa-circle-question"></i>
+        </div>
+        <div class="space-y-1.5">
+            <h3 id="naamaDialogTitle" class="text-base font-black text-slate-900">تأكيد الإجراء</h3>
+            <p id="naamaDialogText" class="text-xs text-slate-600 leading-relaxed">هل أنت متأكد من تنفيذ هذا الإجراء؟</p>
+        </div>
+        <div class="flex items-center justify-center gap-3 pt-2">
+            <button type="button" id="naamaDialogConfirmBtn"
+                    class="px-5 py-2.5 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs shadow-xs transition cursor-pointer">
+                نعم، تأكيد الإرسال
+            </button>
+            <button type="button" id="naamaDialogCancelBtn"
+                    class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition cursor-pointer">
+                تراجع
+            </button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let currentActiveRole = "{{ active_role or 'auditor' }}";
+    let selectedFarmId = null;
+
+    const ROLE_CONFIG = {
+        'auditor': {
+            title: 'موظف الفرع - التدقيق المكتبي ومراجعة الوثائق',
+            scope: 'الطلبات الجديدة غير المدققة',
+            icon: 'fa-solid fa-file-circle-check',
+            bg: 'bg-[#007a3d]',
+            border: 'border-[#007a3d]',
+            bannerBg: 'bg-emerald-50/80',
+            bannerBorder: 'border-emerald-200',
+            textColor: 'text-emerald-950'
+        },
+        'inspector': {
+            title: 'فني الزيارة الميدانية - المعاينة والفحص الميداني',
+            scope: 'الطلبات المقبولة بانتظار المعاينة والنزول للمزرعة',
+            icon: 'fa-solid fa-truck-field',
+            bg: 'bg-amber-600',
+            border: 'border-amber-500',
+            bannerBg: 'bg-amber-50/80',
+            bannerBorder: 'border-amber-200',
+            textColor: 'text-amber-950'
+        },
+        'manager': {
+            title: 'مدير الفرع - لجنة الاعتماد النهائي وتخصيص الدعم',
+            scope: 'الطلبات المنجزة ميدانياً بانتظار قرار الاعتماد',
+            icon: 'fa-solid fa-stamp',
+            bg: 'bg-[#00552b]',
+            border: 'border-[#00552b]',
+            bannerBg: 'bg-emerald-100/70',
+            bannerBorder: 'border-emerald-300',
+            textColor: 'text-emerald-950'
+        }
+    };
+
+    // Role switcher function ("ولما اغير الادوار تتغير الطلبات")
+    function switchRole(role) {
+        currentActiveRole = role;
+
+        // Hide all views, show selected
+        document.querySelectorAll('.role-view').forEach(v => v.classList.add('hidden'));
+        document.getElementById(`view-${role}`).classList.remove('hidden');
+
+        // Update cards styling
+        ['auditor', 'inspector', 'manager'].forEach(r => {
+            const card = document.getElementById(`role-card-${r}`);
+            const ind = card.querySelector('.active-indicator');
+            if (r === role) {
+                card.className = `role-card p-5 rounded-2xl bg-white border-2 ${ROLE_CONFIG[r].border} cursor-pointer transition shadow-md space-y-3 relative overflow-hidden ring-2 ring-[#007a3d]/20`;
+                ind.classList.remove('hidden');
+            } else {
+                card.className = `role-card p-5 rounded-2xl bg-white border-2 border-slate-200 hover:border-slate-300 cursor-pointer transition shadow-xs space-y-3 relative overflow-hidden opacity-85`;
+                ind.classList.add('hidden');
+            }
+        });
+
+        // Update Active Banner
+        const conf = ROLE_CONFIG[role];
+        document.getElementById('persona-title').innerText = conf.title;
+        document.getElementById('persona-scope').innerText = conf.scope;
+        document.getElementById('persona-icon').className = conf.icon;
+        document.getElementById('persona-icon-bg').className = `w-9 h-9 rounded-xl ${conf.bg} text-white flex items-center justify-center text-sm shadow-xs shrink-0`;
+        document.getElementById('active-persona-banner').className = `p-4 rounded-2xl ${conf.bannerBg} border ${conf.bannerBorder} flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs animate-fade-in shadow-xs`;
+
+        // Update URL query without full reload
+        const newUrl = new URL(window.location);
+        newUrl.searchParams.set('role', role);
+        window.history.replaceState({}, '', newUrl);
+
+        filterActiveRoleTable();
+    }
+
+    // Filter table by search input and region
+    function filterActiveRoleTable() {
+        const query = (document.getElementById('inboxSearch').value || '').trim().toLowerCase();
+        const region = document.getElementById('regionFilter').value;
+        const activeTbody = document.getElementById(`${currentActiveRole}-tbody`);
+        if (!activeTbody) return;
+
+        const rows = activeTbody.querySelectorAll('.inbox-row');
+        rows.forEach(row => {
+            const code = row.getAttribute('data-code').toLowerCase();
+            const farmer = row.getAttribute('data-farmer').toLowerCase();
+            const reg = row.getAttribute('data-reg').toLowerCase();
+            const rowRegion = row.getAttribute('data-region');
+
+            const matchQuery = !query || code.includes(query) || farmer.includes(query) || reg.includes(query);
+            const matchRegion = !region || rowRegion === region;
+
+            if (matchQuery && matchRegion) {
+                row.classList.remove('hidden');
+            } else {
+                row.classList.add('hidden');
+            }
+        });
+    }
+
+    // Modal Helpers
+    function openModal(id) {
+        document.getElementById(id).classList.remove('hidden');
+    }
+    function closeModal(id) {
+        document.getElementById(id).classList.add('hidden');
+    }
+
+    const REVIEW_TABS = ['details', 'timeline', 'actions'];
+    let currentReviewTab = 'details';
+
+    // Switch between the 3 Review Tabs
+    function switchReviewTab(tabName) {
+        currentReviewTab = tabName;
+        REVIEW_TABS.forEach(t => {
+            const btn = document.getElementById(`btnTab-${t}`);
+            const content = document.getElementById(`revContent-${t}`);
+            if (t === tabName) {
+                btn.className = 'rev-tab-btn py-3 px-4 border-b-2 border-[#007a3d] text-[#007a3d] font-black text-xs flex items-center gap-2 transition whitespace-nowrap cursor-pointer bg-emerald-50/40';
+                content.classList.remove('hidden');
+            } else {
+                btn.className = 'rev-tab-btn py-3 px-4 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-xs flex items-center gap-2 transition whitespace-nowrap cursor-pointer';
+                content.classList.add('hidden');
+            }
+        });
+
+        // Update Next / Previous footer buttons
+        const idx = REVIEW_TABS.indexOf(tabName);
+        const prevBtn = document.getElementById('btnRevPrev');
+        const nextBtn = document.getElementById('btnRevNext');
+        if (prevBtn) prevBtn.classList.toggle('hidden', idx <= 0);
+        if (nextBtn) nextBtn.classList.toggle('hidden', idx >= REVIEW_TABS.length - 1);
+    }
+
+    function nextReviewTab() {
+        const idx = REVIEW_TABS.indexOf(currentReviewTab);
+        if (idx < REVIEW_TABS.length - 1) {
+            switchReviewTab(REVIEW_TABS[idx + 1]);
+        }
+    }
+
+    function prevReviewTab() {
+        const idx = REVIEW_TABS.indexOf(currentReviewTab);
+        if (idx > 0) {
+            switchReviewTab(REVIEW_TABS[idx - 1]);
+        }
+    }
+
+    // Open Unified Request Review Modal with 3 Tabs
+    async function openRequestReviewModal(farmId) {
+        selectedFarmId = farmId;
+        
+        try {
+            const res = await fetch(`/api/admin/farms/${farmId}/review`);
+            const data = await res.json();
+            if (!data.success) {
+                Swal.fire('خطأ', data.message || 'تعذر تحميل بيانات الطلب', 'error');
+                return;
+            }
+
+            const farm = data.farm;
+            const visits = data.visits || [];
+
+            // 1. Top Bar Info
+            document.getElementById('revModalCode').innerText = farm.code;
+            document.getElementById('revModalFarmer').innerText = farm.farmer_name;
+            document.getElementById('revModalStatus').innerText = farm.status;
+            document.getElementById('revModalDate').innerText = (farm.created_at || '').substring(0, 16);
+
+            // 2. Tab 1: Full Details
+            document.getElementById('revDetailName').innerText = farm.farmer_name;
+            document.getElementById('revDetailNid').innerText = farm.national_id || '-';
+            document.getElementById('revDetailPhone').innerText = farm.phone || '-';
+            document.getElementById('revDetailApplicantRole').innerText = farm.applicant_role || 'مالك';
+            document.getElementById('revDetailSocial').innerText = farm.social_security === 'نعم' ? 'مسجل (مستحق للقرض الحسن)' : 'غير مسجل (شراكة / استثمار)';
+            
+            document.getElementById('revDetailDocType').innerText = farm.ownership_doc_type || 'صك ملكية إلكتروني';
+            document.getElementById('revDetailDocNum').innerText = farm.ownership_doc_number || '-';
+            document.getElementById('revDetailAgriReg').innerText = farm.agricultural_registry || '-';
+
+            document.getElementById('revDetailRegion').innerText = farm.region;
+            document.getElementById('revDetailGov').innerText = farm.governorate;
+            document.getElementById('revDetailCity').innerText = farm.city || farm.governorate;
+            const mapsUrl = farm.maps_url || `https://maps.google.com/?q=${farm.latitude},${farm.longitude}`;
+            document.getElementById('revDetailMapsLink').setAttribute('href', mapsUrl);
+
+            const areaM2 = parseFloat(farm.area_m2) || 0;
+            const areaHectares = (areaM2 / 10000.0).toFixed(2);
+            document.getElementById('revDetailArea').innerText = `${areaM2.toLocaleString()} م² (${areaHectares} هكتار)`;
+            document.getElementById('revDetailLandStatus').innerText = farm.land_status || 'مهملة كلياً';
+            document.getElementById('revDetailWater').innerText = farm.water_source || 'لا يوجد';
+            document.getElementById('revDetailElec').innerText = farm.electricity_source || 'لا يوجد';
+
+            document.getElementById('revDetailCrops').innerText = farm.previous_crops || 'لم تسجل محاصيل سابقة';
+            document.getElementById('revDetailNeeds').innerText = farm.priority_needs_display || 'تأهيل مصادر الري وصيانة البئر وتوريد الشتلات المعتمدة';
+            document.getElementById('revDetailAttachments').innerText = farm.media_urls || 'صك الملكية الإلكتروني المعتمد + السجل الزراعي المطور المرفوع';
+
+            // 3. Tab 2: Workflow Milestones & Audit Trail
+            document.getElementById('revTlDate1').innerText = (farm.created_at || '').substring(0, 16);
+
+            // Milestone 2 (Auditor)
+            const dot2 = document.getElementById('revTlDot2');
+            const badge2 = document.getElementById('revTlBadge2');
+            const desc2 = document.getElementById('revTlDesc2');
+            if (farm.status !== 'مسجل') {
+                dot2.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-[#007a3d] border-2 border-white shadow-xs';
+                badge2.className = 'text-[10px] font-bold bg-emerald-100 text-[#007a3d] px-2 py-0.5 rounded-full';
+                badge2.innerText = 'تم التدقيق والقبول';
+                desc2.innerText = 'تم التدقيق المكتبي للوثائق بنجاح وإحالة المزرعة للمعاينة الميدانية.';
+            } else {
+                dot2.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white shadow-xs animate-pulse';
+                badge2.className = 'text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full';
+                badge2.innerText = 'بانتظار التدقيق المكتبي';
+                desc2.innerText = 'المعاملة بانتظار فحص موظف الفرع لصك الملكية والسجل الزراعي.';
+            }
+
+            // Milestone 3 (Inspector)
+            const dot3 = document.getElementById('revTlDot3');
+            const badge3 = document.getElementById('revTlBadge3');
+            const desc3 = document.getElementById('revTlDesc3');
+            if (['تمت الزيارة الميدانية', 'جاري التأهيل', 'مؤهلة ومنتجة'].includes(farm.status)) {
+                dot3.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-[#007a3d] border-2 border-white shadow-xs';
+                badge3.className = 'text-[10px] font-bold bg-emerald-100 text-[#007a3d] px-2 py-0.5 rounded-full';
+                badge3.innerText = 'تمت المعاينة الفنية';
+                desc3.innerText = 'تم إنجاز النزول الميداني ورفع التقرير الفني لمدير الفرع.';
+            } else if (farm.status === 'محال للمعاينة الميدانية') {
+                dot3.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-amber-500 border-2 border-white shadow-xs animate-pulse';
+                badge3.className = 'text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full';
+                badge3.innerText = 'بانتظار المعاينة الفنية';
+                desc3.innerText = 'المعاملة محالة للمفتش الزراعي لجدولة المعاينة وفحص الآبار والتربة.';
+            } else {
+                dot3.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white shadow-xs';
+                badge3.className = 'text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full';
+                badge3.innerText = 'المرحلة التالية';
+                desc3.innerText = 'تتم بعد استيفاء التدقيق المكتبي.';
+            }
+
+            // Milestone 4 (Manager)
+            const dot4 = document.getElementById('revTlDot4');
+            const badge4 = document.getElementById('revTlBadge4');
+            const desc4 = document.getElementById('revTlDesc4');
+            if (['جاري التأهيل', 'مؤهلة ومنتجة'].includes(farm.status)) {
+                dot4.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-[#007a3d] border-2 border-white shadow-xs';
+                badge4.className = 'text-[10px] font-bold bg-emerald-100 text-[#007a3d] px-2 py-0.5 rounded-full';
+                badge4.innerText = 'تم الاعتماد الرسمي';
+                desc4.innerText = `تم اعتماد خطة التأهيل وتخصيص: ${farm.assigned_partner_name || 'مسار الدعم التنموي'}.`;
+            } else {
+                dot4.className = 'absolute -right-[31px] top-0 w-4 h-4 rounded-full bg-slate-300 border-2 border-white shadow-xs';
+                badge4.className = 'text-[10px] font-bold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full';
+                badge4.innerText = 'بانتظار قرار الاعتماد';
+                desc4.innerText = 'يصدر القرار النهائي من مدير الفرع بعد اعتماد التقرير الميداني.';
+            }
+
+            // Populate Audit Log entries
+            const logContainer = document.getElementById('revAuditLogList');
+            logContainer.innerHTML = '';
+            const rawNotes = (farm.notes || '').split('\n');
+            let hasLogs = false;
+            rawNotes.forEach(line => {
+                const trimmed = line.trim();
+                if (!trimmed) return;
+                hasLogs = true;
+                const div = document.createElement('div');
+                div.className = 'p-2.5 rounded-xl bg-white border border-slate-200 text-slate-700 leading-relaxed';
+                if (trimmed.startsWith('[')) {
+                    div.innerHTML = `<span class="font-bold text-[#007a3d] block mb-0.5">${trimmed.substring(0, trimmed.indexOf(']') + 1)}</span> <span>${trimmed.substring(trimmed.indexOf(']') + 1)}</span>`;
+                } else {
+                    div.innerText = trimmed;
+                }
+                logContainer.appendChild(div);
+            });
+            if (!hasLogs) {
+                logContainer.innerHTML = '<div class="text-slate-400 italic py-2">لا توجد ملاحظات مسجلة مسبقاً على هذا الطلب.</div>';
+            }
+
+            // 4. Tab 3: Action Panel for Active Role
+            const roleLabels = {
+                'auditor': 'موظف الفرع (التدقيق المكتبي)',
+                'inspector': 'فني الزيارة الميدانية (المعاينة والتقرير)',
+                'manager': 'مدير الفرع (الاعتماد النهائي والدعم)'
+            };
+            const badgeEl = document.getElementById('revRoleActionBadge');
+            if (badgeEl) badgeEl.innerText = roleLabels[currentActiveRole] || 'موظف الفرع';
+            const titleEl = document.getElementById('revActionRoleTitle');
+            if (titleEl) titleEl.innerText = roleLabels[currentActiveRole] || 'موظف الفرع';
+
+            // Show current role actions panel only
+            document.querySelectorAll('.role-action-panel').forEach(p => p.classList.add('hidden'));
+            const activePanel = document.getElementById(`roleActionPanel-${currentActiveRole}`);
+            if (activePanel) activePanel.classList.remove('hidden');
+
+            // Default values
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('revInspVisitDate').value = tomorrow.toISOString().split('T')[0];
+
+            // Open Modal and select Details tab by default
+            switchReviewTab('details');
+            openModal('requestReviewModal');
+
+        } catch (e) {
+            await showNaamaAlert('خطأ', 'حدث خطأ في جلب بيانات الطلب', 'error');
+        }
+    }
+
+    // Local self-contained Dialog Helper (works offline & behind any proxy without SweetAlert2 CDN)
+    function showNaamaDialog({ title, text, type = 'question', confirmText = 'نعم، تأكيد الإرسال', cancelText = 'تراجع', showCancel = true, isDestructive = false }) {
+        return new Promise((resolve) => {
+            const modal = document.getElementById('naamaDialogModal');
+            const iconWrap = document.getElementById('naamaDialogIconWrap');
+            const icon = document.getElementById('naamaDialogIcon');
+            const titleEl = document.getElementById('naamaDialogTitle');
+            const textEl = document.getElementById('naamaDialogText');
+            const confirmBtn = document.getElementById('naamaDialogConfirmBtn');
+            const cancelBtn = document.getElementById('naamaDialogCancelBtn');
+
+            titleEl.innerText = title || '';
+            textEl.innerText = text || '';
+            confirmBtn.innerText = confirmText;
+            cancelBtn.innerText = cancelText;
+            cancelBtn.style.display = showCancel ? 'inline-flex' : 'none';
+
+            if (type === 'error' || isDestructive) {
+                iconWrap.className = 'w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-2xl bg-rose-50 text-rose-600 border border-rose-200';
+                icon.className = isDestructive ? 'fa-solid fa-triangle-exclamation' : 'fa-solid fa-circle-xmark';
+                confirmBtn.className = 'px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-xs transition cursor-pointer';
+            } else if (type === 'success') {
+                iconWrap.className = 'w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-2xl bg-emerald-50 text-[#007a3d] border border-emerald-200';
+                icon.className = 'fa-solid fa-circle-check';
+                confirmBtn.className = 'px-5 py-2.5 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs shadow-xs transition cursor-pointer';
+            } else {
+                iconWrap.className = 'w-14 h-14 rounded-2xl mx-auto flex items-center justify-center text-2xl bg-emerald-50 text-[#007a3d] border border-emerald-200';
+                icon.className = 'fa-solid fa-circle-question';
+                confirmBtn.className = 'px-5 py-2.5 rounded-xl bg-[#007a3d] hover:bg-[#006934] text-white font-bold text-xs shadow-xs transition cursor-pointer';
+            }
+
+            const cleanup = (result) => {
+                modal.style.display = 'none';
+                confirmBtn.onclick = null;
+                cancelBtn.onclick = null;
+                resolve(result);
+            };
+
+            confirmBtn.onclick = () => cleanup(true);
+            cancelBtn.onclick = () => cleanup(false);
+            modal.style.display = 'flex';
+        });
+    }
+
+    async function showNaamaAlert(title, text, type = 'success', confirmText = 'تم بنجاح') {
+        return showNaamaDialog({ title, text, type, confirmText, showCancel: false });
+    }
+
+    // Helper: Confirmation Dialog before sending any final action
+    async function confirmActionBeforeSubmit(title, text, isDestructive = false) {
+        return showNaamaDialog({
+            title,
+            text,
+            type: isDestructive ? 'warning' : 'question',
+            confirmText: 'نعم، تأكيد الإرسال',
+            cancelText: 'تراجع',
+            showCancel: true,
+            isDestructive
+        });
+    }
+
+    // Role 1 Actions (Auditor)
+    async function submitAuditorReviewAction(action) {
+        const confirmMessages = {
+            'approve_audit': {
+                title: 'تأكيد قبول الطلب وإحالته للمعاينة',
+                text: 'هل أنت متأكد من قبول التدقيق المكتبي وإحالة الطلب إلى فني الزيارة الميدانية؟',
+                destructive: false
+            },
+            'request_info': {
+                title: 'تأكيد طلب استكمال النواقص',
+                text: 'هل أنت متأكد من إرسال إشعار استكمال النواقص إلى المستفيد؟',
+                destructive: false
+            },
+            'reject': {
+                title: 'تأكيد رفض الطلب',
+                text: 'هل أنت متأكد من رفض هذا الطلب نظامياً؟ لا يمكن التراجع عن هذا الإجراء بعد الإرسال.',
+                destructive: true
+            }
+        };
+        const msg = confirmMessages[action] || { title: 'تأكيد الإجراء', text: 'هل أنت متأكد من تنفيذ هذا الإجراء؟', destructive: false };
+        if (!(await confirmActionBeforeSubmit(msg.title, msg.text, msg.destructive))) return;
+
+        const btn = document.getElementById('btnRevAuditorApprove');
+        if (action === 'approve_audit' && btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري اعتماد التدقيق...`;
+        }
+
+        let notes = '';
+        if (action === 'approve_audit') notes = document.getElementById('revAuditorNotes').value;
+        else if (action === 'request_info') notes = document.getElementById('revAuditorMissingNotes').value;
+        else if (action === 'reject') notes = document.getElementById('revAuditorRejectNotes').value;
+
+        const inspectorAssigned = document.getElementById('revAuditorInspector').value;
+
+        const formData = new FormData();
+        formData.append('farm_id', selectedFarmId);
+        formData.append('role', 'auditor');
+        formData.append('action', action);
+        formData.append('inspector_name', inspectorAssigned);
+        formData.append('notes', (notes ? notes + " | " : "") + "المكلف: " + inspectorAssigned);
+
+        try {
+            const res = await fetch('/api/admin/inbox/action', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                closeModal('requestReviewModal');
+                const successTitle = action === 'reject' ? 'تم رفض الطلب' : (action === 'request_info' ? 'تم إرسال إشعار النواقص' : 'تم إنجاز التدقيق المكتبي بنجاح');
+                const confirmTxt = action === 'approve_audit' ? 'الانتقال إلى صندوق فني المعاينة الميدانية ⬅' : 'تم';
+                await showNaamaAlert(successTitle, data.message, 'success', confirmTxt);
+                const nextRole = action === 'approve_audit' ? 'inspector' : currentActiveRole;
+                window.location.href = `/admin/inbox?role=${nextRole}`;
+            } else {
+                await showNaamaAlert('خطأ', data.message, 'error', 'حسناً');
+            }
+        } catch (e) {
+            await showNaamaAlert('خطأ', 'حدث خطأ في الاتصال بالخادم', 'error', 'حسناً');
+        } finally {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-check text-xs"></i> <span>تأكيد قبول التدقيق المكتبي وإحالة للمعاينة الميدانية ⬅</span>`;
+            }
+        }
+    }
+
+    // Role 2 Actions: Schedule Visit
+    async function submitInspectorScheduleReviewAction() {
+        const vDate = document.getElementById('revInspVisitDate').value;
+        if (!(await confirmActionBeforeSubmit('تأكيد جدولة موعد الزيارة', `هل أنت متأكد من اعتماد موعد الزيارة الميدانية بتاريخ (${vDate}) وإشعار المزارع؟`))) return;
+
+        const btn = document.getElementById('btnRevInspSchedule');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري الحفظ...`;
+
+        const inspector = document.getElementById('revInspVisitInspector').value;
+        const notes = document.getElementById('revInspScheduleNotes').value;
+
+        const formData = new FormData();
+        formData.append('farm_id', selectedFarmId);
+        formData.append('role', 'inspector');
+        formData.append('action', 'schedule_visit');
+        formData.append('visit_date', vDate);
+        formData.append('inspector_name', inspector);
+        formData.append('notes', notes);
+
+        try {
+            const res = await fetch('/api/admin/inbox/action', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                await showNaamaAlert('تمت الجدولة بنجاح', data.message, 'success', 'حسناً');
+            } else {
+                await showNaamaAlert('خطأ', data.message, 'error', 'حسناً');
+            }
+        } catch (e) {
+            await showNaamaAlert('خطأ', 'حدث خطأ في الاتصال بالخادم', 'error', 'حسناً');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-paper-plane text-[10px]"></i> <span>حفظ موعد الزيارة وإشعار المزارع</span>`;
+        }
+    }
+
+    // Role 2 Actions: Submit Inspection Report
+    async function submitInspectorReportReviewAction() {
+        if (!(await confirmActionBeforeSubmit('تأكيد رفع التقرير الميداني', 'هل أنت متأكد من اعتماد نتائج المعاينة الفنية ورفع التقرير إلى مدير الفرع للاعتماد النهائي؟'))) return;
+
+        const btn = document.getElementById('btnRevInspReport');
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري رفع التقرير...`;
+
+        const formData = new FormData();
+        formData.append('farm_id', selectedFarmId);
+        formData.append('role', 'inspector');
+        formData.append('action', 'submit_inspection_report');
+        formData.append('inspector_name', document.getElementById('revInspVisitInspector').value);
+        formData.append('water_eval', document.getElementById('revInspWater').value);
+        formData.append('irrigation_eval', document.getElementById('revInspIrrig').value);
+        formData.append('soil_eval', document.getElementById('revInspSoil').value);
+        formData.append('recommended_seedlings', document.getElementById('revInspSeedlings').value);
+        formData.append('notes', document.getElementById('revInspReportNotes').value);
+
+        try {
+            const res = await fetch('/api/admin/inbox/action', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                closeModal('requestReviewModal');
+                await showNaamaAlert('تم رفع التقرير الميداني بنجاح', data.message, 'success', 'الانتقال إلى صندوق اعتماد مدير الفرع ⬅');
+                window.location.href = '/admin/inbox?role=manager';
+            } else {
+                await showNaamaAlert('خطأ', data.message, 'error', 'حسناً');
+            }
+        } catch (e) {
+            await showNaamaAlert('خطأ', 'حدث خطأ في الاتصال بالخادم', 'error', 'حسناً');
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-clipboard-check text-xs"></i> <span>رفع التقرير الميداني وإحالة المعاملة لمدير الفرع للاعتماد ⬅</span>`;
+        }
+    }
+
+    function updatePartnerUnitHint() {
+        const sel = document.getElementById('revMgrPartnerId');
+        const opt = sel.options[sel.selectedIndex];
+        const unit = opt ? (opt.getAttribute('data-unit') || 'وحدة') : 'وحدة';
+        const unitEl = document.getElementById('revMgrPartnerUnit');
+        if (unitEl) unitEl.innerText = unit;
+    }
+
+    // Role 3 Actions: Manager Approval / Return
+    async function submitManagerReviewAction(action) {
+        const isReturn = action === 'return_for_reinspection';
+        const title = isReturn ? 'تأكيد إعادة الطلب للمعاينة' : 'تأكيد الاعتماد النهائي وتخصيص الدعم';
+        const text = isReturn
+            ? 'هل أنت متأكد من إعادة المعاملة إلى فني الزيارة الميدانية لإعادة الفحص؟'
+            : 'هل أنت متأكد من إصدار قرار الاعتماد النهائي وتخصيص مسار الدعم لهذه المزرعة؟';
+        if (!(await confirmActionBeforeSubmit(title, text, isReturn))) return;
+
+        const btn = document.getElementById('btnRevMgrApprove');
+        if (action === 'approve_plan' && btn) {
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> جاري اعتماد القرار...`;
+        }
+
+        const supportPath = document.getElementById('revMgrSupportPath').value;
+        const partnerId = document.getElementById('revMgrPartnerId') ? document.getElementById('revMgrPartnerId').value : '';
+        const allocatedQty = document.getElementById('revMgrAllocatedQty') ? document.getElementById('revMgrAllocatedQty').value : '0';
+        const notes = action === 'approve_plan' ? document.getElementById('revMgrNotes').value : document.getElementById('revMgrReturnNotes').value;
+
+        const formData = new FormData();
+        formData.append('farm_id', selectedFarmId);
+        formData.append('role', 'manager');
+        formData.append('action', action);
+        formData.append('support_path', supportPath);
+        if (partnerId) formData.append('partner_id', partnerId);
+        if (allocatedQty) formData.append('allocated_quantity', allocatedQty);
+        formData.append('notes', notes);
+
+        try {
+            const res = await fetch('/api/admin/inbox/action', { method: 'POST', body: formData });
+            const data = await res.json();
+            if (data.success) {
+                closeModal('requestReviewModal');
+                const successTitle = action === 'approve_plan' ? 'تم إصدار قرار الاعتماد الرسمي' : 'تمت إعادة الطلب للمعاينة';
+                await showNaamaAlert(successTitle, data.message, 'success', 'تم بنجاح');
+                const nextRole = isReturn ? 'inspector' : 'manager';
+                window.location.href = `/admin/inbox?role=${nextRole}`;
+            } else {
+                await showNaamaAlert('خطأ', data.message, 'error', 'حسناً');
+            }
+        } catch (e) {
+            await showNaamaAlert('خطأ', 'حدث خطأ في الاتصال بالخادم', 'error', 'حسناً');
+        } finally {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-stamp text-xs"></i> <span>إصدار قرار الاعتماد الرسمي وتخصيص الدعم للمزرعة ⬅</span>`;
+            }
+        }
+    }
+
+    function openFarmFullDetails(farmId) {
+        openRequestReviewModal(farmId);
+    }
+
+    // Initialize on page load
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const roleFromUrl = urlParams.get('role') || 'auditor';
+        switchRole(roleFromUrl);
+    });
+</script>
+{% endblock %}

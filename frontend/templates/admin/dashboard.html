@@ -1,0 +1,295 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}لوحة القيادة والمؤشرات التنفيذية | منصة إحياء{% endblock %}
+{% block page_title %}لوحة المؤشرات والقيادة المركزية للمبادرة{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-6">
+
+    <!-- KPI Summary Cards -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        
+        <!-- Card 1 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">إجمالي المزارع المحصورة</span>
+                <span class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-tree"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">{{ "{:,}".format(total_farms) }}</div>
+            <div class="text-[11px] text-emerald-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-arrow-trend-up"></i>
+                <span>حصر رقمي وميداني في 13 منطقة</span>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">المساحة الإجمالية</span>
+                <span class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-vector-square"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">{{ total_hectares }} <span class="text-xs font-normal text-slate-500">هكتار</span></div>
+            <div class="text-[11px] text-blue-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-check"></i>
+                <span>مزارع وحيازات زراعية مؤهلة</span>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">شتلات الشركاء (متعهد + متاحة)</span>
+                <span class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-seedling"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-amber-600 font-mono">{{ committed_seedlings }}</div>
+            <div class="text-[11px] text-amber-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-handshake"></i>
+                <span>مورد ومتاح في سجلات الشركاء</span>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs relative overflow-hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold text-slate-500">مزارع بدأ تأهيلها وأنتجت</span>
+                <span class="w-9 h-9 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-base">
+                    <i class="fa-solid fa-circle-check"></i>
+                </span>
+            </div>
+            <div class="text-3xl font-black text-slate-900 font-mono">{{ rehab_count + active_count }} <span class="text-xs font-normal text-slate-500">مزرعة</span></div>
+            <div class="text-[11px] text-purple-700 font-bold mt-2 flex items-center gap-1">
+                <i class="fa-solid fa-award"></i>
+                <span>{{ rehab_count }} مؤهلة بمكة + {{ active_count }} جارية بجبل شدا</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Secondary Stat Bar -->
+    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs">
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-water"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">يتوفر بها آبار / خزانات</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">{{ "{:,}".format(has_water_count) }} مزرعة</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-bolt"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">يتوفر بها عداد كهرباء</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">{{ "{:,}".format(has_elec_count) }} مزرعة</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 border-l border-slate-100 pl-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-hand-holding-heart"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">مسجل بالضمان الاجتماعي</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">{{ "{:,}".format(social_sec_count) }} مستفيد</div>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center text-lg">
+                <i class="fa-solid fa-boxes-packing"></i>
+            </div>
+            <div>
+                <span class="text-slate-500">شتلات سُلّمت فعلياً</span>
+                <div class="font-bold text-slate-900 text-sm font-mono">{{ delivered_seedlings }} شتلة</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        
+        <!-- Regional Distribution Bar Chart -->
+        <div class="lg:col-span-8 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <i class="fa-solid fa-chart-column text-emerald-600"></i>
+                    <span>توزيع المزارع المحصورة على مناطق المملكة الـ 13</span>
+                </h3>
+                <span class="text-xs text-slate-400">تحديث أسبوعي معتمد</span>
+            </div>
+            <div class="h-72">
+                <canvas id="regionsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Priority Breakdown Doughnut Chart -->
+        <div class="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+            <div>
+                <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-pie-chart text-emerald-600"></i>
+                        <span>تصنيف الجاهزية والأولوية</span>
+                    </h3>
+                </div>
+                <div class="h-56 relative flex items-center justify-center">
+                    <canvas id="priorityChart"></canvas>
+                </div>
+            </div>
+
+            <div class="space-y-2 text-xs pt-3 border-t border-slate-100">
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> أولوية 1 (جاهزية عالية)</span>
+                    <span class="font-bold font-mono">{{ p1_count }}</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> أولوية 2 (جاهزية متوسطة)</span>
+                    <span class="font-bold font-mono">{{ p2_count }}</span>
+                </div>
+                <div class="flex justify-between items-center text-slate-600">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-slate-400"></span> أولوية 3 (استصلاح شامل)</span>
+                    <span class="font-bold font-mono">{{ p3_count }}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Registered Farms Table -->
+    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-list-check text-emerald-600"></i>
+                <h3 class="text-sm font-bold text-slate-900">آخر المزارع المسجلة في الحصر الرقمي</h3>
+            </div>
+            <a href="/admin/farms" class="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center gap-1">
+                <span>عرض كامل السجل ({{ total_farms }} مزرعة)</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs">
+                <thead class="bg-slate-50 text-slate-600 font-bold border-b border-slate-200">
+                    <tr>
+                        <th class="py-3 px-4">رقم المزرعة</th>
+                        <th class="py-3 px-4">اسم المزارع</th>
+                        <th class="py-3 px-4">المنطقة والمحافظة</th>
+                        <th class="py-3 px-4">المساحة</th>
+                        <th class="py-3 px-4">المياه والكهرباء</th>
+                        <th class="py-3 px-4">أولوية التأهيل</th>
+                        <th class="py-3 px-4">حالة الملف</th>
+                        <th class="py-3 px-4 text-center">الإجراء</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    {% for f in recent_farms %}
+                    <tr class="hover:bg-slate-50/80 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-800">{{ f.code }}</td>
+                        <td class="py-3 px-4 font-semibold text-slate-800">{{ f.farmer_name }}</td>
+                        <td class="py-3 px-4 text-slate-600">{{ f.region }} - {{ f.governorate }}</td>
+                        <td class="py-3 px-4 font-mono">{{ "{:,.0f}".format(f.area_m2) }} م²</td>
+                        <td class="py-3 px-4">
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] {% if 'بئر' in f.water_source or 'خزان' in f.water_source %}bg-blue-50 text-blue-700{% else %}bg-slate-100 text-slate-500{% endif %}">
+                                مياه: {{ f.water_source[:12] }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold
+                                {% if 'أولوية 1' in f.readiness_priority %}bg-emerald-100 text-emerald-800
+                                {% elif 'أولوية 2' in f.readiness_priority %}bg-amber-100 text-amber-800
+                                {% else %}bg-slate-100 text-slate-700{% endif %}">
+                                {{ f.readiness_priority[:15] }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-700">
+                                {{ f.status }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-center">
+                            <a href="/admin/farms/{{ f.id }}" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-bold text-[11px] border border-emerald-200 transition">
+                                الملف الكامل
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // Regional Chart Data
+    const regionLabels = [{% for r in regions_data %}"{{ r.region }}",{% endfor %}];
+    const regionCounts = [{% for r in regions_data %}{{ r.cnt }},{% endfor %}];
+
+    const ctxRegions = document.getElementById('regionsChart').getContext('2d');
+    new Chart(ctxRegions, {
+        type: 'bar',
+        data: {
+            labels: regionLabels,
+            datasets: [{
+                label: 'عدد المزارع المحصورة',
+                data: regionCounts,
+                backgroundColor: '#059669',
+                borderRadius: 6,
+                maxBarThickness: 36
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: '#f1f5f9' },
+                    ticks: { font: { family: 'Tajawal' } }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { font: { family: 'Tajawal' } }
+                }
+            }
+        }
+    });
+
+    // Priority Chart
+    const ctxPriority = document.getElementById('priorityChart').getContext('2d');
+    new Chart(ctxPriority, {
+        type: 'doughnut',
+        data: {
+            labels: ['أولوية 1 (عالية)', 'أولوية 2 (متوسطة)', 'أولوية 3 (منخفضة)'],
+            datasets: [{
+                data: [{{ p1_count }}, {{ p2_count }}, {{ p3_count }}],
+                backgroundColor: ['#059669', '#f59e0b', '#94a3b8'],
+                borderWidth: 2,
+                borderColor: '#ffffff'
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false }
+            },
+            cutout: '70%'
+        }
+    });
+</script>
+{% endblock %}

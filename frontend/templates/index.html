@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+
+{% block title %}منصة إحياء | المبادرة الوطنية لحصر وتأهيل المزارع المهملة{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative overflow-hidden bg-gradient-to-b from-emerald-950 via-emerald-900 to-slate-900 text-white pt-16 pb-24">
+    <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:24px_24px]"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-right">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-800/70 border border-emerald-600/50 text-emerald-300 text-xs font-semibold backdrop-blur-sm">
+                    <i class="fa-solid fa-tree"></i>
+                    <span>مبادرة وطنية معتمدة بقرار وكيل الوزارة لشؤون الفروع</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight tracking-tight">
+                    نُعيد لمزارعك <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-200 to-amber-300">الحياة والإنتاج</span>
+                </h1>
+                
+                <p class="text-base sm:text-lg text-emerald-100/90 leading-relaxed font-light max-w-2xl">
+                    منصة رسمية لحصر وتأهيل المزارع المهملة وغير المستغلة في مناطق المملكة الـ 13. نربط مزرعتك بفرق الدعم الميداني، ومصادر المياه، والطاقة الشمسية، وشبكات الري، والشتلات المجانية ونماذج الشراكة التمويلية.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start pt-2">
+                    <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-extrabold text-base shadow-lg shadow-emerald-900/50 transform hover:-translate-y-0.5 transition">
+                        <i class="fa-solid fa-file-signature text-lg"></i>
+                        <span>سجل مزرعتك المهملة الآن</span>
+                    </a>
+                    
+                    <a href="/track" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-emerald-200 font-bold text-base border border-slate-700 transition">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>متابعة حالة طلب قائم</span>
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-emerald-800/50 text-emerald-200">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-amber-300">{{ total_farms }}</div>
+                        <div class="text-xs text-emerald-300 font-medium">مزرعة محصورة فعلياً</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-emerald-400">13</div>
+                        <div class="text-xs text-emerald-300 font-medium">منطقة إدارية مشمولة</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-amber-300">{{ seedlings }}</div>
+                        <div class="text-xs text-emerald-300 font-medium">شتلة متعهد بها ومتاحة</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-black text-emerald-400">{{ rehabilitated_farms + in_progress }}</div>
+                        <div class="text-xs text-emerald-300 font-medium">مزرعة قيد ومكتملة التأهيل</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5">
+                <div class="relative bg-slate-800/90 border border-slate-700 p-6 rounded-2xl shadow-2xl backdrop-blur-md">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-emerald-500 animate-ping"></span>
+                            <span class="text-sm font-bold text-white">الملف الرقمي للمزرعة (Digital Dossier)</span>
+                        </div>
+                        <span class="text-xs bg-emerald-900/60 text-emerald-300 border border-emerald-700 px-2.5 py-1 rounded-full">نموذج معتمد</span>
+                    </div>
+
+                    <div class="space-y-3.5 text-xs">
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <span class="text-slate-400">رقم الطلب والترميز</span>
+                            <span class="font-mono font-bold text-amber-400">FRM-0030 (مكة المكرمة)</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <span class="text-slate-400">حالة التأهيل الميداني</span>
+                            <span class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check ml-1"></i> مؤهلة ومنتجة (30 مزرعة بمكة)</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <span class="text-slate-400">حلول الإصلاح المطبقة</span>
+                            <span class="text-slate-200">طاقة شمسية + شبكة تنقيط + 9,174 شجرة</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <span class="text-slate-400">نموذج الدعم والتمويل</span>
+                            <span class="text-amber-300">شراكة مع جمعية البر الزراعية وشركة أزكى</span>
+                        </div>
+                        <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                            <span class="text-slate-400">السجل الزراعي الموحد</span>
+                            <span class="text-emerald-300 font-mono">SA-2026-100030 (معتمد عبر نما)</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-4 border-t border-slate-700/80 flex items-center justify-between text-xs">
+                        <span class="text-slate-400">تسجيل ميسر بدون اشتراط صك ملكية مبدئياً</span>
+                        <a href="/register" class="text-emerald-400 hover:text-emerald-300 font-bold flex items-center gap-1">
+                            <span>ابدأ التسجيل</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- The 6 Stages Workflow Section -->
+<section class="py-16 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <span class="text-emerald-700 bg-emerald-100 font-bold text-xs px-3 py-1 rounded-full uppercase">مسار رحلة المزرعة المهملة</span>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-2">خطة عمل من 6 مراحل لإعادة إحياء المزرعة</h2>
+            <p class="text-slate-600 text-sm mt-2">تبدأ بتسجيلك الميسر عبر المنصة وتنتهي بمزرعة منتجة مستدامة ترفع من دخلك وتسهم في الأمن الغذائي</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+            <!-- Stage 1 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border-2 border-emerald-500/20 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-emerald-600 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    1
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">الحصر والتسجيل</h3>
+                <span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">المرحلة الحالية (60 يوم)</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    حصر إلكتروني وميداني لبيانات المزارع، وتحديد الموقع الجغرافي والمساحة والاحتياج الأولي.
+                </p>
+            </div>
+
+            <!-- Stage 2 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    2
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">المعاينة والتقييم</h3>
+                <span class="text-[11px] font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">3 - 4 أشهر</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    فحص ميداني للتربة والمياه والكهرباء والطرق وتصنيف المزرعة وفق جاهزيتها وأولويتها.
+                </p>
+            </div>
+
+            <!-- Stage 3 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    3
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">التصميم والخطة</h3>
+                <span class="text-[11px] font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">3 أشهر</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    إعداد خطة تأهيل فنية لكل مزرعة: نوع المحصول الملائم، شبكة الري، ومصدر الدعم.
+                </p>
+            </div>
+
+            <!-- Stage 4 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    4
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">التأهيل والتنفيذ</h3>
+                <span class="text-[11px] font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">3 أشهر</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    تنفيذ أعمال الاستصلاح وحفر الآبار وتركيب الطاقة الشمسية وتوريد الشتلات مع الشركاء.
+                </p>
+            </div>
+
+            <!-- Stage 5 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    5
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">التشغيل والإنتاج</h3>
+                <span class="text-[11px] font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">مستمر</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    متابعة زراعية دورية عبر الإرشاد الزراعي ومركز وقاء لضمان استدامة الإنتاج والمحصول.
+                </p>
+            </div>
+
+            <!-- Stage 6 -->
+            <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 hover:border-emerald-500 transition shadow-sm relative group">
+                <div class="w-10 h-10 rounded-xl bg-slate-800 text-white font-black flex items-center justify-center text-base mb-3 shadow">
+                    6
+                </div>
+                <h3 class="font-bold text-slate-900 text-base mb-1">قياس الأثر والتوسع</h3>
+                <span class="text-[11px] font-semibold text-slate-600 bg-slate-200 px-2 py-0.5 rounded">دوري</span>
+                <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+                    قياس العائد الاقتصادي والبيئي على المزارع، وتوثيق النماذج وتعميمها على مستوى المملكة.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Solutions Engine Highlight -->
+<section class="py-16 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-14">
+            <span class="text-amber-800 bg-amber-100 font-bold text-xs px-3 py-1 rounded-full">حلول متكاملة للتحديات الميدانية</span>
+            <h2 class="text-3xl font-extrabold text-slate-900 mt-2">كيف تعالج المنصة معوقات مزرعتك المهملة؟</h2>
+            <p class="text-slate-600 text-sm mt-2">وفق مخرجات التقرير الشهري للجنة المبادرة، حددنا 5 حلول رئيسية تلبي كل مشكلة</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Sol 1 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-water"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">حلول المياه والآبار</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    حفر وتطهير الآبار السطحية والارتوازية، وإنشاء خزانات تجميع مياه الأمطار المعزولة، والربط مع محطات المؤسسة العامة للري.
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-blue-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot"></i> أولوية في الباحة، تبوك، عسير، والحدود الشمالية
+                </div>
+            </div>
+
+            <!-- Sol 2 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-solar-panel"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">الطاقة الشمسية الزراعية</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    تركيب منظومات كهروضوئية هجينة ومستقلة لتشغيل مضخات الآبار والإنارة وشبكات الري، بالتنسيق مع صندوق التنمية الزراعية.
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-amber-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-location-dot"></i> أولوية كبرى في جازان، نجران، وحائل
+                </div>
+            </div>
+
+            <!-- Sol 3 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-wheat-awn"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">إحلال الشتلات المثمرة</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    توفير 408,000+ شتلة معتمدة عالية الإنتاجية (بن خولاني، رمان، لوز، نخيل خلاص وعجوة، مانجو، زيتون) مجاناً أو بأسعار رمزية.
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-emerald-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-handshake"></i> عبر المشاتل والجمعيات الشريكة
+                </div>
+            </div>
+
+            <!-- Sol 4 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">القرض الحسن (بدون فوائد)</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    نموذج تمويلي مبتكر (مثل شركة أزكى وبنك التنمية) يقدم قرضاً حتى 100 ألف ريال بدون فوائد، وسداد القسط بثلث المحصول عند الإنتاج.
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-purple-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-shield-halved"></i> متاح للمزارع المسجلة في الضمان والملاك
+                </div>
+            </div>
+
+            <!-- Sol 5 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-mountain-sun"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">الاستثمار الأهلي للحيازات</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    توقيع عقود استثمار وتشغيل مع الجمعيات التعاونية (كنموذج جبل شدا بالباحة لتأهيل 67 حيازة زراعية بنظام المشاركة بالدخل).
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-teal-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-users"></i> مناسب للمزارع الوراثية والمشتركة
+                </div>
+            </div>
+
+            <!-- Sol 6 -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                <div class="w-12 h-12 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center text-xl mb-4">
+                    <i class="fa-solid fa-file-contract"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-2">تسهيل السجل الزراعي الموحد</h3>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                    لا يشترط وجود صك ملكية عند التسجيل المبدئي؛ تقوم المنصة بتوجيه طلبك آلياً إلى منصة "نما" لاستخراج السجل الزراعي ومتابعته.
+                </p>
+                <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-rose-700 font-semibold flex items-center gap-1">
+                    <i class="fa-solid fa-check-double"></i> تيسير إجرائي كامل من فروع الوزارة
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-14 bg-gradient-to-r from-emerald-800 to-emerald-950 text-white">
+    <div class="max-w-5xl mx-auto px-4 text-center space-y-6">
+        <h2 class="text-3xl sm:text-4xl font-extrabold">هل تمتلك مزرعة مهملة أو حيازة توقف نشاطها؟</h2>
+        <p class="text-emerald-100 text-base max-w-2xl mx-auto font-light">
+            سارع بتسجيل مزرعتك قبل إغلاق مرحلة الحصر في 30 نوفمبر 2026م لتكون ضمن قوائم الدعم والمطابقة للشركاء
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-3">
+            <a href="/register" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-base shadow transition">
+                <i class="fa-solid fa-plus-circle ml-2"></i> تعبئة نموذج حصر المزرعة
+            </a>
+            <a href="/advisory" class="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-emerald-700/60 hover:bg-emerald-700 border border-emerald-500 text-white font-bold text-sm transition">
+                <i class="fa-solid fa-comments ml-2"></i> استشارة مرشد زراعي
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

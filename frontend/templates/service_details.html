@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+
+{% block title %}تفاصيل وشروط خدمة حصر وتأهيل المزارع المهملة | منصة نما{% endblock %}
+
+{% block content %}
+<!-- Breadcrumbs -->
+<div class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
+        <nav class="text-xs text-slate-500 flex items-center gap-2">
+            <a href="/" class="hover:text-emerald-700">الرئيسية</a>
+            <i class="fa-solid fa-chevron-left text-[10px] text-slate-300"></i>
+            <a href="/services" class="hover:text-emerald-700">دليل الخدمات الإلكترونية</a>
+            <i class="fa-solid fa-chevron-left text-[10px] text-slate-300"></i>
+            <span class="text-emerald-800 font-bold">طلب حصر وتأهيل مزرعة مهملة</span>
+        </nav>
+    </div>
+</div>
+
+<!-- Main Details Layout -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left: Service Overview & Action Box (Sticky) -->
+        <div class="lg:col-span-4 space-y-6">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm sticky top-28 space-y-6">
+                
+                <!-- Service Header Info -->
+                <div class="space-y-3">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center text-3xl shadow-xs">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <div>
+                        <span class="text-[11px] font-bold text-emerald-800 bg-emerald-100 px-2.5 py-0.5 rounded-full">قطاع الزراعة - خدمات المزارع</span>
+                        <h1 class="text-xl font-black text-slate-900 mt-1 leading-snug">
+                            طلب حصر وتأهيل مزرعة مهملة
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Big Primary Action Button to Nafath -->
+                <div class="pt-2">
+                    <a href="/nafath/login?return_to=/register" class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-black text-base shadow-lg shadow-emerald-900/20 flex items-center justify-center gap-3 transition transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-fingerprint text-xl text-emerald-200"></i>
+                        <span>طلب الخدمة (عبر النفاذ الوطني)</span>
+                    </a>
+                    <span class="text-[11px] text-slate-400 block text-center mt-2 font-medium">
+                        يتطلب الدخول بحساب النفاذ الوطني الموحد (نفاذ)
+                    </span>
+                </div>
+
+                <!-- Quick Meta Details -->
+                <div class="pt-4 border-t border-slate-100 space-y-3 text-xs">
+                    <div class="flex justify-between items-center text-slate-600">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-tag text-emerald-600"></i> الرسوم:</span>
+                        <span class="font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">مجانية بالكامل</span>
+                    </div>
+                    <div class="flex justify-between items-center text-slate-600">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-clock text-emerald-600"></i> المدة المتوقعة:</span>
+                        <span class="font-bold text-slate-800">مرحلة الحصر 60 يوماً</span>
+                    </div>
+                    <div class="flex justify-between items-center text-slate-600">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-globe text-emerald-600"></i> قنوات التقديم:</span>
+                        <span class="font-bold text-slate-800">منصة نما الإلكترونية</span>
+                    </div>
+                    <div class="flex justify-between items-center text-slate-600">
+                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-map-location-dot text-emerald-600"></i> النطاق:</span>
+                        <span class="font-bold text-slate-800">كافة مناطق المملكة الـ 13</span>
+                    </div>
+                </div>
+
+                <!-- Alternative Link for Management -->
+                <div class="pt-3 border-t border-slate-100">
+                    <a href="/admin" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+                        <i class="fa-solid fa-shield-halved text-slate-900"></i>
+                        <span>دخول موظفي الفروع لمعالجة الطلبات</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right: Full Service Terms, Prerequisites & Workflow -->
+        <div class="lg:col-span-8 space-y-6">
+            
+            <!-- Card 1: Description -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+                <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-3">
+                    <span>وصف الخدمة</span>
+                </h2>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                    خدمة إلكترونية تتيح لأصحاب وملاك المزارع المهملة أو الحيازات الزراعية غير المستغلة في كافة مناطق المملكة الـ 13 تسجيل مزارعهم ضمن <strong>المبادرة الوطنية لإحياء المزارع المهملة</strong> الصادرة بقرار وكيل الوزارة لشؤون الفروع. تهدف الخدمة إلى دراسة وضع المزرعة، معاينتها ميدانياً، وتقديم خطة تأهيل شاملة لحل مشاكل المياه والآبار، والطاقة الشمسية، وشبكات الري.
+                </p>
+            </div>
+
+            <!-- Card 2: Conditions & Rules (الشروط والضوابط) -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+                <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-3">
+                    <span>الشروط والضوابط المعتمدة للخدمة</span>
+                </h2>
+                <div class="space-y-3 text-xs sm:text-sm text-slate-700">
+                    
+                    <!-- 1. انطباق تعريف المزرعة المهملة -->
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-base mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">1. انطباق تعريف المزرعة المهملة</strong>
+                            <p class="text-xs text-slate-600">أن تكون مزرعة أو حيازة زراعية قائمة فعلياً ومؤهلة للزراعة، هُجرت مدة تزيد عن خمس سنوات، أو نبتت بها الأشجار الحرجية، أو تلفت بعض مكوناتها الإنتاجية.</p>
+                        </div>
+                    </div>
+
+                    <!-- 2. إثبات الملكية أو الحيازة النظامية -->
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-base mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">2. إثبات الملكية أو الحيازة النظامية</strong>
+                            <p class="text-xs text-slate-600">تقديم وثيقة إثبات ملكية أو حيازة نظامية سارية المفعول، تشمل: صك ملكية إلكتروني صادر من وزارة العدل، عقد إيجار زراعي موثق عبر منصة «إيجار»، صك حصر ورثة مشفوعاً بوكالة شرعية سارية للمفوض، أو عقد استثمار/تشغيل زراعي معتمد.</p>
+                        </div>
+                    </div>
+
+                    <!-- 3. توفر وإدخال رقم السجل الزراعي المطور -->
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-base mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">3. توفر وإدخال رقم السجل الزراعي المطور</strong>
+                            <p class="text-xs text-slate-600">أن تمتلك المزرعة سجلاً زراعياً ساري المفعول صادراً من وزارة البيئة والمياه والزراعة، وإدخال رقم السجل المعتمد في استمارة التقديم للتحقق منه آلياً عبر منظومة «نما».</p>
+                        </div>
+                    </div>
+
+                    <!-- 4. الدخول الموثق عبر النفاذ الوطني -->
+                    <div class="flex items-start gap-3 p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
+                        <i class="fa-solid fa-circle-check text-emerald-600 text-base mt-0.5"></i>
+                        <div>
+                            <strong class="text-slate-900 block mb-0.5">4. الدخول الموثق عبر النفاذ الوطني</strong>
+                            <p class="text-xs text-slate-600">تسجيل الدخول عبر منصة النفاذ الوطني الموحد لمقدم الطلب (مالك، وريث مفوض، أو حائز) لضمان موثوقية الحصر وربط الملف برقم الهوية الوطنية.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 3: Target Beneficiaries & Documents -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <!-- Target Beneficiaries -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-users text-emerald-600"></i>
+                        <span>الفئات المستهدفة</span>
+                    </h3>
+                    <ul class="space-y-2 text-xs text-slate-600">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> ملاك المزارع والحيازات المهملة (أفراد)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> الورثة المفوضين بوكالة شرعية</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> المستفيدون المسجلون بالضمان الاجتماعي</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-check text-emerald-600"></i> الجمعيات الزراعية والمستثمرون</li>
+                    </ul>
+                </div>
+
+                <!-- Required Documents -->
+                <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-xs space-y-3">
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                        <i class="fa-solid fa-file-lines text-emerald-600"></i>
+                        <span>المستندات والمعلومات المطلوبة</span>
+                    </h3>
+                    <ul class="space-y-2.5 text-xs text-slate-700 font-medium">
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> رقم الهوية الوطنية لمقدم الطلب (موثق عبر نفاذ)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> وثيقة إثبات الملكية/الحيازة (صك إلكتروني / عقد إيجار موثق / وكالة شرعية)</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> رقم السجل الزراعي المطور الساري من وزارة البيئة</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> موقع المزرعة على الخريطة وتحديد الإحداثيات</li>
+                        <li class="flex items-center gap-2"><i class="fa-solid fa-circle-check text-emerald-600"></i> صور أو فيديو يوضح حالة المزرعة الحالية</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Card 4: Steps to complete service (خطوات التقديم) -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs space-y-4">
+                <h2 class="text-base font-extrabold text-slate-900 flex items-center gap-2 border-r-4 border-emerald-600 pr-3">
+                    <span>خطوات التقديم وسير معالجة الطلب</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-center text-xs pt-2">
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-black flex items-center justify-center mx-auto mb-2 text-xs">1</div>
+                        <strong class="text-slate-900 block mb-1">تسجيل الدخول</strong>
+                        <p class="text-[11px] text-slate-500">الدخول عبر النفاذ الوطني الموحد دون الحاجة لإنشاء حساب جديد.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-black flex items-center justify-center mx-auto mb-2 text-xs">2</div>
+                        <strong class="text-slate-900 block mb-1">تعبئة البيانات</strong>
+                        <p class="text-[11px] text-slate-500">تحديد الموقع، حالة الأرض، مصادر المياه والكهرباء، واحتياجات التأهيل.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-black flex items-center justify-center mx-auto mb-2 text-xs">3</div>
+                        <strong class="text-slate-900 block mb-1">معاينة الفرع</strong>
+                        <p class="text-[11px] text-slate-500">دراسة الطلب وجدولة زيارة ميدانية لفحص التربة ومصادر المياه.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                        <div class="w-8 h-8 rounded-full bg-emerald-600 text-white font-black flex items-center justify-center mx-auto mb-2 text-xs">4</div>
+                        <strong class="text-slate-900 block mb-1">التأهيل والشراكة</strong>
+                        <p class="text-[11px] text-slate-500">ربط المزرعة بشركاء الدعم وتوفير الشتلات وشبكات الري والطاقة.</p>
+                    </div>
+                </div>
+
+                <!-- Bottom CTA -->
+                <div class="pt-4 text-center">
+                    <a href="/nafath/login?return_to=/register" class="inline-flex items-center justify-center gap-3 px-8 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-sm shadow transition">
+                        <span>ابدأ تقديم الطلب الآن</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

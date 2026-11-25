@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>بطاقة المزرعة الرسمية | {{ farm.code }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { font-family: 'Tajawal', sans-serif; background: #fff; }
+        @media print {
+            .no-print { display: none !important; }
+            @page { margin: 15mm; }
+        }
+    </style>
+</head>
+<body class="p-8 max-w-4xl mx-auto text-slate-800">
+
+    <!-- Print Button -->
+    <div class="mb-6 flex justify-between items-center no-print bg-slate-100 p-4 rounded-xl border border-slate-200">
+        <span class="text-xs text-slate-600 font-bold">معاينة بطاقة المزرعة الرسمية للطباعة والأرشفة</span>
+        <button onclick="window.print()" class="px-5 py-2 bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-xs rounded-lg shadow flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> طباعة البطاقة (A4)
+        </button>
+    </div>
+
+    <!-- Official Document Box -->
+    <div class="border-4 border-double border-emerald-900 p-8 rounded-2xl relative space-y-6">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b-2 border-emerald-800 pb-4">
+            <div>
+                <h3 class="text-xs font-bold text-slate-500">المملكة العربية السعودية</h3>
+                <h2 class="text-sm font-bold text-slate-800">وزارة البيئة والمياه والزراعة</h2>
+                <h4 class="text-xs text-emerald-800 font-bold">لجنة مبادرة إحياء المزارع المهملة</h4>
+            </div>
+            
+            <div class="text-center">
+                <div class="w-12 h-12 rounded-xl bg-emerald-800 text-white flex items-center justify-center text-xl mx-auto mb-1">
+                    <i class="fa-solid fa-seedling"></i>
+                </div>
+                <span class="text-xs font-black text-slate-800">الملف الرقمي الموحد</span>
+            </div>
+
+            <div class="text-left font-mono">
+                <div class="text-lg font-black text-emerald-800">{{ farm.code }}</div>
+                <div class="text-[11px] text-slate-500">{{ farm.created_at[:10] }}</div>
+                <div class="text-[10px] text-slate-400">نظام إحياء 2026</div>
+            </div>
+        </div>
+
+        <!-- Title Banner -->
+        <div class="bg-emerald-50 border border-emerald-300 p-3 rounded-xl text-center">
+            <h1 class="text-base font-black text-emerald-950">بطاقة حصر وتأهيل مزرعة مهملة</h1>
+            <p class="text-xs text-emerald-800">صادرة بموجب قرار تشكيل لجنة إحياء المزارع رقم 482555376</p>
+        </div>
+
+        <!-- Section 1: Farmer & Location Details -->
+        <div class="grid grid-cols-2 gap-4 text-xs border border-slate-200 p-4 rounded-xl bg-slate-50/50">
+            <div><strong>اسم المزارع / المالك:</strong> <span class="font-bold text-slate-900">{{ farm.farmer_name }}</span></div>
+            <div><strong>السجل المدني:</strong> <span class="font-mono font-bold">{{ farm.national_id }}</span></div>
+            <div><strong>رقم التواصل:</strong> <span class="font-mono" dir="ltr">{{ farm.phone }}</span></div>
+            <div><strong>الضمان الاجتماعي:</strong> {{ farm.social_security }}</div>
+            <div><strong>المنطقة الإدارية:</strong> {{ farm.region }}</div>
+            <div><strong>المحافظة والمركز:</strong> {{ farm.governorate }} - {{ farm.center or 'المركز الرئيسي' }}</div>
+            <div><strong>القرية / الحي:</strong> {{ farm.village or 'الوادي' }}</div>
+            <div><strong>الإحداثيات الجغرافية:</strong> <span class="font-mono">{{ farm.latitude }}, {{ farm.longitude }}</span></div>
+        </div>
+
+        <!-- Section 2: Farm Technical Specs -->
+        <div class="grid grid-cols-3 gap-3 text-xs border border-slate-200 p-4 rounded-xl">
+            <div><strong>المساحة:</strong> {{ "{:,.0f}".format(farm.area_m2) }} م²</div>
+            <div><strong>حالة الأرض:</strong> {{ farm.land_status }}</div>
+            <div><strong>مصدر المياه:</strong> {{ farm.water_source }}</div>
+            <div><strong>مصدر الكهرباء:</strong> {{ farm.electricity_source }}</div>
+            <div><strong>الطريق:</strong> {{ farm.road_type }}</div>
+            <div><strong>السجل الزراعي:</strong> <span class="font-mono font-bold">{{ farm.agricultural_registry }}</span></div>
+        </div>
+
+        <!-- Section 3: Smart Rehabilitation Plan -->
+        <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40 text-xs space-y-2">
+            <div class="flex justify-between items-center font-bold text-emerald-900">
+                <span>خطة التدخل الاستصلاحي المعتمدة:</span>
+                <span>تصنيف: {{ farm.readiness_priority }}</span>
+            </div>
+            <ul class="space-y-1 list-disc pr-4 text-slate-700">
+                {% for item in farm.suggested_solution.split(' + ') %}
+                <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+            <div class="pt-2 border-t border-emerald-200 flex justify-between font-bold text-slate-800">
+                <span>التكلفة التقديرية للتأهيل: <span class="text-emerald-800 font-mono">{{ "{:,.0f}".format(farm.solution_cost_est) }} ريال</span></span>
+                <span>الشريك المسند: {{ farm.assigned_partner_name }} ({{ farm.support_status }})</span>
+            </div>
+        </div>
+
+        <!-- Signatures & Stamp -->
+        <div class="pt-8 border-t border-slate-300 grid grid-cols-3 text-center text-xs">
+            <div>
+                <span class="text-slate-400 block mb-2">أخصائي الحصر الميداني</span>
+                <span class="font-bold text-slate-800">م. عمر العتيبي</span>
+                <span class="text-[10px] text-slate-400 block mt-4">التوقيع: .....................</span>
+            </div>
+            <div>
+                <div class="w-20 h-20 rounded-full border-2 border-dashed border-emerald-800 flex items-center justify-center text-[10px] text-emerald-800 font-bold mx-auto">
+                    ختم المبادرة الرسمي
+                </div>
+            </div>
+            <div>
+                <span class="text-slate-400 block mb-2">مدير فرع الوزارة بالمنطقة</span>
+                <span class="font-bold text-slate-800">م. فهد الزهراني</span>
+                <span class="text-[10px] text-slate-400 block mt-4">التوقيع: .....................</span>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

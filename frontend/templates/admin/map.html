@@ -1,0 +1,170 @@
+{% extends "admin/base_admin.html" %}
+
+{% block title %}الخريطة الجغرافية الوطنية (GIS) | منصة إحياء{% endblock %}
+{% block page_title %}الخريطة الجغرافية الوطنية لحصر وتوزيع المزارع المهملة{% endblock %}
+
+{% block extra_head %}
+<!-- Leaflet MarkerCluster -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+<link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+<script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+<style>
+    #gis_map {
+        height: calc(100vh - 190px);
+        width: 100%;
+        border-radius: 1rem;
+        z-index: 10;
+    }
+    .custom-popup .leaflet-popup-content-wrapper {
+        border-radius: 1rem;
+        direction: rtl;
+        text-align: right;
+        font-family: 'Tajawal', sans-serif;
+    }
+</style>
+{% endblock %}
+
+{% block admin_content %}
+<div class="space-y-4">
+
+    <!-- Map Filter Toolbar -->
+    <div class="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-1.5 font-bold text-slate-700">
+                <i class="fa-solid fa-filter text-emerald-600"></i>
+                <span>فلترة الخريطة:</span>
+            </div>
+
+            <!-- Region Filter -->
+            <select id="map_region_filter" onchange="loadMapPoints()" class="px-3 py-1.5 rounded-lg border border-slate-300 font-semibold focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                <option value="الكل">كافة مناطق المملكة (13)</option>
+                {% for reg in all_regions %}
+                <option value="{{ reg }}">{{ reg }}</option>
+                {% endfor %}
+            </select>
+
+            <!-- Priority Filter -->
+            <select id="map_priority_filter" onchange="loadMapPoints()" class="px-3 py-1.5 rounded-lg border border-slate-300 font-semibold focus:outline-none focus:ring-1 focus:ring-emerald-500">
+                <option value="الكل">كافة أولويات الجاهزية</option>
+                <option value="أولوية 1">أولوية 1 (عالية - تأهيل سريع)</option>
+                <option value="أولوية 2">أولوية 2 (متوسطة)</option>
+                <option value="أولوية 3">أولوية 3 (استصلاح شامل)</option>
+            </select>
+        </div>
+
+        <div class="flex items-center gap-4">
+            <!-- Markers Counter -->
+            <div class="flex items-center gap-2">
+                <span class="text-slate-500">المزارع المعروضة:</span>
+                <span id="points_count" class="font-mono font-black text-emerald-800 text-sm bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">1,733</span>
+            </div>
+
+            <!-- Legend -->
+            <div class="hidden sm:flex items-center gap-3 text-[11px] font-semibold text-slate-600">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block"></span> أولوية 1</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span> أولوية 2</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> أولوية 3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="relative bg-white p-2 rounded-2xl border border-slate-200 shadow-xs">
+        <div id="gis_map"></div>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    let map, markersCluster;
+
+    function initMap() {
+        // Center of Saudi Arabia
+        map = L.map('gis_map').setView([24.2, 44.5], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© مبادرة إحياء المزارع المهملة | OpenStreetMap'
+        }).addTo(map);
+
+        markersCluster = L.markerClusterGroup({
+            spiderfyOnMaxZoom: true,
+            showCoverageOnHover: false,
+            zoomToBoundsOnClick: true,
+            maxClusterRadius: 40
+        });
+
+        map.addLayer(markersCluster);
+
+        loadMapPoints();
+    }
+
+    async function loadMapPoints() {
+        const region = document.getElementById('map_region_filter').value;
+        const priority = document.getElementById('map_priority_filter').value;
+
+        markersCluster.clearLayers();
+
+        let url = `/api/farms/geojson?region=${encodeURIComponent(region)}&priority=${encodeURIComponent(priority)}`;
+        try {
+            const res = await fetch(url);
+            const geojson = await res.json();
+            const features = geojson.features || [];
+
+            document.getElementById('points_count').innerText = features.length.toLocaleString('en-US');
+
+            features.forEach(feat => {
+                const p = feat.properties;
+                const coords = [feat.geometry.coordinates[1], feat.geometry.coordinates[0]];
+
+                let color = '#f59e0b';
+                if (p.priority.includes('أولوية 1')) color = '#059669';
+                else if (p.priority.includes('أولوية 3')) color = '#e11d48';
+
+                const markerIcon = L.divIcon({
+                    className: 'custom-pin',
+                    html: `<div style="background-color: ${color}; width: 14px; height: 14px; border-radius: 50%; border: 2px solid #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.3);"></div>`,
+                    iconSize: [14, 14],
+                    iconAnchor: [7, 7]
+                });
+
+                const marker = L.marker(coords, { icon: markerIcon });
+
+                const popupHtml = `
+                    <div class="p-1 space-y-2 text-right">
+                        <div class="flex justify-between items-center border-b border-slate-200 pb-1.5">
+                            <span class="font-mono font-black text-emerald-800 text-sm">${p.code}</span>
+                            <span class="text-[10px] px-2 py-0.5 rounded-full font-bold" style="background:${color}20; color:${color}">${p.priority.substring(0,10)}</span>
+                        </div>
+                        <h4 class="font-bold text-slate-900 text-xs">${p.name}</h4>
+                        <div class="text-[11px] text-slate-500 space-y-0.5">
+                            <div><strong>الموقع:</strong> ${p.region} - ${p.gov}</div>
+                            <div><strong>المساحة:</strong> ${(p.area || 0).toLocaleString()} م²</div>
+                            <div><strong>المياه:</strong> ${p.water} | <strong>الكهرباء:</strong> ${p.elec}</div>
+                            <div><strong>الحالة:</strong> ${p.status}</div>
+                        </div>
+                        <div class="pt-1.5 border-t border-slate-100 flex gap-2">
+                            <a href="/admin/farms/${p.id}" class="flex-1 py-1 rounded-lg bg-emerald-600 text-white text-center text-[10px] font-bold">الملف الرقمي</a>
+                            <a href="https://maps.google.com/?q=${coords[0]},${coords[1]}" target="_blank" class="px-2 py-1 rounded-lg bg-slate-100 text-slate-700 text-[10px] font-bold">خرائط Google</a>
+                        </div>
+                    </div>
+                `;
+
+                marker.bindPopup(popupHtml, { className: 'custom-popup', maxWidth: 280 });
+                markersCluster.addLayer(marker);
+            });
+
+            if (region !== 'الكل' && features.length > 0) {
+                const first = features[0].geometry.coordinates;
+                map.flyTo([first[1], first[0]], 8);
+            }
+
+        } catch (e) {
+            console.error('Error loading geojson:', e);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initMap);
+</script>
+{% endblock %}
